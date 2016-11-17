@@ -7,7 +7,7 @@ const {
   ACTION_UPDATE_IMAGE,
 } = require('../actions/ImageActions');
 
-module.exports = createReducer(new Image(), {
+module.exports = createReducer(null, {
   [ACTION_NEW_IMAGE](state, {width, height}) {
     return new Image({width, height});
   },
