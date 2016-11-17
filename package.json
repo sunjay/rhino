@@ -1,0 +1,15 @@
+{
+  "name": "rhino-editor",
+  "version": "0.0.1",
+  "description": "Rhino Editor",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/sunjay/rhino",
+  "author": "Sunjay Varma",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  }
+}
