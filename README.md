@@ -22,5 +22,9 @@ You may need to install yarn with `npm install -g yarn`
 
 ```bash
 yarn
+# Run these in two separate terminal tabs
+yarn run dev
 yarn start
 ```
+
+You may need to press Ctrl+R if the dev server has not finished loading yet.

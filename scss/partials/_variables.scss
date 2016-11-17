@@ -1,0 +1,32 @@
+// Layout
+$navbar-height: 50px;
+$lesson-width: 300px;
+$lesson-actions-height: 60px;
+$editor-tabs-height: 30px;
+$output-window-height: 200px;
+$output-window-width: 300px;
+$component-spacing: 10px;
+
+// Colors
+$brand-default: #fff;
+$brand-primary: #2196f3;
+$brand-success: #388e3c;
+$brand-info: #212121;
+
+$navbar-background: #4caf50;
+$lesson-background: #fff;
+$instructions-background: #c8e6c9;
+$editor-tab-background: #272822;
+$editor-tabs-background: $brand-success;
+$lesson-actions-background: $brand-success;
+
+// Typography
+$font-family-sans-serif: 'Open Sans', sans-serif;
+$headings-font-family: 'Exo', sans-serif;
+$headings-font-weight: 600;
+
+// Button Styles
+$btn-font-weight: bold;
+
+// bring in the rest from bootstrap's defaults
+@import '~bootstrap-sass/assets/stylesheets/bootstrap/variables';

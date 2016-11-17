@@ -1,0 +1,12 @@
+linters:
+  SelectorFormat:
+    enabled: false
+
+  ImportantRule:
+    enabled: false
+
+  ColorVariable:
+    enabled: false
+
+  LeadingZero:
+    style: 'include_zero'
