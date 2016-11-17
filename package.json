@@ -49,6 +49,7 @@
     "immutable": "^3.8.1",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
+    "react-fontawesome": "^1.4.0",
     "react-redux": "^4.4.6",
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.7",

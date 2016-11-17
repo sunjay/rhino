@@ -3520,6 +3520,10 @@ react-dom:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-fontawesome:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-fontawesome/-/react-fontawesome-1.4.0.tgz#a6640f4084cc984281d07c9d97e5846b76016e9b"
+
 react-redux, react-redux@^4.0.0:
   version "4.4.6"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-4.4.6.tgz#4b9d32985307a11096a2dd61561980044fcc6209"
