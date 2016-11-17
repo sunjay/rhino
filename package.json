@@ -45,6 +45,7 @@
     "babel-polyfill": "^6.16.0",
     "bootstrap-sass": "^3.3.7",
     "classnames": "^2.2.5",
+    "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",

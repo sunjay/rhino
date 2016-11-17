@@ -13,4 +13,3 @@ App.propTypes = {
 };
 
 module.exports = App;
-

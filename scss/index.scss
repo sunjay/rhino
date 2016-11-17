@@ -11,4 +11,8 @@
   @import '~bootstrap-sass/assets/stylesheets/bootstrap/type';
   @import '~bootstrap-sass/assets/stylesheets/bootstrap/grid';
   @import './partials/buttons';
+
+  // Font awesome
+  $fa-font-path: '~font-awesome/fonts';
+  @import '~font-awesome/scss/font-awesome';
 }
