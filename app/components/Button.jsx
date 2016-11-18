@@ -1,12 +1,13 @@
 const React = require('react');
 const classNames = require('classnames');
 
-const Button = ({className, style, children, block = false, ...props}) => (
-  <div {...props} className={classNames(className, {
+const Button = ({className, style, size, children, block = false, ...props}) => (
+  <div {...props} className={classNames({
     btn: true,
     [`btn-${style}`]: !!style,
+    [`btn-${size}`]: !!size,
     ['btn-block']: !!block,
-  })}>
+  }, className)}>
     {children}
   </div>
 );
@@ -16,8 +17,9 @@ Button.propTypes = {
   children: React.PropTypes.any,
   style: React.PropTypes.oneOf([
     'default', 'primary', 'secondary', 'success',
-    'info', 'warning', 'danger', 'link',
+    'info', 'warning', 'danger', 'link', 'dark',
   ]),
+  size: React.PropTypes.oneOf(['sm', 'lg']),
   block: React.PropTypes.bool,
 };
 

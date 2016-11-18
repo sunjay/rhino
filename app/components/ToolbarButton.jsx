@@ -8,7 +8,7 @@ const {
 const Button = require('./Button');
 
 const ToolbarButton = ({...props, className, children}) => (
-  <Button  {...props} className={classNames(className, toolbarButton)}>
+  <Button  {...props} style='dark' size='sm' className={classNames(toolbarButton, className)}>
     {children}
   </Button>
 );

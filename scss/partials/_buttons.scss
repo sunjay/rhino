@@ -150,6 +150,16 @@ a.btn {
   @include button-variant2($btn-danger-color, $btn-danger-bg, $btn-danger-border);
 }
 
+.btn-dark {
+  @include button-variant2(#fff, #212121, #424242);
+  font-weight: normal;
+
+  &:active,
+  &:active:focus {
+    background-color: #616161;
+  }
+}
+
 
 // Link buttons
 // -------------------------
