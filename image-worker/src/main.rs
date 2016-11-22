@@ -14,6 +14,7 @@ use std::io::BufRead;
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 enum Action {
+    New {width: u32, height: u32},
     Undo,
     Redo,
     Crop {x: u32, y: u32, width: u32, height: u32},
@@ -23,7 +24,13 @@ enum Action {
 }
 
 fn main() {
+    println!("{}", serde_json::to_string(&Action::New { width: 150, height: 250 }).unwrap());
     println!("{}", serde_json::to_string(&Action::Undo).unwrap());
+    println!("{}", serde_json::to_string(&Action::Redo).unwrap());
+    println!("{}", serde_json::to_string(&Action::Crop { x: 10, y: 11, width: 100, height: 150 }).unwrap());
+    println!("{}", serde_json::to_string(&Action::FlipHorizontal).unwrap());
+    println!("{}", serde_json::to_string(&Action::FlipVertical).unwrap());
+    println!("{}", serde_json::to_string(&Action::Resize { width: 150, height: 250 }).unwrap());
     //let stdin = io::stdin();
     //for line in stdin.lock().lines() {
     //    let line = line.unwrap();
