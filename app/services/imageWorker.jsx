@@ -25,6 +25,10 @@ class ImageWorker {
       console.info(`child process exited with code ${code}`);
     });
 
+    this.worker.on('error', (error) => {
+      console.error(`image worker error: ${error}`);
+    });
+
     this.worker.stdin.write('foo\n');
   }
 
