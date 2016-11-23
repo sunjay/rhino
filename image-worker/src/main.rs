@@ -13,21 +13,42 @@ mod action;
 mod project;
 mod commands;
 
-//use std::io;
-//use std::io::BufRead;
+use std::io;
+use std::io::BufRead;
+
 use action::Action;
+use project::Project;
+use commands::{Command, CommandResult};
+
+#[derive(Debug, PartialEq, Serialize)]
+pub enum Response {
+    Success {/*TODO*/},
+    NoProjectCreated,
+    ActionParseError {/*TODO*/},
+}
 
 fn main() {
-    println!("{}", serde_json::to_string(&Action::New { width: 150, height: 250 }).unwrap());
-    println!("{}", serde_json::to_string(&Action::Undo).unwrap());
-    println!("{}", serde_json::to_string(&Action::Redo).unwrap());
-    println!("{}", serde_json::to_string(&Action::Crop { x: 10, y: 11, width: 100, height: 150 }).unwrap());
-    println!("{}", serde_json::to_string(&Action::FlipHorizontal).unwrap());
-    println!("{}", serde_json::to_string(&Action::FlipVertical).unwrap());
-    println!("{}", serde_json::to_string(&Action::Resize { width: 150, height: 250 }).unwrap());
-    //let stdin = io::stdin();
-    //for line in stdin.lock().lines() {
-    //    let line = line.unwrap();
-    //    println!("{}", line);
-    //}
+    let mut project: Option<Project> = None;
+
+    let stdin = io::stdin();
+    for line in stdin.lock().lines() {
+        let line = line.unwrap().trim();
+        let action: Action = match serde_json::from_str(&line) {
+            Ok(a) => a,
+            Err(error) => {
+                //TODO: Output error response
+                unimplemented!();
+                continue;
+            }
+        };
+
+        let result: CommandResult = match action {
+            Action::New {width, height} => project = Project::new(width, height),
+            Action::Load {path} => project.load(path),
+            Action::Save {path} => project.save(path),
+            Action::Undo => project.undo(),
+            Action::Redo => project.redo(),
+            a => project.perform_command(commands::lookup(action)),
+        };
+    }
 }

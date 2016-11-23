@@ -1,19 +1,19 @@
-use commands::Command;
+use commands::{Command, CommandResult};
 
 // Unrelated error types that should not be grouped
 // into one enum
+#[derive(Debug, PartialEq, Serialize)]
 pub struct UndoStackEmpty;
+#[derive(Debug, PartialEq, Serialize)]
 pub struct RedoStackEmpty;
+#[derive(Debug, PartialEq, Serialize)]
 pub struct LoadFailed {
     reason: &'static str,
 }
+#[derive(Debug, PartialEq, Serialize)]
 pub struct SaveFailed {
     reason: &'static str,
 }
-
-// The result of a mutation either succeeds or fails with
-// some error type
-pub type MutationResult<E> = Result<(), E>;
 
 pub struct Project<'a> {
     // undo stack has latest command at the end
@@ -40,7 +40,7 @@ impl<'a> Project<'a> {
         self.redo_stack.clear();
     }
 
-    pub fn undo(&mut self) -> MutationResult<UndoStackEmpty> {
+    pub fn undo(&mut self) -> CommandResult<UndoStackEmpty> {
         if self.undo_stack.is_empty() {
             return Err(UndoStackEmpty);
         }
@@ -52,7 +52,7 @@ impl<'a> Project<'a> {
         Ok(())
     }
 
-    pub fn redo(&mut self) -> MutationResult<RedoStackEmpty> {
+    pub fn redo(&mut self) -> CommandResult<RedoStackEmpty> {
         if self.redo_stack.is_empty() {
             return Err(RedoStackEmpty);
         }
@@ -64,11 +64,11 @@ impl<'a> Project<'a> {
         Ok(())
     }
 
-    pub fn load(&mut self, path: String) -> MutationResult<LoadFailed> {
+    pub fn load(&mut self, path: String) -> CommandResult<LoadFailed> {
         unimplemented!();
     }
 
-    pub fn save(&mut self, path: String) -> MutationResult<SaveFailed> {
+    pub fn save(&mut self, path: String) -> CommandResult<SaveFailed> {
         unimplemented!();
     }
 }
