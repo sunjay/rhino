@@ -9,19 +9,11 @@ extern crate rustc_serialize;
 
 extern crate image;
 
-use std::io;
-use std::io::BufRead;
+mod action;
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
-enum Action {
-    New {width: u32, height: u32},
-    Undo,
-    Redo,
-    Crop {x: u32, y: u32, width: u32, height: u32},
-    FlipHorizontal,
-    FlipVertical,
-    Resize {width: u32, height: u32},
-}
+//use std::io;
+//use std::io::BufRead;
+use action::Action;
 
 fn main() {
     println!("{}", serde_json::to_string(&Action::New { width: 150, height: 250 }).unwrap());
