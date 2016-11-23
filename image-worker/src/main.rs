@@ -10,6 +10,8 @@ extern crate rustc_serialize;
 extern crate image;
 
 mod action;
+mod project;
+mod commands;
 
 //use std::io;
 //use std::io::BufRead;
