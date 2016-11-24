@@ -110,7 +110,7 @@ fn run_test_script(script: PathBuf) {
         };
 
         if let Err(error) = result {
-            panic!("{}#{}: {}", filename, num, error);
+            panic!("{}#{}: {}", filename, num + 1, error);
         }
     }
 
