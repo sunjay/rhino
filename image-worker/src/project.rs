@@ -53,11 +53,11 @@ impl Project {
         Ok(())
     }
 
-    pub fn load(&mut self, path: String) -> CommandResult {
+    pub fn load(&mut self, path: &str) -> CommandResult {
         unimplemented!();
     }
 
-    pub fn save(&mut self, path: String) -> CommandResult {
+    pub fn save(&mut self, path: &str) -> CommandResult {
         unimplemented!();
     }
 }

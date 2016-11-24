@@ -66,8 +66,8 @@ fn main() {
 
 fn dispatch_action(project: &mut Project, action: Action) -> CommandResult {
     match action {
-        Action::Load {path} => project.load(path),
-        Action::Save {path} => project.save(path),
+        Action::Load {ref path} => project.load(path),
+        Action::Save {ref path} => project.save(path),
         Action::Undo => project.undo(),
         Action::Redo => project.redo(),
         a => project.perform_command(commands::lookup(a)),
