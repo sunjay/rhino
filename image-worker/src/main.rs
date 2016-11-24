@@ -15,7 +15,6 @@ mod commands;
 
 use std::io;
 use std::io::BufRead;
-use std::error::Error;
 
 use action::Action;
 use project::Project;
@@ -39,8 +38,7 @@ fn main() {
         let action: Action = match serde_json::from_str(&line) {
             Ok(a) => a,
             Err(error) => {
-                let description = error.description().to_owned();
-                let response = Response::ActionParseError {error: description};
+                let response = Response::ActionParseError {error: format!("{}", error)};
                 send_response(response);
                 continue;
             }
@@ -49,10 +47,14 @@ fn main() {
         if let Action::New {width, height} = action {
             project = Some(Project::new(width, height));
             send_response(Response::Success {/*TODO*/});
-            continue;
         }
-
-        if let Some(ref mut project) = project {
+        else if let Action::Load {ref path} = action {
+            match Project::load(path) {
+                Ok(p) => project = Some(p),
+                Err(error) => send_response(Response::ActionFailed {reason: error}),
+            }
+        }
+        else if let Some(ref mut project) = project {
             let result = dispatch_action(project, action);
             match result {
                 Ok(_) => send_response(Response::Success {/*TODO*/}),
@@ -67,7 +69,6 @@ fn main() {
 
 fn dispatch_action(project: &mut Project, action: Action) -> CommandResult {
     match action {
-        Action::Load {ref path} => project.load(path),
         Action::Save {ref path} => project.save(path),
         Action::Undo => project.undo(),
         Action::Redo => project.redo(),

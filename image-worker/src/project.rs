@@ -1,6 +1,11 @@
+use std::path::Path;
+
+use image::{self, DynamicImage, ImageFormat};
+
 use commands::{Command, CommandResult};
 
 pub struct Project {
+    image: DynamicImage,
     // undo stack has latest command at the end
     // and oldest command at the beginning
     undo_stack: Vec<Box<Command>>,
@@ -13,10 +18,26 @@ pub struct Project {
 
 impl Project {
     pub fn new(width: u32, height: u32) -> Project {
+        Project::from_image(DynamicImage::new_rgba8(width, height))
+    }
+
+    pub fn load(path: &str) -> Result<Project, String> {
+        let path = Path::new(path);
+        let image = image::open(path).map_err(|e| format!("{}", e))?;
+
+        Ok(Project::from_image(image))
+    }
+
+    pub fn from_image(image: DynamicImage) -> Project {
         Project {
+            image: image,
             undo_stack: Vec::new(),
             redo_stack: Vec::new(),
         }
+    }
+
+    pub fn save(&mut self, path: &str) -> CommandResult {
+        unimplemented!();
     }
 
     pub fn perform_command(&mut self, command: Box<Command>) -> CommandResult {
@@ -51,14 +72,6 @@ impl Project {
         self.undo_stack.push(command);
 
         Ok(())
-    }
-
-    pub fn load(&mut self, path: &str) -> CommandResult {
-        unimplemented!();
-    }
-
-    pub fn save(&mut self, path: &str) -> CommandResult {
-        unimplemented!();
     }
 }
 
