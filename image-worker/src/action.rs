@@ -74,6 +74,14 @@ mod tests {
     }
 
     #[test]
+    fn json_close() {
+        test_json(
+            Action::Close,
+            "\"Close\""
+        );
+    }
+
+    #[test]
     fn json_crop() {
         test_json(
             Action::Crop { x: 10, y: 11, width: 100, height: 150 },
