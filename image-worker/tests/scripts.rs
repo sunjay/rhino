@@ -25,6 +25,25 @@
 //! %output.jpg => tests/assets/crop-640x480+900+800.jpg
 //! ```
 //!
+//! This will automatically delete output.jpg so you do not
+//! need to clean up after the test.
+//! If a mismatch occurs, the image will not be deleted.
+//!
+//! To just clean the output file and do no checks:
+//!
+//! ```
+//! -output.jpg
+//! ```
+//!
+//! To inspect a file that you're about to clean up, you
+//! can copy it with the following command:
+//!
+//! ```
+//! =output.jpg destination.jpg
+//! ```
+//!
+//! This is useful for debugging.
+//!
 //! You can assert that the output of a given input line
 //! is as expected:
 //!
@@ -38,6 +57,12 @@
 //!
 //! With no expected output provided, we will check to
 //! see if the output was a success and that is it.
+//!
+//! Lines beginning with `//` will be ignored. You can
+//! use these lines to document your test scripts as
+//! necessary.
+//!
+//! // Your comment here
 
 #[test]
 fn run_scripts() {
