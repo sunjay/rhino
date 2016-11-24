@@ -4,17 +4,15 @@ use action::Action;
 use project::Project;
 
 pub trait Command {
-    type Error: Serialize;
-
-    fn forward(&self, project: &mut Project) -> CommandResult<Self::Error>;
-    fn backward(&self, project: &mut Project) -> CommandResult<Self::Error>;
+    fn forward(&self, project: &mut Project) -> CommandResult;
+    fn backward(&self, project: &mut Project) -> CommandResult;
 }
 
 // The result of a command either succeeds or fails with
-// some error type
-pub type CommandResult<E: Serialize> = Result<(), E>;
+// an error message
+pub type CommandResult = Result<(), String>;
 
-pub fn lookup(action: Action) -> Command {
+pub fn lookup(action: Action) -> Box<Command> {
     match action {
         // Some actions are implemented with internal
         // functions so we won't match them here unless

@@ -32,7 +32,8 @@ fn main() {
 
     let stdin = io::stdin();
     for line in stdin.lock().lines() {
-        let line = line.unwrap().trim();
+        let line = line.unwrap();
+        let line = line.trim();
         let action: Action = match serde_json::from_str(&line) {
             Ok(a) => a,
             Err(error) => {
@@ -42,13 +43,23 @@ fn main() {
             }
         };
 
-        let result: CommandResult = match action {
-            Action::New {width, height} => project = Project::new(width, height),
-            Action::Load {path} => project.load(path),
-            Action::Save {path} => project.save(path),
-            Action::Undo => project.undo(),
-            Action::Redo => project.redo(),
-            a => project.perform_command(commands::lookup(action)),
-        };
+        if let Action::New {width, height} = action {
+            project = Some(Project::new(width, height));
+            continue;
+        }
+
+        if let Some(ref mut project) = project {
+            let result: CommandResult = match action {
+                Action::Load {path} => project.load(path),
+                Action::Save {path} => project.save(path),
+                Action::Undo => project.undo(),
+                Action::Redo => project.redo(),
+                a => project.perform_command(commands::lookup(a)),
+            };
+        }
+        else {
+            //TODO: Output error response that no project has been created or opened yet
+            unimplemented!();
+        }
     }
 }
