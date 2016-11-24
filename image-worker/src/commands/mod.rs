@@ -1,5 +1,3 @@
-use serde::Serialize;
-
 use action::Action;
 use project::Project;
 
