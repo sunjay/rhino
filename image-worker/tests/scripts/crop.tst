@@ -18,7 +18,15 @@
 {"Save": {"path": "output.jpg"}}
 %output.jpg => tests/assets/crop-125x200+25+60.jpg
 
+# Usually this would cause a panic because the image library does not
+# know what to do when trying to save an empty png
+{"Load": {"path": "tests/assets/sample2.jpg"}}
+{"Crop": {"x": 1000000, "y": 1000000, "width": 125, "height": 200}}
+{"Save": {"path": "output.png"}}
+>{"ActionFailed":{"reason":"Cannot save image with dimension equal to zero"}}
+
 # Disallow saving images with zero dimensions
+
 {"Load": {"path": "tests/assets/sample2.jpg"}}
 {"Crop": {"x": 50000, "y": 60, "width": 125, "height": 200}}
 {"Save": {"path": "output.jpg"}}
@@ -47,11 +55,4 @@
 {"Load": {"path": "tests/assets/sample2.jpg"}}
 {"Crop": {"x": 1000000, "y": 1000000, "width": 125, "height": 200}}
 {"Save": {"path": "output.jpg"}}
->{"ActionFailed":{"reason":"Cannot save image with dimension equal to zero"}}
-
-# Usually this would cause a panic because the image library does not
-# know what to do when trying to save an empty png
-{"Load": {"path": "tests/assets/sample2.jpg"}}
-{"Crop": {"x": 1000000, "y": 1000000, "width": 125, "height": 200}}
-{"Save": {"path": "output.png"}}
 >{"ActionFailed":{"reason":"Cannot save image with dimension equal to zero"}}
