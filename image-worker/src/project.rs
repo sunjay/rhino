@@ -88,6 +88,18 @@ impl Project {
 
         Ok(())
     }
+
+    // For use in commands only
+    pub fn get_image(&self) -> &DynamicImage {
+        &self.image
+    }
+
+    // For use in commands only
+    pub fn apply_to_image<F>(&mut self, f: F)
+        where F: FnOnce(&mut DynamicImage) -> DynamicImage {
+
+        self.image = f(&mut self.image);
+    }
 }
 
 #[cfg(test)]
