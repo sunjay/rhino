@@ -64,8 +64,10 @@
 //!
 //! # Your comment here
 
-use std::fs::read_dir;
+use std::fs::{File, read_dir};
+use std::io::{BufReader, BufRead};
 use std::path::{Path, PathBuf};
+use std::process::Child;
 
 #[test]
 fn run_scripts() {
@@ -78,5 +80,47 @@ fn run_scripts() {
 }
 
 fn run_test_script(script: PathBuf) {
+    let file = File::open(script).unwrap();
+    let reader = BufReader::new(file);
+
+    let child = spawn_worker();
+
+    for line in reader.lines() {
+        let line = line.unwrap();
+        let line = line.trim();
+
+        let (first, line) = line.split_at(1);
+
+        match first {
+            "%" => assert_file_match(line),
+            "-" => remove_file(line),
+            "=" => copy_file(line),
+            ">" => assert_output(line),
+            _ => send_input(&child, line),
+        }
+    }
+}
+
+fn spawn_worker() -> Child {
+    unimplemented!();
+}
+
+fn assert_file_match(line: &str) {
+    unimplemented!();
+}
+
+fn remove_file(line: &str) {
+    unimplemented!();
+}
+
+fn copy_file(line: &str) {
+    unimplemented!();
+}
+
+fn assert_output(line: &str) {
+    unimplemented!();
+}
+
+fn send_input(child: &Child, line: &str) {
     unimplemented!();
 }

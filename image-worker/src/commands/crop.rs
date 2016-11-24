@@ -40,13 +40,3 @@ impl Command for Crop {
         Ok(())
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_name() {
-        unimplemented!()
-    }
-}
