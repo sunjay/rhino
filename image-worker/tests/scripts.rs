@@ -197,7 +197,8 @@ fn assert_success(output: Option<&String>) -> Result<(), String> {
             Ok(())
         }
         else {
-            Err(format!("Worker did not produce Success. Actual result: {}", response))
+            Err(format!("Worker did not produce Success. Script failed at \
+                the last input *before* this line. Actual result: {}", response))
         }
     }
     else {
@@ -206,7 +207,23 @@ fn assert_success(output: Option<&String>) -> Result<(), String> {
 }
 
 fn assert_output(output: Option<&String>, arg: &str) -> Result<(), String> {
-    unimplemented!();
+    // This is brittle, but it doesn't seem worth it to implement something
+    // more robust for now. You will need to exactly match the output in your
+    // test script if you want to test output
+    if let Some(response) = output {
+        let arg = arg.trim();
+        let response = response.trim();
+        if response == arg {
+            Ok(())
+        }
+        else {
+            Err(format!("Worker produced output not equal to expected output.\
+                \nExpected: {:?}\nReceived: {:?}", arg, response))
+        }
+    }
+    else {
+        panic!("assert_success should have been called only when last_response had a value");
+    }
 }
 
 fn send_input(child: &mut Child, line: &str) -> Result<(), String> {
