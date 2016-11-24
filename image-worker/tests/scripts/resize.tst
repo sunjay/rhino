@@ -1,28 +1,50 @@
 # Disallow before loading anything
-{"Resize": {"width": 640, "height": 480}}
+{"Resize": {"width": 9000, "height": 9000}}
 >"NoProjectCreated"
 
-# Test basic resize operation
+# Scale down
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"Resize": {"width": 640, "height": 480}}
+{"Resize": {"width": 400, "height": 200}}
 {"Save": {"path": "output.jpg"}}
-%output.jpg => tests/assets/resize-640x480.jpg
-# Test further resizing the image
-{"Resize": {"width": 200, "height": 250}}
+%output.jpg => tests/assets/resize-400x200.jpg
+# Scale down again
+{"Resize": {"width": 200, "height": 100}}
 {"Save": {"path": "output.jpg"}}
-%output.jpg => tests/assets/resize-200x250.jpg
+%output.jpg => tests/assets/resize-200x100.jpg
 
-# Resize simple image
-{"Load": {"path": "tests/assets/sample2.jpg"}}
-{"Resize": {"width": 125, "height": 200}}
+# Scale up
+{"Load": {"path": "tests/assets/sample.jpg"}}
+{"Resize": {"width": 800, "height": 1200}}
 {"Save": {"path": "output.jpg"}}
-%output.jpg => tests/assets/resize-125x200.jpg
+%output.jpg => tests/assets/resize-800x1200.jpg
+# Scale up again
+{"Resize": {"width": 1000, "height": 1300}}
+{"Save": {"path": "output.jpg"}}
+%output.jpg => tests/assets/resize-1000x1300.jpg
 
-# Upscale simple image
+# Scale down a lot
 {"Load": {"path": "tests/assets/sample2.jpg"}}
-{"Resize": {"width": 600, "height": 400}}
+{"Resize": {"width": 20, "height": 10}}
 {"Save": {"path": "output.jpg"}}
-%output.jpg => tests/assets/resize-600x400.jpg
+%output.jpg => tests/assets/resize-20x10.jpg
+
+# Scale up a lot (very time intensive test)
+{"Load": {"path": "tests/assets/sample2.jpg"}}
+{"Resize": {"width": 2000, "height": 4000}}
+{"Save": {"path": "output.jpg"}}
+%output.jpg => tests/assets/resize-2000x4000.jpg
+
+# Leave one dimension the same
+{"Load": {"path": "tests/assets/sample2.jpg"}}
+{"Resize": {"width": 400, "height": 100}}
+{"Save": {"path": "output.jpg"}}
+%output.jpg => tests/assets/resize-400x100.jpg
+
+# Leave other dimension the same
+{"Load": {"path": "tests/assets/sample2.jpg"}}
+{"Resize": {"width": 100, "height": 300}}
+{"Save": {"path": "output.jpg"}}
+%output.jpg => tests/assets/resize-100x300.jpg
 
 # Usually this would cause a panic because the image library does not
 # know what to do when trying to save an empty png

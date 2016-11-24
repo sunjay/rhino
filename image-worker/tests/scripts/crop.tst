@@ -1,16 +1,22 @@
 # Disallow before loading anything
-{"Crop": {"x": 900, "y": 800, "width": 640, "height": 480}}
+{"Crop": {"x": 900, "y": 800, "width": 480, "height": 700}}
 >"NoProjectCreated"
+
+# Crop from origin
+{"Load": {"path": "tests/assets/sample.jpg"}}
+{"Crop": {"x": 0, "y": 0, "width": 200, "height": 400}}
+{"Save": {"path": "output.jpg"}}
+%output.jpg => tests/assets/crop-200x400+0+0.jpg
 
 # Test basic crop operation
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"Crop": {"x": 900, "y": 800, "width": 640, "height": 480}}
+{"Crop": {"x": 300, "y": 200, "width": 200, "height": 100}}
 {"Save": {"path": "output.jpg"}}
-%output.jpg => tests/assets/crop-640x480+900+800.jpg
+%output.jpg => tests/assets/crop-200x100+300+200.jpg
 # Test further cropping the image
-{"Crop": {"x": 50, "y": 100, "width": 300, "height": 500}}
+{"Crop": {"x": 50, "y": 25, "width": 100, "height": 50}}
 {"Save": {"path": "output.jpg"}}
-%output.jpg => tests/assets/crop-300x500+50+100.jpg
+%output.jpg => tests/assets/crop-100x50+50+25.jpg
 
 # Crop simple image
 {"Load": {"path": "tests/assets/sample2.jpg"}}
