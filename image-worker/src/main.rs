@@ -46,13 +46,13 @@ fn main() {
 
         if let Action::New {width, height} = action {
             project = Some(Project::new(width, height));
-            send_success(project);
+            send_success(project.as_ref().unwrap());
         }
         else if let Action::Load {ref path} = action {
             match Project::load(path) {
                 Ok(p) => {
                     project = Some(p);
-                    send_success(project);
+                    send_success(project.as_ref().unwrap());
                 },
                 Err(error) => send_response(Response::ActionFailed {reason: error}),
             }
@@ -60,7 +60,7 @@ fn main() {
         else if let Some(ref mut project) = project {
             let result = dispatch_action(project, action);
             match result {
-                Ok(_) => send_success(project),
+                Ok(_) => send_success(&project),
                 Err(error) => send_response(Response::ActionFailed {reason: error}),
             }
         }
