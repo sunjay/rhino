@@ -12,6 +12,14 @@ pub type CommandResult = Result<(), String>;
 
 pub fn lookup(action: Action) -> Box<Command> {
     match action {
+        Crop {x, y, width, height} => unimplemented!(),
+        FlipHorizontal => unimplemented!(),
+        FlipVertical => unimplemented!(),
+        Resize {width, height} => unimplemented!(),
+        ResizeCanvas {width, height, anchor} => unimplemented!(),
+        Rotate90Clockwise => unimplemented!(),
+        Rotate90Counterclockwise => unimplemented!(),
+        Rotate180 => unimplemented!(),
         // Some actions are implemented with internal
         // functions so we won't match them here unless
         // we accidentally forgot to add a branch in this

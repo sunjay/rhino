@@ -5,12 +5,15 @@ pub enum Direction {
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub enum Action {
+    // Internal actions, no effect on undo history
     New {width: u32, height: u32},
     // full path including extension
     Load {path: String},
     Save {path: String},
     Undo,
     Redo,
+
+    // commands, effect undo history
     Crop {x: u32, y: u32, width: u32, height: u32},
     FlipHorizontal,
     FlipVertical,
