@@ -10,3 +10,12 @@
 {"Load": {"path": "tests/assets/sample2.jpg"}}
 {"Save": {"path": ""}}
 >{"ActionFailed":{"reason":"Cannot save empty path"}}
+
+# Make sure saving fails when the project is closed
+{"Load": {"path": "tests/assets/sample2.jpg"}}
+{"Save": {"path": "output.jpg"}}
+-output.jpg
+"Close"
+>"ProjectClosed"
+{"Save": {"path": "output.jpg"}}
+>"NoProjectCreated"

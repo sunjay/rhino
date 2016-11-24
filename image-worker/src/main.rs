@@ -22,7 +22,11 @@ use commands::CommandResult;
 
 #[derive(Debug, PartialEq, Serialize)]
 pub enum Response {
+    // Success messages
     Success {/*TODO*/},
+    ProjectClosed,
+
+    // Failures
     NoProjectCreated,
     ActionParseError {error: String},
     ActionFailed {reason: String},
@@ -57,6 +61,11 @@ fn main() {
                 Err(error) => send_response(Response::ActionFailed {reason: error}),
             }
         }
+        else if let Action::Close = action {
+            project = None;
+            send_response(Response::ProjectClosed);
+        }
+        // The remaining actions require the project to be created in advance
         else if let Some(ref mut project) = project {
             let result = dispatch_action(project, action);
             match result {

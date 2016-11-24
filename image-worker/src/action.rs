@@ -12,6 +12,7 @@ pub enum Action {
     Save {path: String},
     Undo,
     Redo,
+    Close,
 
     // commands, effect undo history
     Crop {x: u32, y: u32, width: u32, height: u32},
