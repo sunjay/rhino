@@ -1,3 +1,4 @@
+use std::fs::File;
 use std::path::Path;
 
 use image::{self, DynamicImage, ImageFormat};
@@ -37,7 +38,21 @@ impl Project {
     }
 
     pub fn save(&mut self, path: &str) -> CommandResult {
-        unimplemented!();
+        let path = Path::new(path);
+        // Need to normalize extension
+        let extension = path.extension()
+            .and_then(|s| s.to_str())
+            .map_or("".to_string(), |s| s.to_lowercase());
+        let format = match &extension[..] {
+            "jpg" | "jpeg" => ImageFormat::JPEG,
+            "png" => ImageFormat::PNG,
+            ext => return Err(format!("Unsupported extension: {}", ext))
+        };
+
+        let mut f = File::create(path).map_err(|e| format!("{}", e))?;
+        self.image.save(&mut f, format).map_err(|e| format!("{}", e))?;
+
+        Ok(())
     }
 
     pub fn perform_command(&mut self, command: Box<Command>) -> CommandResult {
