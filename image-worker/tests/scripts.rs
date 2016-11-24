@@ -95,6 +95,10 @@ fn run_test_script(script: PathBuf) {
         let line = line.unwrap();
         let line = line.trim();
 
+        if line.is_empty() {
+            continue;
+        }
+
         let (first, arg) = line.split_at(1);
 
         let result = match first {
