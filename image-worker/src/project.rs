@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::path::Path;
 
-use image::{self, DynamicImage, ImageFormat};
+use image::{self, DynamicImage, ImageFormat, GenericImage};
 
 use commands::{Command, CommandResult};
 
@@ -23,6 +23,10 @@ impl Project {
     }
 
     pub fn load(path: &str) -> Result<Project, String> {
+        if path.is_empty() {
+            return Err("Cannot load empty path".to_owned());
+        }
+
         let path = Path::new(path);
         let image = image::open(path).map_err(|e| format!("{}", e))?;
 
@@ -38,6 +42,14 @@ impl Project {
     }
 
     pub fn save(&mut self, path: &str) -> CommandResult {
+        if path.is_empty() {
+            return Err("Cannot save empty path".to_owned());
+        }
+        match self.image.dimensions() {
+            (0, 0) | (0, _) | (_, 0) => Err("Cannot save image with dimension equal to zero".to_owned()),
+            _ => Ok(()),
+        }?;
+
         let path = Path::new(path);
         // Need to normalize extension
         let extension = path.extension()
