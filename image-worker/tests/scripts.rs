@@ -64,10 +64,13 @@
 //!
 //! # Your comment here
 
-use std::fs::{File, read_dir};
-use std::io::{BufReader, BufRead};
+extern crate image;
+
+use std::fs::{File, read_dir, remove_file};
+use std::io::{BufReader, BufRead, Write};
 use std::path::{Path, PathBuf};
 use std::process::Child;
+use std::process::{Command, Stdio};
 
 #[test]
 fn run_scripts() {
@@ -80,47 +83,106 @@ fn run_scripts() {
 }
 
 fn run_test_script(script: PathBuf) {
-    let file = File::open(script).unwrap();
+    let file = File::open(script.clone()).unwrap();
     let reader = BufReader::new(file);
 
-    let child = spawn_worker();
+    let mut child = spawn_worker();
 
-    for line in reader.lines() {
+    let filename = script.file_name().unwrap().to_str().unwrap();
+
+    let mut last_response: Option<String> = None;
+    for (num, line) in reader.lines().enumerate() {
         let line = line.unwrap();
         let line = line.trim();
 
-        let (first, line) = line.split_at(1);
+        let (first, arg) = line.split_at(1);
 
-        match first {
-            "%" => assert_file_match(line),
-            "-" => remove_file(line),
-            "=" => copy_file(line),
-            ">" => assert_output(line),
-            _ => send_input(&child, line),
+        let result = match first {
+            "%" => assert_file_match(arg),
+            "-" => remove_file(arg.trim()).map_err(|e| format!("{}", e)),
+            "=" => copy_file(arg),
+            ">" => assert_output(last_response.as_ref(), arg),
+            "#" => Ok(()),
+            _ => send_input(&mut child, line).and_then(|_| {
+                last_response = Some(read_output(&mut child)?);
+                Ok(())
+            }),
+        };
+
+        if let Err(error) = result {
+            panic!("{}#{}: {}", filename, num, error);
         }
     }
+
+    assert!(child.wait().unwrap().success(),
+        format!("{}: Worker process did not complete successfully after test script", filename));
 }
 
 fn spawn_worker() -> Child {
+    Command::new("cargo")
+        .args(&["run", "-q"])
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .unwrap()
+}
+
+fn assert_file_match(arg: &str) -> Result<(), String> {
+    let delimiter = arg.find("=>")
+        .ok_or("Could not find => in % command")?;
+    let (output_path, expected_path) = arg.split_at(delimiter);
+    // get rid of the "=>"
+    let expected_path = expected_path.chars().skip(2).collect::<String>();
+
+    // ignore any extra whitespace
+    let output_path = output_path.trim();
+    let expected_path = expected_path.trim();
+
+    let output = image::open(output_path).map_err(|e| format!("{}", e))?;
+    let expected = image::open(expected_path).map_err(|e| format!("{}", e))?;
+
+    let output = output.raw_pixels();
+    let expected = expected.raw_pixels();
+
+    if output == expected {
+        remove_file(output_path)
+            .map_err(|e| format!("Failed to remove output after test passed: {}", e))?;
+        Ok(())
+    }
+    else {
+        Err(format!("{} did not match {}", output_path, expected_path))
+    }
+}
+
+fn copy_file(arg: &str) -> Result<(), String> {
     unimplemented!();
 }
 
-fn assert_file_match(line: &str) {
+fn assert_output(output: Option<&String>, arg: &str) -> Result<(), String> {
     unimplemented!();
 }
 
-fn remove_file(line: &str) {
-    unimplemented!();
+fn send_input(child: &mut Child, line: &str) -> Result<(), String> {
+    if let Some(ref mut stdin) = child.stdin {
+        match write!(stdin, "{}\n", line) {
+            Ok(_) => Ok(()),
+            Err(error) => Err(format!("{}", error)),
+        }
+    }
+    else {
+        // should not happen. This panic is just in case.
+        panic!("stdin was not open for writing".to_string());
+    }
 }
 
-fn copy_file(line: &str) {
-    unimplemented!();
-}
+fn read_output(child: &mut Child) -> Result<String, String> {
+    let mut stdout = BufReader::new(match child.stdout {
+        Some(ref mut handle) => Ok(handle),
+        None => Err("Worker child process stdout was never open"),
+    }?);
+    let mut response = String::new();
+    stdout.read_line(&mut response).map_err(|e| format!("{}", e))?;
 
-fn assert_output(line: &str) {
-    unimplemented!();
-}
-
-fn send_input(child: &Child, line: &str) {
-    unimplemented!();
+    Ok(response)
 }
