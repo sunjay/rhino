@@ -135,6 +135,12 @@ fn run_test_script(script: PathBuf) {
         }
     }
 
+    if last_response.is_some() {
+        if let Err(error) = assert_success(last_response.as_ref()) {
+            panic!("{}#EOF: {}", filename, error);
+        }
+    }
+
     assert!(child.wait().unwrap().success(),
         format!("{}: Worker process did not complete successfully after test script", filename));
 }
