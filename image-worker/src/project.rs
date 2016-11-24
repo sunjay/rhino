@@ -32,10 +32,10 @@ impl Project {
             return Err("Nothing to undo".to_owned());
         }
 
-        let command = self.undo_stack.last().unwrap();
+        let command = self.undo_stack.pop().unwrap();
         command.backward(self)?;
 
-        self.redo_stack.push(self.undo_stack.pop().unwrap());
+        self.redo_stack.push(command);
 
         Ok(())
     }
@@ -45,10 +45,10 @@ impl Project {
             return Err("Nothing to redo".to_owned());
         }
 
-        let command = self.redo_stack.last().unwrap();
+        let command = self.redo_stack.pop().unwrap();
         command.forward(self)?;
 
-        self.undo_stack.push(self.redo_stack.pop().unwrap());
+        self.undo_stack.push(command);
 
         Ok(())
     }
