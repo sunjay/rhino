@@ -48,6 +48,7 @@ fn main() {
 
         if let Action::New {width, height} = action {
             project = Some(Project::new(width, height));
+            send_response(Response::Success {/*TODO*/});
             continue;
         }
 
