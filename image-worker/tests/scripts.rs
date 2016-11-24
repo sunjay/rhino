@@ -58,13 +58,25 @@
 //! With no expected output provided, we will check to
 //! see if the output was a success and that is it.
 //!
-//! Lines beginning with `//` will be ignored. You can
+//! Lines beginning with `#` will be ignored. You can
 //! use these lines to document your test scripts as
 //! necessary.
 //!
-//! // Your comment here
+//! # Your comment here
+
+use std::fs::read_dir;
+use std::path::{Path, PathBuf};
 
 #[test]
 fn run_scripts() {
-    unimplemented!()
+    let scripts_dir = Path::new(file!()).with_file_name("scripts");
+
+    for entry in read_dir(scripts_dir).unwrap() {
+        let test_script = entry.unwrap().path();
+        run_test_script(test_script);
+    }
+}
+
+fn run_test_script(script: PathBuf) {
+    unimplemented!();
 }
