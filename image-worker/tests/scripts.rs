@@ -105,12 +105,29 @@ fn run_test_script(script: PathBuf) {
             "%" => assert_file_match(arg),
             "-" => remove_file(arg.trim()).map_err(|e| format!("{}", e)),
             "=" => copy_file(arg),
-            ">" => assert_output(last_response.as_ref(), arg),
+            ">" => {
+                let res = assert_output(last_response.as_ref(), arg);
+                last_response = None;
+                res
+            },
             "#" => Ok(()),
-            _ => send_input(&mut child, line).and_then(|_| {
-                last_response = Some(read_output(&mut child)?);
-                Ok(())
-            }),
+            _ => {
+                // The test script has until the next command to check its output using the
+                // > command. If they do not, we will check here for success
+                let response_checked = if last_response.is_some() {
+                    assert_success(last_response.as_ref())
+                }
+                else {
+                    Ok(())
+                };
+
+                response_checked.and_then(|_| {
+                    send_input(&mut child, line).and_then(|_| {
+                        last_response = Some(read_output(&mut child)?);
+                        Ok(())
+                    })
+                })
+            },
         };
 
         if let Err(error) = result {
@@ -170,6 +187,22 @@ fn copy_file(arg: &str) -> Result<(), String> {
     copy(source, destination).map_err(|e| format!("{}", e))?;
 
     Ok(())
+}
+
+fn assert_success(output: Option<&String>) -> Result<(), String> {
+    if let Some(response) = output {
+        // This check is not foolproof and may eventually cause problems.
+        // It is good enough for now though we're running with it
+        if response.starts_with("{\"Success\":") {
+            Ok(())
+        }
+        else {
+            Err(format!("Worker did not produce Success. Actual result: {}", response))
+        }
+    }
+    else {
+        panic!("assert_success should have been called only when last_response had a value");
+    }
 }
 
 fn assert_output(output: Option<&String>, arg: &str) -> Result<(), String> {
