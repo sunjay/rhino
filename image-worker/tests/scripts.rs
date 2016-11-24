@@ -66,7 +66,7 @@
 
 extern crate image;
 
-use std::fs::{File, read_dir, remove_file};
+use std::fs::{File, read_dir, remove_file, copy};
 use std::io::{BufReader, BufRead, Write};
 use std::path::{Path, PathBuf};
 use std::process::Child;
@@ -160,7 +160,16 @@ fn assert_file_match(arg: &str) -> Result<(), String> {
 }
 
 fn copy_file(arg: &str) -> Result<(), String> {
-    unimplemented!();
+    let args: Vec<_> = arg.trim().split_whitespace().collect();
+    if args.len() != 2 {
+        return Err("= command requires only 2 arguments".to_owned());
+    }
+
+    let source = args[0];
+    let destination = args[1];
+    copy(source, destination).map_err(|e| format!("{}", e))?;
+
+    Ok(())
 }
 
 fn assert_output(output: Option<&String>, arg: &str) -> Result<(), String> {
