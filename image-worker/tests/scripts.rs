@@ -71,24 +71,54 @@ use std::io::{BufReader, BufRead, Write};
 use std::path::{Path, PathBuf};
 use std::process::Child;
 use std::process::{Command, Stdio};
+use std::thread;
+use std::sync::mpsc;
 
 #[test]
 fn run_scripts() {
     let scripts_dir = Path::new(file!()).with_file_name("scripts");
 
+    let mut threads = Vec::new();
+
+    // We use channels here so we can immediately exit if we get
+    // a failure message
+    let (tx, rx) = mpsc::channel();
+
     for entry in read_dir(scripts_dir).unwrap() {
         let test_script = entry.unwrap().path();
-        run_test_script(test_script);
+
+        let tx = tx.clone();
+        let th = (test_script.clone(), thread::spawn(move || {
+            let result = run_test_script(test_script);
+            tx.send(result).unwrap();
+        }));
+        threads.push(th);
+    }
+
+    for _ in threads.iter() {
+        let result = rx.recv().unwrap();
+        match result {
+            Err(error) => panic!(error),
+            _ => (),
+        }
+    }
+
+    for (script, th) in threads {
+        match th.join() {
+            Ok(_) => (),
+            Err(_) => panic!("thread for {} ended in a panic", script.to_str().unwrap()),
+        }
     }
 }
 
-fn run_test_script(script: PathBuf) {
+fn run_test_script(script: PathBuf) -> Result<(), String> {
     let file = File::open(script.clone()).unwrap();
     let reader = BufReader::new(file);
 
     let mut child = spawn_worker();
 
     let filename = script.file_name().unwrap().to_str().unwrap();
+    println!("Starting {}...", filename);
 
     let mut last_response: Option<String> = None;
     for (num, line) in reader.lines().enumerate() {
@@ -98,15 +128,16 @@ fn run_test_script(script: PathBuf) {
         if line.is_empty() {
             continue;
         }
+        println!("{}", line);
 
         let (first, arg) = line.split_at(1);
 
         let result = match first {
-            "%" => assert_file_match(arg),
+            "%" => check_file_match(arg),
             "-" => remove_file(arg.trim()).map_err(|e| format!("{}", e)),
             "=" => copy_file(arg),
             ">" => {
-                let res = assert_output(last_response.as_ref(), arg);
+                let res = check_output(last_response.as_ref(), arg);
                 last_response = None;
                 res
             },
@@ -115,7 +146,7 @@ fn run_test_script(script: PathBuf) {
                 // The test script has until the next command to check its output using the
                 // > command. If they do not, we will check here for success
                 let response_checked = if last_response.is_some() {
-                    assert_success(last_response.as_ref())
+                    check_success(last_response.as_ref())
                 }
                 else {
                     Ok(())
@@ -131,18 +162,25 @@ fn run_test_script(script: PathBuf) {
         };
 
         if let Err(error) = result {
-            panic!("{}#{}: {}", filename, num + 1, error);
+            return Err(format!("{}#{}: {}", filename, num + 1, error));
         }
     }
 
     if last_response.is_some() {
-        if let Err(error) = assert_success(last_response.as_ref()) {
-            panic!("{}#EOF: {}", filename, error);
+        if let Err(error) = check_success(last_response.as_ref()) {
+            return Err(format!("{}#EOF: {}", filename, error));
         }
     }
 
-    assert!(child.wait().unwrap().success(),
-        format!("{}: Worker process did not complete successfully after test script", filename));
+    if !child.wait().unwrap().success() {
+        return Err(
+            format!("{}: Worker process did not complete successfully after test script", filename)
+        );
+    }
+
+    println!("Completed {}.", filename);
+
+    Ok(())
 }
 
 fn spawn_worker() -> Child {
@@ -155,7 +193,7 @@ fn spawn_worker() -> Child {
         .unwrap()
 }
 
-fn assert_file_match(arg: &str) -> Result<(), String> {
+fn check_file_match(arg: &str) -> Result<(), String> {
     let delimiter = arg.find("=>")
         .ok_or("Could not find => in % command")?;
     let (output_path, expected_path) = arg.split_at(delimiter);
@@ -195,7 +233,7 @@ fn copy_file(arg: &str) -> Result<(), String> {
     Ok(())
 }
 
-fn assert_success(output: Option<&String>) -> Result<(), String> {
+fn check_success(output: Option<&String>) -> Result<(), String> {
     if let Some(response) = output {
         // This check is not foolproof and may eventually cause problems.
         // It is good enough for now though we're running with it
@@ -208,11 +246,11 @@ fn assert_success(output: Option<&String>) -> Result<(), String> {
         }
     }
     else {
-        panic!("assert_success should have been called only when last_response had a value");
+        panic!("check_success should have been called only when last_response had a value");
     }
 }
 
-fn assert_output(output: Option<&String>, arg: &str) -> Result<(), String> {
+fn check_output(output: Option<&String>, arg: &str) -> Result<(), String> {
     // This is brittle, but it doesn't seem worth it to implement something
     // more robust for now. You will need to exactly match the output in your
     // test script if you want to test output
@@ -228,7 +266,7 @@ fn assert_output(output: Option<&String>, arg: &str) -> Result<(), String> {
         }
     }
     else {
-        panic!("assert_success should have been called only when last_response had a value");
+        panic!("check_output should have been called only when last_response had a value");
     }
 }
 

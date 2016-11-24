@@ -26,9 +26,9 @@
 
 # Make sure saving fails when the project is closed
 {"Load": {"path": "tests/assets/sample2.jpg"}}
-{"Save": {"path": "output.jpg"}}
--output.jpg
+{"Save": {"path": "saveload.jpg"}}
+-saveload.jpg
 "Close"
 >"ProjectClosed"
-{"Save": {"path": "output.jpg"}}
+{"Save": {"path": "saveload.jpg"}}
 >"NoProjectCreated"
