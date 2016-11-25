@@ -2,6 +2,10 @@
 {"ResizeCanvas": {"width": 480, "height": 700, "anchor": "NE"}}
 >"NoProjectCreated"
 
+# Resizing canvas to the exact same size
+
+#TODO: All anchor points
+
 # Resize multiple times onto larger canvas at all anchor points (only a single load)
 
 {"Load": {"path": "tests/assets/sample3.png"}}
