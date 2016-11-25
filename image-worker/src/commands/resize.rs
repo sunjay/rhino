@@ -7,9 +7,9 @@ use project::Project;
 use super::{Command, CommandResult};
 
 pub struct Resize {
-   width: u32,
-   height: u32,
-   previous_image: RefCell<Option<DynamicImage>>,
+    width: u32,
+    height: u32,
+    previous_image: RefCell<Option<DynamicImage>>,
 }
 
 impl Resize {

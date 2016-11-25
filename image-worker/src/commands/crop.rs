@@ -7,11 +7,11 @@ use project::Project;
 use super::{Command, CommandResult};
 
 pub struct Crop {
-   x: u32,
-   y: u32,
-   width: u32,
-   height: u32,
-   previous_image: RefCell<Option<DynamicImage>>,
+    x: u32,
+    y: u32,
+    width: u32,
+    height: u32,
+    previous_image: RefCell<Option<DynamicImage>>,
 }
 
 impl Crop {
