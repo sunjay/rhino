@@ -32,3 +32,9 @@
 >"ProjectClosed"
 {"Save": {"path": "saveload.jpg"}}
 >"NoProjectCreated"
+
+#TODO: This test current does not work.
+# Make sure we can load and then save an image with no change
+#{"Load": {"path": "tests/assets/sample2.jpg"}}
+#{"Save": {"path": "saveload.jpg"}}
+#%saveload.jpg => tests/assets/sample2.jpg
