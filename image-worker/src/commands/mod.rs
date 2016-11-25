@@ -1,5 +1,6 @@
 mod crop;
 mod resize;
+mod resize_canvas;
 
 use action::Action;
 use project::Project;
@@ -28,7 +29,7 @@ pub fn lookup(action: Action) -> Box<Command> {
             Box::new(resize::Resize::new(width, height)),
 
         Action::ResizeCanvas {width, height, anchor} =>
-            unimplemented!(),
+            Box::new(resize_canvas::ResizeCanvas::new(width, height, anchor)),
 
         Action::Rotate90Clockwise =>
             unimplemented!(),

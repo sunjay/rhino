@@ -1,6 +1,6 @@
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
-pub enum Direction {
-    N, NE, E, SE, S, SW, W, NW,
+pub enum Anchor {
+    N, NE, E, SE, S, SW, W, NW, Middle,
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
@@ -19,7 +19,7 @@ pub enum Action {
     FlipHorizontal,
     FlipVertical,
     Resize {width: u32, height: u32},
-    ResizeCanvas {width: u32, height: u32, anchor: Direction},
+    ResizeCanvas {width: u32, height: u32, anchor: Anchor},
     Rotate90Clockwise,
     Rotate90Counterclockwise,
     Rotate180,
@@ -116,7 +116,7 @@ mod tests {
     #[test]
     fn json_resize_canvas() {
         test_json(
-            Action::ResizeCanvas { width: 250, height: 550, anchor: Direction::NE },
+            Action::ResizeCanvas { width: 250, height: 550, anchor: Anchor::NE },
             "{\"ResizeCanvas\":{\"width\":250,\"height\":550,\"anchor\":\"NE\"}}"
         );
     }
