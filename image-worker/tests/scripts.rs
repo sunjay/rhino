@@ -128,7 +128,7 @@ fn run_test_script(script: PathBuf) -> Result<(), String> {
         if line.is_empty() {
             continue;
         }
-        println!("{}", line);
+        //println!("{}", line);
 
         let (first, arg) = line.split_at(1);
 

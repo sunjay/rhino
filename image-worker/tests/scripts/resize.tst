@@ -1,3 +1,6 @@
+# NOTE: Some tests in this file have been commented out
+# because they take a VERY long time.
+
 # Disallow before loading anything
 {"Resize": {"width": 9000, "height": 9000}}
 >"NoProjectCreated"
@@ -14,13 +17,13 @@
 
 # Scale up
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"Resize": {"width": 800, "height": 1200}}
+{"Resize": {"width": 680, "height": 680}}
 {"Save": {"path": "resize.jpg"}}
-%resize.jpg => tests/assets/resize-800x1200.jpg
+%resize.jpg => tests/assets/resize-680x680.jpg
 # Scale up again
-{"Resize": {"width": 1000, "height": 1300}}
+{"Resize": {"width": 750, "height": 720}}
 {"Save": {"path": "resize.jpg"}}
-%resize.jpg => tests/assets/resize-1000x1300.jpg
+%resize.jpg => tests/assets/resize-750x720.jpg
 
 # Scale down a lot
 {"Load": {"path": "tests/assets/sample2.jpg"}}
@@ -29,10 +32,10 @@
 %resize.jpg => tests/assets/resize-20x10.jpg
 
 # Scale up a lot (very time intensive test)
-{"Load": {"path": "tests/assets/sample2.jpg"}}
-{"Resize": {"width": 2000, "height": 4000}}
-{"Save": {"path": "resize.jpg"}}
-%resize.jpg => tests/assets/resize-2000x4000.jpg
+#{"Load": {"path": "tests/assets/sample2.jpg"}}
+#{"Resize": {"width": 2000, "height": 4000}}
+#{"Save": {"path": "resize.jpg"}}
+#%resize.jpg => tests/assets/resize-2000x4000.jpg
 
 # Leave one dimension the same
 {"Load": {"path": "tests/assets/sample2.jpg"}}
