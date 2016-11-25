@@ -113,8 +113,3 @@ impl Project {
         self.image = f(&mut self.image);
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-}
