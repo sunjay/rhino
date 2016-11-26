@@ -3,6 +3,9 @@ mod resize;
 mod resize_canvas;
 mod flip_horizontal;
 mod flip_vertical;
+mod rotate_90;
+mod rotate_270;
+mod rotate_180;
 
 use action::Action;
 use project::Project;
@@ -34,13 +37,13 @@ pub fn lookup(action: Action) -> Box<Command> {
             Box::new(resize_canvas::ResizeCanvas::new(width, height, anchor)),
 
         Action::Rotate90 =>
-            unimplemented!(),
+            Box::new(rotate_90::Rotate90::new()),
 
         Action::Rotate270 =>
-            unimplemented!(),
+            Box::new(rotate_270::Rotate270::new()),
 
         Action::Rotate180 =>
-            unimplemented!(),
+            Box::new(rotate_180::Rotate180::new()),
 
         // Some actions are implemented with internal
         // functions so we won't match them here unless

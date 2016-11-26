@@ -20,6 +20,7 @@ pub enum Action {
     FlipVertical,
     Resize {width: u32, height: u32},
     ResizeCanvas {width: u32, height: u32, anchor: Anchor},
+    // All rotations are clockwise
     Rotate90,
     Rotate180,
     Rotate270,
