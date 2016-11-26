@@ -31,10 +31,10 @@ pub fn lookup(action: Action) -> Box<Command> {
         Action::ResizeCanvas {width, height, anchor} =>
             Box::new(resize_canvas::ResizeCanvas::new(width, height, anchor)),
 
-        Action::Rotate90Clockwise =>
+        Action::Rotate90 =>
             unimplemented!(),
 
-        Action::Rotate90Counterclockwise =>
+        Action::Rotate270 =>
             unimplemented!(),
 
         Action::Rotate180 =>

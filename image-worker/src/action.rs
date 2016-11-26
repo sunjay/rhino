@@ -20,9 +20,9 @@ pub enum Action {
     FlipVertical,
     Resize {width: u32, height: u32},
     ResizeCanvas {width: u32, height: u32, anchor: Anchor},
-    Rotate90Clockwise,
-    Rotate90Counterclockwise,
+    Rotate90,
     Rotate180,
+    Rotate270,
 }
 
 #[cfg(test)]
@@ -122,18 +122,18 @@ mod tests {
     }
 
     #[test]
-    fn json_rotate_90_clockwise() {
+    fn json_rotate_90() {
         test_json(
-            Action::Rotate90Clockwise,
-            "\"Rotate90Clockwise\""
+            Action::Rotate90,
+            "\"Rotate90\""
         );
     }
 
     #[test]
-    fn json_rotate_90_counterclockwise() {
+    fn json_rotate_270() {
         test_json(
-            Action::Rotate90Counterclockwise,
-            "\"Rotate90Counterclockwise\""
+            Action::Rotate270,
+            "\"Rotate270\""
         );
     }
 
