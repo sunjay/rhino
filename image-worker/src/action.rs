@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone, Copy)]
 pub enum Anchor {
     N, NE, E, SE, S, SW, W, NW, Middle,
 }

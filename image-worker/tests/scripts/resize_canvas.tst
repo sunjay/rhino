@@ -99,104 +99,86 @@
 
 {"ResizeCanvas": {"width": 401, "height": 327, "anchor": "N"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-401x327-N.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-401x327-N.jpg
 
 {"ResizeCanvas": {"width": 392, "height": 316, "anchor": "NE"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-392x316-NE.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-392x316-NE.jpg
 
 {"ResizeCanvas": {"width": 383, "height": 305, "anchor": "E"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-383x305-E.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-383x305-E.jpg
 
 {"ResizeCanvas": {"width": 374, "height": 294, "anchor": "SE"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-374x294-SE.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-374x294-SE.jpg
 
 {"ResizeCanvas": {"width": 365, "height": 283, "anchor": "S"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-365x283-S.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-365x283-S.jpg
 
 {"ResizeCanvas": {"width": 356, "height": 272, "anchor": "SW"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-356x272-SW.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-356x272-SW.jpg
 
 {"ResizeCanvas": {"width": 347, "height": 261, "anchor": "W"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-347x261-W.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-347x261-W.jpg
 
 {"ResizeCanvas": {"width": 338, "height": 250, "anchor": "NW"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-338x250-NW.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-338x250-NW.jpg
 
 {"ResizeCanvas": {"width": 329, "height": 239, "anchor": "Middle"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-329x239-Middle.jpg
 %resize_canvas.jpg => tests/assets/resize_canvas-329x239-Middle.jpg
 
 # Resize onto smaller canvas at all anchor points
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "N"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "N"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-N.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-N.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-N.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "NE"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "NE"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-NE.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-NE.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-NE.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "E"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "E"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-E.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-E.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-E.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "SE"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "SE"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-SE.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-SE.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-SE.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "S"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "S"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-S.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-S.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-S.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "SW"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "SW"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-SW.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-SW.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-SW.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "W"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "W"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-W.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-W.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-W.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "NW"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "NW"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-NW.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-NW.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-NW.jpg
 
 {"Load": {"path": "tests/assets/sample.jpg"}}
-{"ResizeCanvas": {"width": 566, "height": 380, "anchor": "Middle"}}
+{"ResizeCanvas": {"width": 227, "height": 177, "anchor": "Middle"}}
 {"Save": {"path": "resize_canvas.jpg"}}
-=resize_canvas.jpg tests/assets/resize_canvas-566x380-Middle.jpg
-%resize_canvas.jpg => tests/assets/resize_canvas-566x380-Middle.jpg
+%resize_canvas.jpg => tests/assets/resize_canvas-227x177-Middle.jpg
 
 # Resize onto canvas with smaller width and larger height
 
