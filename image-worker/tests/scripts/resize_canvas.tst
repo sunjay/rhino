@@ -182,24 +182,150 @@
 
 # Resize onto canvas with smaller width and larger height
 
-#TODO: All anchor points
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "N"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-N.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "NE"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-NE.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "E"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-E.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "SE"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-SE.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "S"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-S.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "SW"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-SW.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "W"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-W.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "NW"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-NW.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 100, "height": 200, "anchor": "Middle"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-100x200-Middle.png
 
 # Resize onto canvas with larger width and smaller height
 
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "N"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-N.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "NE"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-NE.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "E"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-SE.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "S"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-S.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "SW"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-SW.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "W"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-W.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "NW"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-NW.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 150, "height": 50, "anchor": "Middle"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-150x50-Middle.png
+
+# Resize onto canvas with same width and larger height
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "N"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-N.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "NE"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-NE.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "E"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-E.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "SE"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-SE.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "S"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-S.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "SW"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-SW.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "W"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-W.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "NW"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-NW.png
+
+{"Load": {"path": "tests/assets/sample3.png"}}
+{"ResizeCanvas": {"width": 120, "height": 100, "anchor": "Middle"}}
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-120x100-Middle.png
+
+# Resize onto canvas with same width and smaller height
+
 #TODO: All anchor points
 
-# Resize onto canvas with width the same and larger height
+# Resize onto canvas with same height and larger width
 
 #TODO: All anchor points
 
-# Resize onto canvas with width the same and smaller height
+# Resize onto canvas with same height and smaller width
 
 #TODO: All anchor points
-
-# Resize onto canvas with height the same and larger width
-
-#TODO: All anchor points
-
-# Resize onto canvas with height the same and smaller width
 
 #TODO: Odd numbered dimensions
