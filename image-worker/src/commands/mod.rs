@@ -2,6 +2,7 @@ mod crop;
 mod resize;
 mod resize_canvas;
 mod flip_horizontal;
+mod flip_vertical;
 
 use action::Action;
 use project::Project;
@@ -24,7 +25,7 @@ pub fn lookup(action: Action) -> Box<Command> {
             Box::new(flip_horizontal::FlipHorizontal::new()),
 
         Action::FlipVertical =>
-            unimplemented!(),
+            Box::new(flip_vertical::FlipVertical::new()),
 
         Action::Resize {width, height} =>
             Box::new(resize::Resize::new(width, height)),
