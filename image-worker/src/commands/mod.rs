@@ -1,6 +1,7 @@
 mod crop;
 mod resize;
 mod resize_canvas;
+mod flip_horizontal;
 
 use action::Action;
 use project::Project;
@@ -20,7 +21,7 @@ pub fn lookup(action: Action) -> Box<Command> {
             Box::new(crop::Crop::new(x, y, width, height)),
 
         Action::FlipHorizontal =>
-            unimplemented!(),
+            Box::new(flip_horizontal::FlipHorizontal::new()),
 
         Action::FlipVertical =>
             unimplemented!(),
