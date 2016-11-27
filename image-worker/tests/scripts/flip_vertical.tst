@@ -11,6 +11,14 @@
 {"Save": {"path": "flip_vertical.png"}}
 %flip_vertical.png => tests/assets/flip_vertical-s3-2.png
 
+# Test Undo/Redo of last action
+"Undo"
+{"Save": {"path": "flip_vertical.png"}}
+%flip_vertical.png => tests/assets/flip_vertical-s3.png
+"Redo"
+{"Save": {"path": "flip_vertical.png"}}
+%flip_vertical.png => tests/assets/flip_vertical-s3-2.png
+
 # Single flip
 
 {"Load": {"path": "tests/assets/sample.jpg"}}

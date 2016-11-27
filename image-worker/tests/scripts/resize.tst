@@ -15,6 +15,14 @@
 {"Save": {"path": "resize.jpg"}}
 %resize.jpg => tests/assets/resize-200x100.jpg
 
+# Test Undo/Redo
+"Undo"
+{"Save": {"path": "resize.jpg"}}
+%resize.jpg => tests/assets/resize-400x200.jpg
+"Redo"
+{"Save": {"path": "resize.jpg"}}
+%resize.jpg => tests/assets/resize-200x100.jpg
+
 # Scale up
 {"Load": {"path": "tests/assets/sample.jpg"}}
 {"Resize": {"width": 680, "height": 680}}

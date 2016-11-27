@@ -17,6 +17,14 @@
 {"Save": {"path": "rotate_180.png"}}
 %rotate_180.png => tests/assets/rotate_180-s3-4.png
 
+# Test Undo/Redo of last action
+"Undo"
+{"Save": {"path": "rotate_180.png"}}
+%rotate_180.png => tests/assets/rotate_180-s3-3.png
+"Redo"
+{"Save": {"path": "rotate_180.png"}}
+%rotate_180.png => tests/assets/rotate_180-s3-4.png
+
 # Single rotation
 
 {"Load": {"path": "tests/assets/sample.jpg"}}

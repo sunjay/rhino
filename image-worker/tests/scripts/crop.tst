@@ -18,6 +18,14 @@
 {"Save": {"path": "crop.jpg"}}
 %crop.jpg => tests/assets/crop-100x50+50+25.jpg
 
+# Test Undo/Redo
+"Undo"
+{"Save": {"path": "crop.jpg"}}
+%crop.jpg => tests/assets/crop-200x100+300+200.jpg
+"Redo"
+{"Save": {"path": "crop.jpg"}}
+%crop.jpg => tests/assets/crop-100x50+50+25.jpg
+
 # Crop simple image
 {"Load": {"path": "tests/assets/sample2.jpg"}}
 {"Crop": {"x": 25, "y": 60, "width": 125, "height": 200}}

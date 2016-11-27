@@ -46,6 +46,14 @@
 {"Save": {"path": "resize_canvas.png"}}
 %resize_canvas.png => tests/assets/resize_canvas-220x200-Middle.png
 
+# Test Undo/Redo of last action
+"Undo"
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-210x190-NW.png
+"Redo"
+{"Save": {"path": "resize_canvas.png"}}
+%resize_canvas.png => tests/assets/resize_canvas-220x200-Middle.png
+
 # Resize onto larger canvas at all anchor points
 
 {"Load": {"path": "tests/assets/sample3.png"}}
