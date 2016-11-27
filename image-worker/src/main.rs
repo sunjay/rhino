@@ -5,7 +5,6 @@ extern crate serde_derive;
 
 extern crate serde;
 extern crate serde_json;
-extern crate rustc_serialize;
 
 extern crate image;
 
@@ -23,7 +22,7 @@ use commands::CommandResult;
 #[derive(Debug, PartialEq, Serialize)]
 pub enum Response {
     // Success messages
-    Success {/*TODO*/},
+    Success {data: Vec<u8>},
     ProjectClosed,
 
     // Failures
@@ -89,7 +88,9 @@ fn dispatch_action(project: &mut Project, action: Action) -> CommandResult {
 }
 
 fn send_success(project: &Project) {
-    send_response(Response::Success {/*TODO*/});
+    send_response(Response::Success {
+        data: project.get_image().raw_pixels(),
+    });
 }
 
 fn send_response(response: Response) {
