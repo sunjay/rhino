@@ -68,3 +68,21 @@
 >"NoProjectCreated"
 "Redo"
 >"NoProjectCreated"
+
+# Create some undo history
+{"Load": {"path": "tests/assets/sample3.png"}}
+"Rotate90"
+"Rotate180"
+
+# Make sure undo history actually exists
+"Undo"
+"Redo"
+"Redo"
+>{"ActionFailed":{"reason":"Nothing to redo"}}
+
+# Load should also destroy any undo history
+{"Load": {"path": "tests/assets/sample3.png"}}
+"Undo"
+>{"ActionFailed":{"reason":"Nothing to undo"}}
+"Redo"
+>{"ActionFailed":{"reason":"Nothing to redo"}}
