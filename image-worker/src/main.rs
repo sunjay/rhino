@@ -15,6 +15,8 @@ mod commands;
 use std::io;
 use std::io::BufRead;
 
+use image::GenericImage;
+
 use action::Action;
 use project::Project;
 use commands::CommandResult;
@@ -22,7 +24,7 @@ use commands::CommandResult;
 #[derive(Debug, PartialEq, Serialize)]
 pub enum Response {
     // Success messages
-    Success {data: Vec<u8>},
+    Success {width: u32, height: u32, data: Vec<u8>},
     ProjectClosed,
 
     // Failures
@@ -88,8 +90,12 @@ fn dispatch_action(project: &mut Project, action: Action) -> CommandResult {
 }
 
 fn send_success(project: &Project) {
+    let img = project.get_image();
+    let (width, height) = img.dimensions();
     send_response(Response::Success {
-        data: project.get_image().raw_pixels(),
+        width: width,
+        height: height,
+        data: img.raw_pixels(),
     });
 }
 
