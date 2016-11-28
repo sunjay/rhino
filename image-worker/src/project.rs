@@ -32,6 +32,10 @@ impl Project {
 
         let path = Path::new(path);
         let image = image::open(path).map_err(|e| format!("{}", e))?;
+        let image = match image {
+            DynamicImage::ImageRgba8(_) => image,
+            img => DynamicImage::ImageRgba8(img.to_rgba()),
+        };
 
         Ok(Project::from_image(Some(path_string), image))
     }
