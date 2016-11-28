@@ -121,6 +121,9 @@ const Canvas = React.createClass({
     const background = this.createTransparentBackground(imageWidth, imageHeight);
 
     ctx.drawImage(background, offsetX, offsetY);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#aaa';
+    ctx.strokeRect(offsetX, offsetY, imageWidth, imageHeight);
 
     ctx.scale(zoom, zoom);
     // need to scale offsets because everything is scaled by the call to scale()
