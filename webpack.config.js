@@ -4,7 +4,7 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: ['./app/index.jsx'],
-  target: 'node',
+  target: 'electron-renderer',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
