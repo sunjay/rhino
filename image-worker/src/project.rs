@@ -6,6 +6,7 @@ use image::{self, DynamicImage, ImageFormat, GenericImage};
 use commands::{Command, CommandResult};
 
 pub struct Project {
+    path: Option<String>,
     image: DynamicImage,
     // undo stack has latest command at the end
     // and oldest command at the beginning
@@ -19,7 +20,7 @@ pub struct Project {
 
 impl Project {
     pub fn new(width: u32, height: u32) -> Project {
-        Project::from_image(DynamicImage::new_rgba8(width, height))
+        Project::from_image(None, DynamicImage::new_rgba8(width, height))
     }
 
     pub fn load(path: &str) -> Result<Project, String> {
@@ -27,18 +28,25 @@ impl Project {
             return Err("Cannot load empty path".to_owned());
         }
 
+        let path_string = path.to_owned();
+
         let path = Path::new(path);
         let image = image::open(path).map_err(|e| format!("{}", e))?;
 
-        Ok(Project::from_image(image))
+        Ok(Project::from_image(Some(path_string), image))
     }
 
-    pub fn from_image(image: DynamicImage) -> Project {
+    pub fn from_image(path: Option<String>, image: DynamicImage) -> Project {
         Project {
+            path: path,
             image: image,
             undo_stack: Vec::new(),
             redo_stack: Vec::new(),
         }
+    }
+
+    pub fn get_path(&self) -> Option<String> {
+        self.path.clone()
     }
 
     pub fn save(&mut self, path: &str) -> CommandResult {
@@ -49,6 +57,8 @@ impl Project {
             (0, 0) | (0, _) | (_, 0) => Err("Cannot save image with dimension equal to zero".to_owned()),
             _ => Ok(()),
         }?;
+
+        let path_string = path.to_owned();
 
         let path = Path::new(path);
         // Need to normalize extension
@@ -63,6 +73,8 @@ impl Project {
 
         let mut f = File::create(path).map_err(|e| format!("{}", e))?;
         self.image.save(&mut f, format).map_err(|e| format!("{}", e))?;
+
+        self.path = Some(path_string);
 
         Ok(())
     }

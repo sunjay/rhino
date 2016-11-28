@@ -24,7 +24,12 @@ use commands::CommandResult;
 #[derive(Debug, PartialEq, Serialize)]
 pub enum Response {
     // Success messages
-    Success {width: u32, height: u32, data: Vec<u8>},
+    Success {
+        path: Option<String>,
+        width: u32,
+        height: u32,
+        data: Vec<u8>,
+    },
     ProjectClosed,
 
     // Failures
@@ -93,6 +98,7 @@ fn send_success(project: &Project) {
     let img = project.get_image();
     let (width, height) = img.dimensions();
     send_response(Response::Success {
+        path: project.get_path(),
         width: width,
         height: height,
         data: img.raw_pixels(),
