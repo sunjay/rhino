@@ -36,6 +36,7 @@ class ImageWorker {
       for (const line of this.queue.slice(0, -1)) {
         this.processResponse(dispatch, line);
       }
+      this.queue = this.queue.slice(this.queue.length - 1);
     });
 
     this.worker.stderr.on('data', (data) => {
