@@ -6,6 +6,8 @@
 
 const path = require('path');
 
+const {openImage} = require('../actions/ImageActions');
+
 const {
   ipcRenderer: ipc,
   remote: {dialog},
@@ -15,11 +17,11 @@ class Remote {
   constructor() {
   }
 
-  start(store) {
+  start({dispatch}) {
     ipc.on('action', (event, action) => {
       switch (action) {
         case 'open':
-          this.open();
+          this.open(dispatch);
           break;
         default:
           throw new Error(`Unrecognized action received from main process: ${action}`);
@@ -27,13 +29,17 @@ class Remote {
     });
   }
 
-  open() {
+  middleware() {
+    return store => next => action => next(action);
+  }
+
+  open(dispatch) {
     const supported = ['jpg', 'jpeg', 'png'];
     const files = dialog.showOpenDialog({
       title: 'Open Image',
       properties: ['openFile', 'createDirectory'],
       filters: [
-        {name: 'Image Files (*.jpg, *.jpeg, *.png)', extensions: supported},
+        {name: `Image Files (${supported.map((e) => '*.' + e).join(', ')})`, extensions: supported},
         {name: 'All Files (*.*)', extensions: ['*']},
       ],
     });
@@ -41,16 +47,12 @@ class Remote {
     const file = files[0];
     const filetype = path.extname(file).slice(1);
     if (supported.includes(filetype)) {
-      //TODO
+      dispatch(openImage(file));
     }
     else {
       dialog.showErrorBox('Unsupported File Type',
         `The file extension '${filetype}' is not supported.`);
     }
-  }
-
-  middleware() {
-    return store => next => action => next(action);
   }
 }
 
