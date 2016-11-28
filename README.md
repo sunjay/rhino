@@ -28,3 +28,9 @@ yarn start
 ```
 
 You may need to press Ctrl+R if the dev server has not finished loading yet.
+
+## Image Worker Process
+
+We use a separate image worker process that performs all
+image operations. It can be found in `image-worker/` and
+its usage is documented in [`image-worker/README.md`](image-worker/README.md).
