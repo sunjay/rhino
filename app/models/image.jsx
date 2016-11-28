@@ -4,7 +4,7 @@ const ImageRecord = createRecord({
 }, (constants) => ({
   width: undefined,
   height: undefined,
-  buffer: null,
+  data: null,
 }));
 
 class Image extends ImageRecord {

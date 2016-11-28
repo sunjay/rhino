@@ -8,7 +8,7 @@ const {
 const Canvas = ({image}) => {
   if (image) {
     return (
-      <canvas className={canvasClass} width={image.width} height={image.height}></canvas>
+      <canvas className={canvasClass}></canvas>
     );
   }
   else {
