@@ -93,8 +93,11 @@ const Canvas = React.createClass({
     const ctx = canvas.getContext('2d');
     const {image, centerX, centerY, zoom} = {...props, ...this._viewProps};
 
-    // Always clear the entire canvas before drawing
+    // Always want to save the state so we can restore it at the end of this
+    // method. This ensures we always have a clean context to work with.
     ctx.save();
+
+    // Always clear the entire canvas before drawing
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     if (!image) {
@@ -118,16 +121,26 @@ const Canvas = React.createClass({
     const offsetX = canvasCenterX - imageWidth / 2;
     const offsetY = canvasCenterY - imageHeight / 2;
 
+    // We draw a shadow around the image to distinguish it from the canvas
+    // background. That way we can open images that have the same background
+    // color as the canvas background
+    this.drawImageShadow(ctx, offsetX, offsetY, imageWidth, imageHeight);
     const background = this.createTransparentBackground(imageWidth, imageHeight);
 
     ctx.drawImage(background, offsetX, offsetY);
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#aaa';
-    ctx.strokeRect(offsetX, offsetY, imageWidth, imageHeight);
 
     ctx.scale(zoom, zoom);
     // need to scale offsets because everything is scaled by the call to scale()
     ctx.drawImage(imageCanvas, offsetX / zoom, offsetY / zoom);
+
+    ctx.restore();
+  },
+
+  drawImageShadow(ctx, offsetX, offsetY, width, height) {
+    ctx.save();
+    ctx.shadowColor = '#888';
+    ctx.shadowBlur = 20;
+    ctx.fillRect(offsetX, offsetY, width, height);
     ctx.restore();
   },
 
