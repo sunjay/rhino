@@ -13,8 +13,10 @@ const createRouter = require('./router');
 const appReducer = require('./reducers/app');
 
 const ImageWorker = require('./services/imageWorker');
+const Remote = require('./services/remote');
 
 const image = new ImageWorker();
+const remote = new Remote();
 
 const logger = createLogger();
 const store = createStore(
@@ -24,6 +26,7 @@ const store = createStore(
       routerMiddleware(hashHistory),
       thunk,
       image.middleware(),
+      remote.middleware(),
       // The logger MUST be last (other than DevTools)
       logger
     ),
@@ -41,3 +44,4 @@ ReactDOM.render(
 );
 
 image.start(store);
+remote.start(store);

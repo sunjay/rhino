@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, Menu, BrowserWindow} = require('electron');
 
 const path = require('path');
 const url = require('url');
@@ -52,3 +52,38 @@ app.on('activate', function () {
     createWindow();
   }
 });
+
+const dispatch = (win, action) => {
+  win.webContents.send('action', action);
+};
+
+const template = [
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'Open',
+        accelerator: 'CommandOrControl+O',
+        click(menuItem, browserWindow) {
+          dispatch(browserWindow, 'open');
+        },
+      },
+    ],
+  },
+
+  {
+    label: 'View',
+    submenu: [
+      {
+        role: 'reload',
+        accelerator: 'CommandOrControl+Shift+F5',
+      },
+      {
+        role: 'toggledevtools',
+      },
+    ],
+  },
+];
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
