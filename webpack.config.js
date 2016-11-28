@@ -36,6 +36,9 @@ module.exports = {
   ],
   resolve: {
     extensions: ['', '.js', '.jsx'],
+    alias: {
+      'image-assets': path.join(__dirname, 'assets/images'),
+    },
   },
   devtool: 'cheap-module-eval-source-map',
   postcss: [autoprefixer],
