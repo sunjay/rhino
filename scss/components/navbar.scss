@@ -1,5 +1,14 @@
 @import '../partials/variables';
 
 .navbar {
+  background-color: $panel-background;
+  color: $panel-color;
   flex-grow: 0;
+  height: 30px;
+  padding: $panel-padding;
+
+  .navbarButton {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }

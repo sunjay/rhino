@@ -150,14 +150,10 @@ a.btn {
   @include button-variant2($btn-danger-color, $btn-danger-bg, $btn-danger-border);
 }
 
-.btn-dark {
-  @include button-variant2(#fff, #212121, #424242);
+.btn-navbar {
+  @include button-variant2(#fff, $panel-background, $panel-border-color);
+  border-width: 0;
   font-weight: normal;
-
-  &:active,
-  &:active:focus {
-    background-color: #616161;
-  }
 }
 
 
