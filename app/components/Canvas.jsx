@@ -63,6 +63,11 @@ const Canvas = React.createClass({
   },
 
   updateDimensions() {
+    // need to reset the size so that the browser recalculates it from
+    // the CSS
+    this._canvas.width = 0;
+    this._canvas.height = 0;
+
     this._canvas.width = this._canvas.scrollWidth;
     this._canvas.height = this._canvas.scrollHeight;
   },

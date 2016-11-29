@@ -1,0 +1,9 @@
+@import '../partials/variables';
+
+.menuBar {
+  -webkit-app-region: drag;
+
+  * {
+    -webkit-app-region: no-drag;
+  }
+}

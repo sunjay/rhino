@@ -2,8 +2,10 @@ const React = require('react');
 
 require('../../scss/index.scss');
 
+const {app} = require('../../scss/components/app.scss');
+
 const App = ({children}) => (
-  <div>
+  <div className={app}>
     {children}
   </div>
 );
