@@ -19,7 +19,7 @@ Button.propTypes = {
     'default', 'primary', 'secondary', 'success',
     'info', 'warning', 'danger', 'link', 'navbar',
   ]),
-  size: React.PropTypes.oneOf(['sm', 'lg']),
+  size: React.PropTypes.oneOf(['xs', 'sm', 'lg']),
   block: React.PropTypes.bool,
 };
 
