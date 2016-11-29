@@ -3,7 +3,15 @@
 .menuBar {
   -webkit-app-region: drag;
 
-  * {
+  .menuBarRight {
+    float: right;
+  }
+
+  .menuBarLarge {
+    font-size: 120%;
+  }
+
+  > * {
     -webkit-app-region: no-drag;
   }
 }
