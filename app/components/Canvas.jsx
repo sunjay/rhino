@@ -15,15 +15,7 @@ const {
 const Canvas = React.createClass({
   propTypes: {
     image: React.PropTypes.instanceOf(ImageModel),
-  },
-
-  componentWillMount() {
-    //TODO: All of these will become props on a `view` store property in #44
-    this._viewProps = {
-      centerX: 0.5,
-      centerY: 0.5,
-      zoom: 1,
-    };
+    view: React.PropTypes.object.isRequired,
   },
 
   componentDidMount() {
@@ -40,41 +32,10 @@ const Canvas = React.createClass({
     this.forceUpdate();
   },
 
-  componentWillReceiveProps(nextProps) {
-    const {image} = this.props;
-    const {image: nextImage} = nextProps;
-
-    if (image !== nextImage || (image && !image.equals(nextImage))) {
-      if ((!image && nextImage) || (image && nextImage && image.path !== nextImage.path)) {
-        //this.resetPanZoom(nextImage);
-      }
-    }
-  },
-
   componentDidUpdate() {
     if (this._canvas && this.props.image) {
       this.draw();
     }
-  },
-
-  resetPanZoom(image) {
-    //TODO: Implement this properly when implementing pan and zoom in #44
-
-    const {canvasWidth, canvasHeight} = this.canvasDimensions();
-    // When we initially load an image, we want to zoom in so that this
-    // much of the canvas width or height is taken up
-    const size = 0.8;
-
-    const widthFactor = canvasWidth * size / image.width;
-    const heightFactor = canvasHeight * size / image.height;
-
-    this._viewProps = {
-      centerX: 0.5,
-      centerY: 0.5,
-      // We take the minimum because we do not want the resulting
-      // size to go over the canvas size
-      zoom: Math.min(widthFactor, heightFactor),
-    };
   },
 
   draw() {
@@ -82,7 +43,7 @@ const Canvas = React.createClass({
     const ctx = canvas.getContext('2d');
 
     const {image} = this.props;
-    const {zoom} = this._viewProps;
+    const zoom = this.zoom(image);
     const {canvasWidth, canvasHeight} = this.canvasDimensions();
 
     // Always want to save the state so we can restore it at the end of this
@@ -146,7 +107,8 @@ const Canvas = React.createClass({
   },
 
   renderImage(image) {
-    const {centerX, centerY, zoom} = this._viewProps;
+    const zoom = this.zoom(image);
+    const {centerX, centerY} = this.props.view;
     const {canvasWidth, canvasHeight} = this.canvasDimensions();
 
     const canvasCenterX = centerX * canvasWidth;
@@ -165,6 +127,21 @@ const Canvas = React.createClass({
     );
   },
 
+  zoom(image) {
+    // When we initially load an image, we want to zoom in so that this
+    // much of the canvas width or height is taken up
+    const size = 0.8;
+    const {canvasWidth, canvasHeight} = this.canvasDimensions();
+
+    const widthFactor = canvasWidth * size / image.width;
+    const heightFactor = canvasHeight * size / image.height;
+
+    const factor = Math.min(widthFactor, heightFactor);
+
+    const {zoom} = this.props.view;
+    return zoom * factor;
+  },
+
   canvasDimensions() {
     const {
       offsetWidth: canvasWidth = 0,
@@ -177,8 +154,5 @@ const Canvas = React.createClass({
     };
   },
 });
-
-Canvas.propTypes = {
-};
 
 module.exports = Canvas;
