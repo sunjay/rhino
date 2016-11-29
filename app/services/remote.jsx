@@ -7,10 +7,15 @@
 const path = require('path');
 
 const {openImage} = require('../actions/ImageActions');
+const {
+  ACTION_MINIMIZE,
+  ACTION_MAXIMIZE,
+  ACTION_CLOSE,
+} = require('../actions/WindowActions');
 
 const {
   ipcRenderer: ipc,
-  remote: {dialog},
+  remote: {dialog, BrowserWindow},
 } = require('electron');
 
 class Remote {
@@ -30,7 +35,35 @@ class Remote {
   }
 
   middleware() {
-    return store => next => action => next(action);
+    const actionHandlers = {
+      [ACTION_MINIMIZE]() {
+        BrowserWindow.getFocusedWindow().minimize();
+      },
+
+      [ACTION_MAXIMIZE](win) {
+        if (win.isMaximized()) {
+          win.unmaximize();
+        }
+        else {
+          win.maximize();
+        }
+      },
+
+      [ACTION_CLOSE](win) {
+        win.close();
+      },
+    };
+
+    return store => next => action => {
+      const win = BrowserWindow.getFocusedWindow();
+
+      const handler = actionHandlers[action.type];
+      if (handler) {
+        handler(win);
+      }
+
+      next(action);
+    };
   }
 
   open(dispatch) {

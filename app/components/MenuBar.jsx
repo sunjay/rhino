@@ -9,7 +9,11 @@ const {
   menuBarLarge,
 } = require('../../scss/components/menuBar.scss');
 
-const MenuBar = () => (
+const MenuBar = ({
+  minimize = () => {},
+  maximize = () => {},
+  close = () => {},
+}) => (
   <Navbar className={menuBar}>
     <NavbarButton>File</NavbarButton>
     <NavbarButton>Edit</NavbarButton>
@@ -18,13 +22,13 @@ const MenuBar = () => (
     <NavbarButton>Help</NavbarButton>
 
     <div className={menuBarRight}>
-      <NavbarButton>
+      <NavbarButton onClick={minimize}>
         <span className={menuBarLarge}>&ndash;</span>
       </NavbarButton>
-      <NavbarButton>
+      <NavbarButton onClick={maximize}>
         <span className={menuBarLarge}>+</span>
       </NavbarButton>
-      <NavbarButton>
+      <NavbarButton onClick={close}>
         <span className={menuBarLarge}>&times;</span>
       </NavbarButton>
     </div>
