@@ -77,6 +77,10 @@ class Remote {
       ],
     });
 
+    if (!files) {
+      return;
+    }
+
     const file = files[0];
     const filetype = path.extname(file).slice(1);
     if (supported.includes(filetype)) {
