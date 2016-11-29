@@ -17,7 +17,7 @@ Button.propTypes = {
   children: React.PropTypes.any,
   style: React.PropTypes.oneOf([
     'default', 'primary', 'secondary', 'success',
-    'info', 'warning', 'danger', 'link', 'dark',
+    'info', 'warning', 'danger', 'link', 'navbar',
   ]),
   size: React.PropTypes.oneOf(['sm', 'lg']),
   block: React.PropTypes.bool,
