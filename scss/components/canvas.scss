@@ -1,5 +1,19 @@
-.canvas {
+.canvasContainer {
   align-self: stretch;
   background: #eee;
   flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.canvas {
+  box-shadow: 0 0 20px #888;
+  position: absolute;
+}
+
+.canvasNoImage {
+  color: #aaa;
+  font-size: 46px;
+  margin-top: 30vh;
+  text-align: center;
 }

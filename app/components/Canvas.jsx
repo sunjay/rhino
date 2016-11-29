@@ -7,7 +7,9 @@ const transparentImage = new Image();
 transparentImage.src = transparent;
 
 const {
+  canvasContainer,
   canvas: canvasClass,
+  canvasNoImage,
 } = require('../../scss/components/canvas.scss');
 
 const Canvas = React.createClass({
@@ -15,27 +17,17 @@ const Canvas = React.createClass({
     image: React.PropTypes.instanceOf(ImageModel),
   },
 
-  shouldComponentUpdate() {
-    // We never want react to compare props for us since these props can be
-    // pretty huge and we never really need react to re-render anything
-    // after the first time
-    return false;
-  },
-
-  componentDidMount() {
+  componentWillMount() {
     //TODO: All of these will become props on a `view` store property in #44
     this._viewProps = {
       centerX: 0.5,
       centerY: 0.5,
       zoom: 1,
     };
+  },
 
-    // Need to wait briefly for the layout to finish so the updated
-    // dimensions are correct
-    setTimeout(() => {
-      this.updateDimensions();
-      this.draw();
-    }, 1);
+  componentDidMount() {
+    this.forceUpdate();
 
     window.addEventListener('resize', this.onResize);
   },
@@ -45,8 +37,7 @@ const Canvas = React.createClass({
   },
 
   onResize() {
-    this.updateDimensions();
-    this.draw();
+    this.forceUpdate();
   },
 
   componentWillReceiveProps(nextProps) {
@@ -54,28 +45,22 @@ const Canvas = React.createClass({
     const {image: nextImage} = nextProps;
 
     if (image !== nextImage || (image && !image.equals(nextImage))) {
-      if (!image || !nextImage || image.path !== nextImage.path) {
-        this.resetPanZoom(nextImage);
+      if ((!image && nextImage) || (image && nextImage && image.path !== nextImage.path)) {
+        //this.resetPanZoom(nextImage);
       }
-
-      this.draw(nextProps);
     }
   },
 
-  updateDimensions() {
-    // need to reset the size so that the browser recalculates it from
-    // the CSS
-    this._canvas.width = 0;
-    this._canvas.height = 0;
-
-    this._canvas.width = this._canvas.scrollWidth;
-    this._canvas.height = this._canvas.scrollHeight;
+  componentDidUpdate() {
+    if (this._canvas && this.props.image) {
+      this.draw();
+    }
   },
 
   resetPanZoom(image) {
     //TODO: Implement this properly when implementing pan and zoom in #44
 
-    const {width: canvasWidth, height: canvasHeight} = this._canvas;
+    const {canvasWidth, canvasHeight} = this.canvasDimensions();
     // When we initially load an image, we want to zoom in so that this
     // much of the canvas width or height is taken up
     const size = 0.8;
@@ -92,11 +77,13 @@ const Canvas = React.createClass({
     };
   },
 
-  draw(props = this.props) {
+  draw() {
     const canvas = this._canvas;
-    const {width: canvasWidth, height: canvasHeight} = canvas;
     const ctx = canvas.getContext('2d');
-    const {image, centerX, centerY, zoom} = {...props, ...this._viewProps};
+
+    const {image} = this.props;
+    const {zoom} = this._viewProps;
+    const {canvasWidth, canvasHeight} = this.canvasDimensions();
 
     // Always want to save the state so we can restore it at the end of this
     // method. This ensures we always have a clean context to work with.
@@ -105,47 +92,18 @@ const Canvas = React.createClass({
     // Always clear the entire canvas before drawing
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    if (!image) {
-      ctx.fillStyle = '#aaa';
-      ctx.font = '46px sans-serif';
-      ctx.textBaseline = 'middle';
-      ctx.textAlign = 'center';
-
-      ctx.fillText('No Image Loaded', canvasWidth / 2, canvasHeight / 2);
-      return;
-    }
-
     const imageCanvas = this.createImage(image);
 
     const imageWidth = image.width * zoom;
     const imageHeight = image.height * zoom;
 
-    const canvasCenterX = centerX * canvasWidth;
-    const canvasCenterY = centerY * canvasHeight;
-
-    const offsetX = canvasCenterX - imageWidth / 2;
-    const offsetY = canvasCenterY - imageHeight / 2;
-
-    // We draw a shadow around the image to distinguish it from the canvas
-    // background. That way we can open images that have the same background
-    // color as the canvas background
-    this.drawImageShadow(ctx, offsetX, offsetY, imageWidth, imageHeight);
     const background = this.createTransparentBackground(imageWidth, imageHeight);
 
-    ctx.drawImage(background, offsetX, offsetY);
+    ctx.drawImage(background, 0, 0);
 
-    ctx.scale(zoom, zoom);
     // need to scale offsets because everything is scaled by the call to scale()
-    ctx.drawImage(imageCanvas, offsetX / zoom, offsetY / zoom);
+    ctx.drawImage(imageCanvas, 0, 0, imageWidth, imageHeight);
 
-    ctx.restore();
-  },
-
-  drawImageShadow(ctx, offsetX, offsetY, width, height) {
-    ctx.save();
-    ctx.shadowColor = '#888';
-    ctx.shadowBlur = 20;
-    ctx.fillRect(offsetX, offsetY, width, height);
     ctx.restore();
   },
 
@@ -174,9 +132,49 @@ const Canvas = React.createClass({
   },
 
   render() {
+    const {image} = this.props;
+
     return (
-      <canvas ref={(node) => this._canvas = node} className={canvasClass} />
+      <div className={canvasContainer} ref={(node) => this._container = node}>
+        {image ? (
+          this.renderImage(image)
+        ) : (
+          <div className={canvasNoImage}>No Image Loaded</div>
+        )}
+      </div>
     );
+  },
+
+  renderImage(image) {
+    const {centerX, centerY, zoom} = this._viewProps;
+    const {canvasWidth, canvasHeight} = this.canvasDimensions();
+
+    const canvasCenterX = centerX * canvasWidth;
+    const canvasCenterY = centerY * canvasHeight;
+
+    const imageWidth = image.width * zoom;
+    const imageHeight = image.height * zoom;
+
+    const offsetX = canvasCenterX - imageWidth / 2;
+    const offsetY = canvasCenterY - imageHeight / 2;
+
+    return (
+      <canvas ref={(node) => this._canvas = node}
+        width={image.width * zoom} height={image.height * zoom}
+        style={{left: offsetX, top: offsetY}} className={canvasClass} />
+    );
+  },
+
+  canvasDimensions() {
+    const {
+      offsetWidth: canvasWidth = 0,
+      offsetHeight: canvasHeight = 0,
+    } = this._container;
+
+    return {
+      canvasWidth,
+      canvasHeight,
+    };
   },
 });
 
