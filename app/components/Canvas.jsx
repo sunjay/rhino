@@ -2,10 +2,6 @@ const React = require('react');
 
 const ImageModel = require('../models/image');
 
-const transparent = require('image-assets/transparent-bg.svg');
-const transparentImage = new Image();
-transparentImage.src = transparent;
-
 const {
   canvasContainer,
   canvas: canvasClass,
@@ -53,22 +49,19 @@ const Canvas = React.createClass({
     // Always clear the entire canvas before drawing
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    const imageCanvas = this.createImage(image);
+    const imageCanvas = this.createImageCanvas(image);
 
     const imageWidth = image.width * zoom;
     const imageHeight = image.height * zoom;
 
-    const background = this.createTransparentBackground(imageWidth, imageHeight);
-
-    ctx.drawImage(background, 0, 0);
-
-    // need to scale offsets because everything is scaled by the call to scale()
+    // drawImage will automatically scale the image to the desired zoom level
+    // because of the imageWidth and imageHeight parameters
     ctx.drawImage(imageCanvas, 0, 0, imageWidth, imageHeight);
 
     ctx.restore();
   },
 
-  createImage(image) {
+  createImageCanvas(image) {
     const data = Uint8ClampedArray.from(image.data);
     const imageData = new ImageData(data, image.width, image.height);
     const canvas = document.createElement('canvas');
@@ -76,18 +69,6 @@ const Canvas = React.createClass({
     canvas.height = image.height;
     const imageContext = canvas.getContext('2d');
     imageContext.putImageData(imageData, 0, 0);
-
-    return canvas;
-  },
-
-  createTransparentBackground(width, height) {
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = ctx.createPattern(transparentImage, 'repeat');
-    ctx.fillRect(0, 0, width, height);
 
     return canvas;
   },

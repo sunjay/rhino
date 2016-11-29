@@ -7,6 +7,8 @@
 }
 
 .canvas {
+  background-image: url('image-assets/transparent-bg.svg');
+  background-repeat: repeat;
   box-shadow: 0 0 20px #888;
   position: absolute;
 }
