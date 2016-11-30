@@ -19,6 +19,7 @@
 
 .menu {
   display: inline-block;
+  margin-right: 5px;
   position: relative;
 
   .menuItems {
@@ -35,8 +36,9 @@
     background-color: $panel-background;
     color: $panel-color;
     cursor: pointer;
-    display: inline-block;
+    display: flex;
     font-size: $font-size-small;
+    justify-content: space-between;
     line-height: $line-height-small;
     list-style-type: none;
     padding: $panel-padding;
@@ -50,6 +52,12 @@
 
     &:not(:first-child) {
       border-top: $panel-border;
+    }
+
+    .menuItemRight {
+      display: inline-block;
+      padding-left: 30px;
+      text-align: right;
     }
   }
 

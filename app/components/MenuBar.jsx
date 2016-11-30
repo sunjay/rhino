@@ -1,5 +1,7 @@
 const React = require('react');
 
+const menu = require('../menu');
+
 const Navbar = require('./Navbar');
 const NavbarButton = require('./NavbarButton');
 const Menu = require('./Menu');
@@ -13,52 +15,42 @@ const {
 } = require('../../scss/components/menuBar.scss');
 
 const MenuBar = ({
-  minimize = () => {},
-  maximize = () => {},
-  close = () => {},
+  dispatch,
+  minimizeWindow,
+  maximizeWindow,
+  closeWindow,
 }) => (
   <Navbar className={menuBar}>
-    <Menu label='File'>
-      <MenuItem>Open</MenuItem>
-      <MenuItem>Save</MenuItem>
-      <MenuItem>Save As</MenuItem>
-      <MenuSeparator />
-      <MenuItem>Close</MenuItem>
-    </Menu>
-    <Menu label='Edit'>
-      <MenuItem>Undo</MenuItem>
-      <MenuItem>Redo</MenuItem>
-    </Menu>
-    <Menu label='Image'>
-      <MenuItem>Crop</MenuItem>
-      <MenuItem>Resize Image</MenuItem>
-      <MenuItem>Resize Canvas</MenuItem>
-      <MenuSeparator />
-      <MenuItem>Flip Horizontal</MenuItem>
-      <MenuItem>Flip Vertical</MenuItem>
-      <MenuSeparator />
-      <MenuItem>Rotate 90&deg; Clockwise</MenuItem>
-      <MenuItem>Rotate 90&deg; Counterclockwise</MenuItem>
-      <MenuItem>Rotate 180&deg;</MenuItem>
-    </Menu>
-    <Menu label='View'>
-      <MenuItem>Toggle Fullscreen</MenuItem>
-    </Menu>
-    <Menu label='Help'>
-      <MenuItem href='http://rhinoeditor.com/'>Website</MenuItem>
-      <MenuItem href='http://rhinoeditor.com/bugs'>Report a bug</MenuItem>
-      <MenuSeparator />
-      <MenuItem>About</MenuItem>
-    </Menu>
+    {menu(dispatch).map(({label, submenu}) => (
+      <Menu key={label} label={label}>
+        {submenu ?
+          submenu.map(({type, label, accelerator, click}, i) => {
+            if (type === 'separator') {
+              return (
+                <MenuSeparator key={'sep' + i} />
+              );
+            }
+            else {
+              return (
+                <MenuItem key={label} accelerator={accelerator} onClick={click}>
+                  {label}
+                </MenuItem>
+              );
+            }
+          })
+          : null
+        }
+      </Menu>
+    ))}
 
     <div className={menuBarRight}>
-      <NavbarButton onClick={minimize}>
+      <NavbarButton onClick={minimizeWindow}>
         <span className={menuBarLarge}>&ndash;</span>
       </NavbarButton>
-      <NavbarButton onClick={maximize}>
+      <NavbarButton onClick={maximizeWindow}>
         <span className={menuBarLarge}>+</span>
       </NavbarButton>
-      <NavbarButton onClick={close}>
+      <NavbarButton onClick={closeWindow}>
         <span className={menuBarLarge}>&times;</span>
       </NavbarButton>
     </div>
@@ -66,6 +58,10 @@ const MenuBar = ({
 );
 
 MenuBar.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  minimizeWindow: React.PropTypes.func.isRequired,
+  maximizeWindow: React.PropTypes.func.isRequired,
+  closeWindow: React.PropTypes.func.isRequired,
 };
 
 module.exports = MenuBar;

@@ -1352,6 +1352,10 @@ electron-download@^3.0.1:
     semver "^5.3.0"
     sumchecker "^1.2.0"
 
+electron-localshortcut@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/electron-localshortcut/-/electron-localshortcut-1.0.0.tgz#e9c1ba267c75376e1b254af206b9ff856360a67a"
+
 electron@^1.4.8:
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.4.8.tgz#5ac8cfa465f9ff4957a8da9974fa7c460c89d918"
@@ -2531,6 +2535,10 @@ lodash.create@3.1.1:
     lodash._baseassign "^3.0.0"
     lodash._basecreate "^3.0.0"
     lodash._isiterateecall "^3.0.0"
+
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
 
 lodash.indexof@^4.0.5:
   version "4.0.5"

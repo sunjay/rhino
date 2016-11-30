@@ -27,16 +27,12 @@ const Actions = {
     };
   },
   createActionFromFields(type, fields, values) {
-    return this.createAction(type, fields.reduce((data, field, i) => ({
-      ...data,
-      [field]: values[i],
-    }), {}));
+    return this.createAction(type, fields.reduce((data, field, i) => (
+      Object.assign({}, data, {[field]: values[i]})
+    ), {}));
   },
   createAction(type, data = {}) {
-    return {
-      type,
-      ...data,
-    };
+    return Object.assign({}, data, {type});
   },
 };
 

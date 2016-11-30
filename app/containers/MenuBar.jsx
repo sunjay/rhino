@@ -2,20 +2,25 @@ const {connect} = require('react-redux');
 
 const MenuBar = require('../components/MenuBar');
 
-const {minimize, maximize, close} = require('../actions/WindowActions');
+const {
+  minimizeWindow,
+  maximizeWindow,
+  closeWindow,
+} = require('../actions/WindowActions');
 
 const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  minimize() {
-    dispatch(minimize());
+  dispatch,
+  minimizeWindow() {
+    dispatch(minimizeWindow());
   },
-  maximize() {
-    dispatch(maximize());
+  maximizeWindow() {
+    dispatch(maximizeWindow());
   },
-  close() {
-    dispatch(close());
+  closeWindow() {
+    dispatch(closeWindow());
   },
 });
 

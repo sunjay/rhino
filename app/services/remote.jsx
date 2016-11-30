@@ -6,11 +6,20 @@
 
 const path = require('path');
 
-const {openImage} = require('../actions/ImageActions');
 const {
-  ACTION_MINIMIZE,
-  ACTION_MAXIMIZE,
-  ACTION_CLOSE,
+  loadImage,
+} = require('../actions/ImageActions');
+
+const {
+  ACTION_OPEN_FILE,
+} = require('../actions/FileActions');
+
+const {
+  ACTION_MINIMIZE_WINDOW,
+  ACTION_MAXIMIZE_WINDOW,
+  ACTION_CLOSE_WINDOW,
+  ACTION_RELOAD_WINDOW,
+  ACTION_TOGGLE_DEVTOOLS,
 } = require('../actions/WindowActions');
 
 const {
@@ -23,24 +32,16 @@ class Remote {
   }
 
   start({dispatch}) {
-    ipc.on('action', (event, action) => {
-      switch (action) {
-        case 'open':
-          this.open(dispatch);
-          break;
-        default:
-          throw new Error(`Unrecognized action received from main process: ${action}`);
-      }
-    });
+    ipc.on('action', (event, action) => dispatch(action));
   }
 
   middleware() {
     const actionHandlers = {
-      [ACTION_MINIMIZE]() {
-        BrowserWindow.getFocusedWindow().minimize();
+      [ACTION_MINIMIZE_WINDOW](dispatch, win) {
+        win.minimize();
       },
 
-      [ACTION_MAXIMIZE](win) {
+      [ACTION_MAXIMIZE_WINDOW](dispatch, win) {
         if (win.isMaximized()) {
           win.unmaximize();
         }
@@ -49,17 +50,35 @@ class Remote {
         }
       },
 
-      [ACTION_CLOSE](win) {
+      [ACTION_RELOAD_WINDOW](dispatch, win) {
+        win.reload();
+      },
+
+      [ACTION_TOGGLE_DEVTOOLS](dispatch, win) {
+        if (win.isDevToolsOpened()) {
+          win.closeDevTools();
+        }
+        else {
+          win.openDevTools();
+        }
+      },
+
+      [ACTION_CLOSE_WINDOW](dispatch, win) {
         win.close();
+      },
+
+      [ACTION_OPEN_FILE](dispatch) {
+        this.open(dispatch);
       },
     };
 
-    return store => next => action => {
-      const win = BrowserWindow.getFocusedWindow();
-
+    return ({dispatch}) => next => action => {
       const handler = actionHandlers[action.type];
+
       if (handler) {
-        handler(win);
+        const win = BrowserWindow.getFocusedWindow();
+
+        handler.call(this, dispatch, win);
       }
 
       next(action);
@@ -84,7 +103,7 @@ class Remote {
     const file = files[0];
     const filetype = path.extname(file).slice(1);
     if (supported.includes(filetype)) {
-      dispatch(openImage(file));
+      dispatch(loadImage(file));
     }
     else {
       dialog.showErrorBox('Unsupported File Type',
