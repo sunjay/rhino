@@ -2,6 +2,7 @@
 
 .menuBar {
   -webkit-app-region: drag;
+  user-select: none;
 
   .menuBarRight {
     float: right;

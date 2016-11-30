@@ -14,6 +14,8 @@ function createWindow () {
     frame: false,
     width: 800,
     height: 600,
+    minWidth: 640,
+    minHeight: 480,
   });
 
   mainWindow.once('ready-to-show', () => {
