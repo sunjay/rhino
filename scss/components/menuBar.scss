@@ -1,5 +1,10 @@
 @import '../partials/variables';
 
+@keyframes fade {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
 .menuBar {
   -webkit-app-region: drag;
   transition: max-height 2s ease-out;
@@ -33,9 +38,11 @@
   position: relative;
 
   .menuItems {
+    animation: fade 300ms;
     border: $panel-border;
     box-shadow: 0 1px 5px $panel-border-color;
     min-width: 150px;
+    opacity: 1;
     padding-left: 0;
     position: absolute;
     top: calc(100% + 2px);
