@@ -20,6 +20,14 @@ const Menu = React.createClass({
     };
   },
 
+  componentDidMount() {
+    window.addEventListener('resize', this.close);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.close);
+  },
+
   toggleOpen() {
     this.setState({open: !this.state.open});
   },
