@@ -15,6 +15,7 @@ const {
   toggleFullscreen,
   reloadWindow,
   openURL,
+  aboutRhino,
 } = require('./actions/WindowActions');
 
 const alert = global.alert || console.error;
@@ -184,7 +185,7 @@ module.exports = (dispatch) => [
       {
         label: 'About Rhino',
         click() {
-          alert('Not implemented');
+          dispatch(aboutRhino());
         },
       },
     ],

@@ -1,5 +1,6 @@
 const path = require('path');
 
+const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -33,6 +34,12 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'APP_ROOT': JSON.stringify(__dirname),
+      },
+    }),
   ],
   resolve: {
     extensions: ['', '.js', '.jsx'],

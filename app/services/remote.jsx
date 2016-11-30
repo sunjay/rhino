@@ -4,6 +4,7 @@
  * which need to be used in special ways by the renderer process.
  */
 
+const url = require('url');
 const path = require('path');
 
 const {
@@ -28,6 +29,7 @@ const {
   ACTION_TOGGLE_DEVTOOLS,
   ACTION_TOGGLE_FULLSCREEN,
   ACTION_OPEN_URL,
+  ACTION_SHOW_ABOUT_SCREEN,
 } = require('../actions/WindowActions');
 
 const actionHandlers = {
@@ -71,6 +73,30 @@ const actionHandlers = {
 
   [ACTION_OPEN_URL](win, dispatch, {url}) {
     shell.openExternal(url);
+  },
+
+  [ACTION_SHOW_ABOUT_SCREEN](win) {
+    const child = new BrowserWindow({
+      parent: win,
+      modal: true,
+      show: false,
+      frame: false,
+      resizable: false,
+      width: 640,
+      height: 480,
+    });
+    child.setMenu(null);
+
+    child.loadURL(url.format({
+      protocol: 'file:',
+      pathname: path.join(process.env.APP_ROOT, 'index.html'),
+      hash: '#/about',
+      slashes: true,
+    }));
+
+    child.once('ready-to-show', () => {
+      child.show();
+    });
   },
 };
 
