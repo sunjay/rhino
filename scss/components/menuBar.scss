@@ -16,3 +16,45 @@
     -webkit-app-region: no-drag;
   }
 }
+
+.menu {
+  display: inline-block;
+  position: relative;
+
+  .menuItems {
+    border: $panel-border;
+    box-shadow: 0 1px 5px $panel-border-color;
+    min-width: 150px;
+    padding-left: 0;
+    position: absolute;
+    top: calc(100% + 2px);
+    z-index: 5;
+  }
+
+  .menuItem {
+    background-color: $panel-background;
+    color: $panel-color;
+    cursor: pointer;
+    display: inline-block;
+    font-size: $font-size-small;
+    line-height: $line-height-small;
+    list-style-type: none;
+    padding: $panel-padding;
+    white-space: nowrap;
+    width: 100%;
+
+    &:hover {
+      background-color: darken($panel-background, 10%);
+      border-color: darken($panel-border-color, 12%);
+    }
+
+    &:not(:first-child) {
+      border-top: $panel-border;
+    }
+  }
+
+  .menuSeparator {
+    background-color: $panel-border-color;
+    height: 2px;
+  }
+}

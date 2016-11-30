@@ -48,6 +48,7 @@
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "react": "^15.4.0",
+    "react-click-outside": "tj/react-click-outside",
     "react-dom": "^15.4.0",
     "react-fontawesome": "^1.4.0",
     "react-redux": "^4.4.6",
