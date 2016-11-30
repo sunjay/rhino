@@ -2,7 +2,7 @@
   "name": "rhino-editor",
   "version": "0.0.1",
   "description": "Rhino Editor",
-  "main": "main.js",
+  "main": "app/main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "dev": "./node_modules/.bin/webpack-dev-server --content-base dist/ --inline --hot --port 8080",
