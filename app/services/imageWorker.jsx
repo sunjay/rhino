@@ -2,7 +2,7 @@ const spawn = require('child_process').spawn;
 
 const {
   updateImage,
-  ACTION_OPEN_IMAGE,
+  ACTION_LOAD_IMAGE,
 } = require('../actions/ImageActions');
 
 class ImageWorker {
@@ -72,7 +72,7 @@ class ImageWorker {
 
   middleware() {
     return (/*store*/) => (next) => (action) => {
-      if (action.type === ACTION_OPEN_IMAGE) {
+      if (action.type === ACTION_LOAD_IMAGE) {
         this.open(action.path);
       }
 
