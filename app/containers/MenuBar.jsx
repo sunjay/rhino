@@ -6,9 +6,11 @@ const {
   minimizeWindow,
   maximizeWindow,
   closeWindow,
+  toggleFullscreen,
 } = require('../actions/WindowActions');
 
-const mapStateToProps = () => ({
+const mapStateToProps = ({page: {view: {fullscreen: isFullScreen}}}) => ({
+  isFullScreen,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -21,6 +23,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   closeWindow() {
     dispatch(closeWindow());
+  },
+  toggleFullscreen() {
+    dispatch(toggleFullscreen());
   },
 });
 

@@ -26,8 +26,53 @@ const {
   ACTION_CLOSE_WINDOW,
   ACTION_RELOAD_WINDOW,
   ACTION_TOGGLE_DEVTOOLS,
+  ACTION_TOGGLE_FULLSCREEN,
   ACTION_OPEN_URL,
 } = require('../actions/WindowActions');
+
+const actionHandlers = {
+  [ACTION_MINIMIZE_WINDOW](win) {
+    win.minimize();
+  },
+
+  [ACTION_MAXIMIZE_WINDOW](win) {
+    if (win.isMaximized()) {
+      win.unmaximize();
+    }
+    else {
+      win.maximize();
+    }
+  },
+
+  [ACTION_RELOAD_WINDOW](win) {
+    win.reload();
+  },
+
+  [ACTION_TOGGLE_DEVTOOLS](win) {
+    if (win.isDevToolsOpened()) {
+      win.closeDevTools();
+    }
+    else {
+      win.openDevTools();
+    }
+  },
+
+  [ACTION_TOGGLE_FULLSCREEN](win) {
+    win.setFullScreen(!win.isFullScreen());
+  },
+
+  [ACTION_CLOSE_WINDOW](win) {
+    win.close();
+  },
+
+  [ACTION_OPEN_FILE](win, dispatch) {
+    this.open(dispatch);
+  },
+
+  [ACTION_OPEN_URL](win, dispatch, {url}) {
+    shell.openExternal(url);
+  },
+};
 
 class Remote {
   constructor() {
@@ -38,46 +83,6 @@ class Remote {
   }
 
   middleware() {
-    const actionHandlers = {
-      [ACTION_MINIMIZE_WINDOW](win) {
-        win.minimize();
-      },
-
-      [ACTION_MAXIMIZE_WINDOW](win) {
-        if (win.isMaximized()) {
-          win.unmaximize();
-        }
-        else {
-          win.maximize();
-        }
-      },
-
-      [ACTION_RELOAD_WINDOW](win) {
-        win.reload();
-      },
-
-      [ACTION_TOGGLE_DEVTOOLS](win) {
-        if (win.isDevToolsOpened()) {
-          win.closeDevTools();
-        }
-        else {
-          win.openDevTools();
-        }
-      },
-
-      [ACTION_CLOSE_WINDOW](win) {
-        win.close();
-      },
-
-      [ACTION_OPEN_FILE](win, dispatch) {
-        this.open(dispatch);
-      },
-
-      [ACTION_OPEN_URL](win, dispatch, {url}) {
-        shell.openExternal(url);
-      },
-    };
-
     return ({dispatch}) => next => action => {
       const handler = actionHandlers[action.type];
 
