@@ -32,9 +32,8 @@ const MenuBar = ({
             }
             else {
               return (
-                <MenuItem key={label} accelerator={accelerator} onClick={click}>
-                  {label}
-                </MenuItem>
+                <MenuItem key={label} label={label}
+                  accelerator={accelerator} onClick={click} />
               );
             }
           })

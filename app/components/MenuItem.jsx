@@ -7,13 +7,13 @@ const {
 } = require('../../scss/components/menuBar.scss');
 
 const MenuItem = ({
-  children,
+  label,
   accelerator,
   className,
   ...props
 }) => (
   <li {...props} className={classNames(menuItem, className)}>
-    {children}
+    {label}
     {accelerator ?
       <span className={menuItemRight}>{accelerator.replace('CommandOrControl', 'Ctrl')}</span>
       : null
@@ -22,7 +22,7 @@ const MenuItem = ({
 );
 
 MenuItem.propTypes = {
-  children: React.PropTypes.any,
+  label: React.PropTypes.node,
   accelerator: React.PropTypes.string,
   className: React.PropTypes.string,
 };
