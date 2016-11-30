@@ -30,6 +30,7 @@ const createRouter = (history, store) => (
     <Route path='/' component={App}>
       <IndexRedirect to='/editor' />
       {createRoute({store, routeKey: 'editor'})}
+      {createRoute({store, routeKey: 'about'})}
       <Route path='*' component={NotFound}/>
     </Route>
   </Router>

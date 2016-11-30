@@ -6,9 +6,11 @@ const requests = require('./requests');
 const createPageReducer = require('./page');
 
 const editor = require('./pages/editor');
+const about = require('./pages/about');
 
 const page = createPageReducer([
   {pattern: routes.editor.pattern, reducer: editor},
+  {pattern: routes.about.pattern, reducer: about},
 ]);
 
 // Reducers placed here are the top-level of the state object

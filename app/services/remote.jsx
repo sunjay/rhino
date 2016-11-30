@@ -82,8 +82,8 @@ const actionHandlers = {
       show: false,
       frame: false,
       resizable: false,
-      width: 640,
-      height: 480,
+      width: 480,
+      height: 400,
     });
     child.setMenu(null);
 

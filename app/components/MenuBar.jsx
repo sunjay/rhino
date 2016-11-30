@@ -23,12 +23,13 @@ const MenuBar = ({
   maximizeWindow,
   closeWindow,
   toggleFullscreen,
+  modal = false,
 }) => (
   <Navbar className={classNames({
     [menuBar]: true,
     [menuBarFullScreen]: isFullScreen,
   })}>
-    {menu(dispatch).map(({label, submenu}) => (
+    {!modal ? menu(dispatch).map(({label, submenu}) => (
       <Menu key={label} label={label}>
         {submenu ?
           submenu.map(({type, label, accelerator, click}, i) => {
@@ -47,7 +48,7 @@ const MenuBar = ({
           : null
         }
       </Menu>
-    ))}
+    )) : null}
 
     <div className={menuBarRight}>
       {isFullScreen ?
@@ -56,13 +57,13 @@ const MenuBar = ({
         </NavbarButton>
         : null
       }
-      {!isFullScreen ?
+      {!modal && !isFullScreen ?
         <NavbarButton onClick={minimizeWindow}>
           <span className={menuBarLarge}>&ndash;</span>
         </NavbarButton>
         : null
       }
-      {!isFullScreen ?
+      {!modal && !isFullScreen ?
         <NavbarButton onClick={maximizeWindow}>
           <span className={menuBarLarge}>+</span>
         </NavbarButton>
@@ -85,6 +86,7 @@ MenuBar.propTypes = {
   maximizeWindow: React.PropTypes.func.isRequired,
   closeWindow: React.PropTypes.func.isRequired,
   toggleFullscreen: React.PropTypes.func.isRequired,
+  modal: React.PropTypes.bool,
 };
 
 module.exports = MenuBar;

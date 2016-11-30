@@ -38,6 +38,7 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'APP_ROOT': JSON.stringify(__dirname),
+        'APP_VERSION': JSON.stringify(require('./package.json').version),
       },
     }),
   ],
