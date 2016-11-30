@@ -1,4 +1,5 @@
 const React = require('react');
+const classNames = require('classnames');
 
 const menu = require('../menu');
 
@@ -12,6 +13,7 @@ const {
   menuBar,
   menuBarRight,
   menuBarLarge,
+  menuBarFullScreen,
 } = require('../../scss/components/menuBar.scss');
 
 const MenuBar = ({
@@ -22,7 +24,10 @@ const MenuBar = ({
   closeWindow,
   toggleFullscreen,
 }) => (
-  <Navbar className={menuBar}>
+  <Navbar className={classNames({
+    [menuBar]: true,
+    [menuBarFullScreen]: isFullScreen,
+  })}>
     {menu(dispatch).map(({label, submenu}) => (
       <Menu key={label} label={label}>
         {submenu ?

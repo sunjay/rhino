@@ -2,7 +2,17 @@
 
 .menuBar {
   -webkit-app-region: drag;
+  transition: max-height 2s ease-out;
   user-select: none;
+
+  &.menuBarFullScreen {
+    max-height: 0;
+
+    &:hover {
+      // This can be any large value
+      max-height: 500px;
+    }
+  }
 
   .menuBarRight {
     float: right;
