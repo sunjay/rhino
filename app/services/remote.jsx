@@ -7,6 +7,12 @@
 const path = require('path');
 
 const {
+  shell,
+  ipcRenderer: ipc,
+  remote: {dialog, BrowserWindow},
+} = require('electron');
+
+const {
   loadImage,
 } = require('../actions/ImageActions');
 
@@ -20,12 +26,8 @@ const {
   ACTION_CLOSE_WINDOW,
   ACTION_RELOAD_WINDOW,
   ACTION_TOGGLE_DEVTOOLS,
+  ACTION_OPEN_URL,
 } = require('../actions/WindowActions');
-
-const {
-  ipcRenderer: ipc,
-  remote: {dialog, BrowserWindow},
-} = require('electron');
 
 class Remote {
   constructor() {
@@ -37,11 +39,11 @@ class Remote {
 
   middleware() {
     const actionHandlers = {
-      [ACTION_MINIMIZE_WINDOW](dispatch, win) {
+      [ACTION_MINIMIZE_WINDOW](win) {
         win.minimize();
       },
 
-      [ACTION_MAXIMIZE_WINDOW](dispatch, win) {
+      [ACTION_MAXIMIZE_WINDOW](win) {
         if (win.isMaximized()) {
           win.unmaximize();
         }
@@ -50,11 +52,11 @@ class Remote {
         }
       },
 
-      [ACTION_RELOAD_WINDOW](dispatch, win) {
+      [ACTION_RELOAD_WINDOW](win) {
         win.reload();
       },
 
-      [ACTION_TOGGLE_DEVTOOLS](dispatch, win) {
+      [ACTION_TOGGLE_DEVTOOLS](win) {
         if (win.isDevToolsOpened()) {
           win.closeDevTools();
         }
@@ -63,12 +65,16 @@ class Remote {
         }
       },
 
-      [ACTION_CLOSE_WINDOW](dispatch, win) {
+      [ACTION_CLOSE_WINDOW](win) {
         win.close();
       },
 
-      [ACTION_OPEN_FILE](dispatch) {
+      [ACTION_OPEN_FILE](win, dispatch) {
         this.open(dispatch);
+      },
+
+      [ACTION_OPEN_URL](win, dispatch, {url}) {
+        shell.openExternal(url);
       },
     };
 
@@ -78,7 +84,7 @@ class Remote {
       if (handler) {
         const win = BrowserWindow.getFocusedWindow();
 
-        handler.call(this, dispatch, win);
+        handler.call(this, win, dispatch, action);
       }
 
       next(action);
