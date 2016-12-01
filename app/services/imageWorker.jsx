@@ -4,6 +4,8 @@ const {
   updateImage,
   destroyImage,
   ACTION_LOAD_IMAGE,
+  ACTION_FLIP_IMAGE_HORIZONTAL,
+  ACTION_FLIP_IMAGE_VERTICAL,
 } = require('../actions/ImageActions');
 
 const {
@@ -38,6 +40,24 @@ const actionHandlers = {
         Save: {path},
       });
     }
+  },
+
+  [ACTION_FLIP_IMAGE_HORIZONTAL](action, {getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    this.send('FlipHorizontal');
+  },
+
+  [ACTION_FLIP_IMAGE_VERTICAL](action, {getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    this.send('FlipVertical');
   },
 };
 

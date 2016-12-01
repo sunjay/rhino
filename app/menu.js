@@ -18,6 +18,11 @@ const {
   aboutRhino,
 } = require('./actions/WindowActions');
 
+const {
+  flipHorizontal,
+  flipVertical,
+} = require('./actions/ImageActions');
+
 const alert = global.alert || console.error;
 
 const noImage = ({image}) => !image;
@@ -115,14 +120,14 @@ module.exports = (dispatch) => [
         label: 'Flip Horizontal',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          dispatch(flipHorizontal());
         },
       },
       {
         label: 'Flip Vertical',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          dispatch(flipVertical());
         },
       },
       {type: 'separator'},
