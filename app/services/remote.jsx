@@ -15,10 +15,13 @@ const {
 
 const {
   loadImage,
+  changeImagePath,
 } = require('../actions/ImageActions');
 
 const {
+  saveFile,
   ACTION_OPEN_FILE,
+  ACTION_SAVE_AS_FILE,
 } = require('../actions/FileActions');
 
 const {
@@ -67,11 +70,18 @@ const actionHandlers = {
     win.close();
   },
 
-  [ACTION_OPEN_FILE](win, dispatch) {
+  [ACTION_OPEN_FILE](win, {dispatch}) {
     this.open(dispatch);
   },
 
-  [ACTION_OPEN_URL](win, dispatch, {url}) {
+  [ACTION_SAVE_AS_FILE](win, {dispatch, getState}) {
+    if (!getState().page.image) {
+      return;
+    }
+    this.saveAs(dispatch);
+  },
+
+  [ACTION_OPEN_URL](win, {dispatch}, {url}) {
     shell.openExternal(url);
   },
 
@@ -100,6 +110,15 @@ const actionHandlers = {
   },
 };
 
+const supportedFileTypes = ['jpg', 'jpeg', 'png'];
+const supportedFilters = [
+  {
+    name: `Image Files (${supportedFileTypes.map((e) => '*.' + e).join(', ')})`,
+    extensions: supportedFileTypes,
+  },
+  {name: 'All Files (*.*)', extensions: ['*']},
+];
+
 class Remote {
   constructor() {
   }
@@ -109,13 +128,13 @@ class Remote {
   }
 
   middleware() {
-    return ({dispatch}) => next => action => {
+    return (store) => next => action => {
       const handler = actionHandlers[action.type];
 
       if (handler) {
         const win = BrowserWindow.getFocusedWindow();
 
-        handler.call(this, win, dispatch, action);
+        handler.call(this, win, store, action);
       }
 
       next(action);
@@ -123,24 +142,35 @@ class Remote {
   }
 
   open(dispatch) {
-    const supported = ['jpg', 'jpeg', 'png'];
     const files = dialog.showOpenDialog({
       title: 'Open Image',
       properties: ['openFile', 'createDirectory'],
-      filters: [
-        {name: `Image Files (${supported.map((e) => '*.' + e).join(', ')})`, extensions: supported},
-        {name: 'All Files (*.*)', extensions: ['*']},
-      ],
+      filters: supportedFilters,
     });
 
-    if (!files) {
+    this.checkSingleFile(files && files[0], (file) => dispatch(loadImage(file)));
+  }
+
+  saveAs(dispatch) {
+    const file = dialog.showSaveDialog({
+      title: 'Save Image',
+      filters: supportedFilters,
+    });
+
+    this.checkSingleFile(file, (file) => {
+      dispatch(changeImagePath(file));
+      dispatch(saveFile());
+    });
+  }
+
+  checkSingleFile(file, success) {
+    if (!file) {
       return;
     }
 
-    const file = files[0];
     const filetype = path.extname(file).slice(1);
-    if (supported.includes(filetype)) {
-      dispatch(loadImage(file));
+    if (supportedFileTypes.includes(filetype)) {
+      success(file);
     }
     else {
       dialog.showErrorBox('Unsupported File Type',

@@ -7,6 +7,8 @@ const {
 } = require('../actions/ImageActions');
 
 const {
+  saveFileAs,
+  ACTION_SAVE_FILE,
   ACTION_CLOSE_FILE,
 } = require('../actions/FileActions');
 
@@ -19,6 +21,23 @@ const actionHandlers = {
 
   [ACTION_CLOSE_FILE]() {
     this.send('Close');
+  },
+
+  [ACTION_SAVE_FILE](action, {dispatch, getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    const path = image.path;
+    if (!path) {
+      dispatch(saveFileAs());
+    }
+    else {
+      this.send({
+        Save: {path},
+      });
+    }
   },
 };
 
@@ -91,10 +110,10 @@ class ImageWorker {
   }
 
   middleware() {
-    return (/*store*/) => (next) => (action) => {
+    return (store) => (next) => (action) => {
       const handler = actionHandlers[action.type];
       if (handler) {
-        handler.call(this, action);
+        handler.call(this, action, store);
       }
 
       next(action);
@@ -102,6 +121,7 @@ class ImageWorker {
   }
 
   send(message) {
+    console.info('Sending to image worker', message);
     this.worker.stdin.write(JSON.stringify(message) + '\n');
   }
 }
