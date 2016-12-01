@@ -6,6 +6,9 @@ exports.ACTION_DESTROY_IMAGE = Actions.register('image-destroy');
 exports.ACTION_CHANGE_IMAGE_PATH = Actions.register('image-change-path');
 exports.ACTION_FLIP_IMAGE_HORIZONTAL = Actions.register('image-fliph');
 exports.ACTION_FLIP_IMAGE_VERTICAL = Actions.register('image-flipv');
+exports.ACTION_ROTATE_IMAGE_90_CLOCKWISE = Actions.register('image-rotate-90-clockwise');
+exports.ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE = Actions.register('image-rotate-90-counterclockwise');
+exports.ACTION_ROTATE_IMAGE_180 = Actions.register('image-rotate-180');
 
 exports.updateImage = Actions.registerActionCreator(
   exports.ACTION_UPDATE_IMAGE,
@@ -41,4 +44,16 @@ exports.flipHorizontal = Actions.registerActionCreator(
 
 exports.flipVertical = Actions.registerActionCreator(
   exports.ACTION_FLIP_IMAGE_VERTICAL
+);
+
+exports.rotate90Clockwise = Actions.registerActionCreator(
+  exports.ACTION_ROTATE_IMAGE_90_CLOCKWISE
+);
+
+exports.rotate90Counterclockwise = Actions.registerActionCreator(
+  exports.ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE
+);
+
+exports.rotate180 = Actions.registerActionCreator(
+  exports.ACTION_ROTATE_IMAGE_180
 );

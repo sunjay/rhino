@@ -21,6 +21,9 @@ const {
 const {
   flipHorizontal,
   flipVertical,
+  rotate90Clockwise,
+  rotate90Counterclockwise,
+  rotate180,
 } = require('./actions/ImageActions');
 
 const alert = global.alert || console.error;
@@ -136,7 +139,7 @@ module.exports = (dispatch) => [
         accelerator: 'CommandOrControl+H',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          dispatch(rotate90Clockwise());
         },
       },
       {
@@ -144,7 +147,7 @@ module.exports = (dispatch) => [
         accelerator: 'CommandOrControl+G',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          dispatch(rotate90Counterclockwise());
         },
       },
       {
@@ -152,7 +155,7 @@ module.exports = (dispatch) => [
         accelerator: 'CommandOrControl+J',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          dispatch(rotate180());
         },
       },
     ],

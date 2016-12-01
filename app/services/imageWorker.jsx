@@ -6,6 +6,9 @@ const {
   ACTION_LOAD_IMAGE,
   ACTION_FLIP_IMAGE_HORIZONTAL,
   ACTION_FLIP_IMAGE_VERTICAL,
+  ACTION_ROTATE_IMAGE_90_CLOCKWISE,
+  ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE,
+  ACTION_ROTATE_IMAGE_180,
 } = require('../actions/ImageActions');
 
 const {
@@ -58,6 +61,33 @@ const actionHandlers = {
     }
 
     this.send('FlipVertical');
+  },
+
+  [ACTION_ROTATE_IMAGE_90_CLOCKWISE](action, {getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    this.send('Rotate90');
+  },
+
+  [ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE](action, {getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    this.send('Rotate270');
+  },
+
+  [ACTION_ROTATE_IMAGE_180](action, {getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    this.send('Rotate180');
   },
 };
 
