@@ -13,7 +13,7 @@ const mapStateToProps = ({page: {image, view}}, {modal}) => ({
   modal,
   image,
   view,
-  isFullScreen: view.fullscreen,
+  isFullScreen: modal ? false : view.fullscreen,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -88,7 +88,7 @@ const MenuBar = ({
 MenuBar.propTypes = {
   isFullScreen: React.PropTypes.bool.isRequired,
   image: React.PropTypes.object,
-  view: React.PropTypes.object.isRequired,
+  view: React.PropTypes.object,
   dispatch: React.PropTypes.func.isRequired,
   minimizeWindow: React.PropTypes.func.isRequired,
   maximizeWindow: React.PropTypes.func.isRequired,
