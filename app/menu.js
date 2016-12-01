@@ -203,7 +203,7 @@ module.exports = (dispatch) => [
       },
       {type: 'separator'},
       {
-        label: 'About Rhino',
+        label: 'About Rhino Editor',
         click() {
           dispatch(aboutRhino());
         },

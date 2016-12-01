@@ -1,11 +1,18 @@
-const {app, BrowserWindow} = require('electron');
-
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
+
+const {
+  app,
+  nativeImage,
+  BrowserWindow,
+} = require('electron');
 
 const localShortcut = require('electron-localshortcut');
 
 const menu = require('./menu');
+
+const logo = nativeImage.createFromPath(path.join(__dirname, '../assets/images/logo.png'));
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -20,6 +27,7 @@ function createWindow () {
     height: 600,
     minWidth: 640,
     minHeight: 480,
+    icon: logo,
   });
 
   mainWindow.once('ready-to-show', () => {
