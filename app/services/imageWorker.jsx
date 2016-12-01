@@ -17,6 +17,15 @@ const {
   ACTION_CLOSE_FILE,
 } = require('../actions/FileActions');
 
+const requireImage = (handler) => function(action, store) {
+  const image = store.getState().page.image;
+  if (!image) {
+    return;
+  }
+
+  return handler.call(this, image, action, store);
+};
+
 const actionHandlers = {
   [ACTION_LOAD_IMAGE]({path}) {
     this.send({
@@ -28,12 +37,7 @@ const actionHandlers = {
     this.send('Close');
   },
 
-  [ACTION_SAVE_FILE](action, {dispatch, getState}) {
-    const image = getState().page.image;
-    if (!image) {
-      return;
-    }
-
+  [ACTION_SAVE_FILE]: requireImage(function(image, action, {dispatch}) {
     const path = image.path;
     if (!path) {
       dispatch(saveFileAs());
@@ -43,52 +47,27 @@ const actionHandlers = {
         Save: {path},
       });
     }
-  },
+  }),
 
-  [ACTION_FLIP_IMAGE_HORIZONTAL](action, {getState}) {
-    const image = getState().page.image;
-    if (!image) {
-      return;
-    }
-
+  [ACTION_FLIP_IMAGE_HORIZONTAL]: requireImage(function() {
     this.send('FlipHorizontal');
-  },
+  }),
 
-  [ACTION_FLIP_IMAGE_VERTICAL](action, {getState}) {
-    const image = getState().page.image;
-    if (!image) {
-      return;
-    }
-
+  [ACTION_FLIP_IMAGE_VERTICAL]: requireImage(function() {
     this.send('FlipVertical');
-  },
+  }),
 
-  [ACTION_ROTATE_IMAGE_90_CLOCKWISE](action, {getState}) {
-    const image = getState().page.image;
-    if (!image) {
-      return;
-    }
-
+  [ACTION_ROTATE_IMAGE_90_CLOCKWISE]: requireImage(function() {
     this.send('Rotate90');
-  },
+  }),
 
-  [ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE](action, {getState}) {
-    const image = getState().page.image;
-    if (!image) {
-      return;
-    }
-
+  [ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE]: requireImage(function() {
     this.send('Rotate270');
-  },
+  }),
 
-  [ACTION_ROTATE_IMAGE_180](action, {getState}) {
-    const image = getState().page.image;
-    if (!image) {
-      return;
-    }
-
+  [ACTION_ROTATE_IMAGE_180]: requireImage(function() {
     this.send('Rotate180');
-  },
+  }),
 };
 
 class ImageWorker {
