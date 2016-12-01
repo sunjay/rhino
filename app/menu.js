@@ -16,6 +16,8 @@ const {
   reloadWindow,
   openURL,
   aboutRhino,
+  showResizeDialog,
+  showResizeCanvasDialog,
 } = require('./actions/WindowActions');
 
 const {
@@ -107,7 +109,7 @@ module.exports = (dispatch) => [
         accelerator: 'CommandOrControl+R',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          dispatch(showResizeDialog());
         },
       },
       {
@@ -115,7 +117,7 @@ module.exports = (dispatch) => [
         accelerator: 'CommandOrControl+Shift+R',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          dispatch(showResizeCanvasDialog());
         },
       },
       {type: 'separator'},

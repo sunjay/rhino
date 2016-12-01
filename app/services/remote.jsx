@@ -33,6 +33,8 @@ const {
   ACTION_TOGGLE_FULLSCREEN,
   ACTION_OPEN_URL,
   ACTION_SHOW_ABOUT_SCREEN,
+  ACTION_SHOW_RESIZE_DIALOG,
+  ACTION_SHOW_RESIZE_CANVAS_DIALOG,
 } = require('../actions/WindowActions');
 
 const actionHandlers = {
@@ -86,27 +88,15 @@ const actionHandlers = {
   },
 
   [ACTION_SHOW_ABOUT_SCREEN](win) {
-    const child = new BrowserWindow({
-      parent: win,
-      modal: true,
-      show: false,
-      frame: false,
-      resizable: false,
-      width: 480,
-      height: 400,
-    });
-    child.setMenu(null);
+    this.showModal(win, '/about', 480, 400);
+  },
 
-    child.loadURL(url.format({
-      protocol: 'file:',
-      pathname: path.join(process.env.APP_ROOT, 'index.html'),
-      hash: '#/about',
-      slashes: true,
-    }));
+  [ACTION_SHOW_RESIZE_DIALOG](win) {
+    this.showModal(win, '/resize', 480, 400);
+  },
 
-    child.once('ready-to-show', () => {
-      child.show();
-    });
+  [ACTION_SHOW_RESIZE_CANVAS_DIALOG](win) {
+    this.showModal(win, '/canvas-size', 480, 400);
   },
 };
 
@@ -139,6 +129,30 @@ class Remote {
 
       next(action);
     };
+  }
+
+  showModal(win, routePath, width, height) {
+    const child = new BrowserWindow({
+      parent: win,
+      modal: true,
+      show: false,
+      frame: false,
+      resizable: false,
+      width: width,
+      height: height,
+    });
+    child.setMenu(null);
+
+    child.loadURL(url.format({
+      protocol: 'file:',
+      pathname: path.join(process.env.APP_ROOT, 'index.html'),
+      hash: `#${routePath}`,
+      slashes: true,
+    }));
+
+    child.once('ready-to-show', () => {
+      child.show();
+    });
   }
 
   open(dispatch) {
