@@ -91,8 +91,12 @@ impl Project {
         Ok(())
     }
 
+    pub fn can_undo(&self) -> bool {
+        !self.undo_stack.is_empty()
+    }
+
     pub fn undo(&mut self) -> CommandResult {
-        if self.undo_stack.is_empty() {
+        if !self.can_undo() {
             return Err("Nothing to undo".to_owned());
         }
 
@@ -104,8 +108,12 @@ impl Project {
         Ok(())
     }
 
+    pub fn can_redo(&self) -> bool {
+        !self.redo_stack.is_empty()
+    }
+
     pub fn redo(&mut self) -> CommandResult {
-        if self.redo_stack.is_empty() {
+        if !self.can_redo() {
             return Err("Nothing to redo".to_owned());
         }
 

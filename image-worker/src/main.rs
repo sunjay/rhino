@@ -28,6 +28,8 @@ pub enum Response {
         path: Option<String>,
         width: u32,
         height: u32,
+        can_undo: bool,
+        can_redo: bool,
         data: Vec<u8>,
     },
     ProjectClosed,
@@ -101,6 +103,8 @@ fn send_success(project: &Project) {
         path: project.get_path(),
         width: width,
         height: height,
+        can_undo: project.can_undo(),
+        can_redo: project.can_redo(),
         data: img.raw_pixels(),
     });
 }
