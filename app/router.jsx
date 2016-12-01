@@ -31,6 +31,7 @@ const createRouter = (history, store) => (
       <IndexRedirect to='/editor' />
       {createRoute({store, routeKey: 'editor'})}
       {createRoute({store, routeKey: 'about'})}
+      {createRoute({store, routeKey: 'resize'})}
       <Route path='*' component={NotFound}/>
     </Route>
   </Router>

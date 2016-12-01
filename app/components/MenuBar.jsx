@@ -5,13 +5,13 @@ const menu = require('../menu');
 
 const Navbar = require('./Navbar');
 const NavbarButton = require('./NavbarButton');
+const NavbarRight = require('./NavbarRight');
 const Menu = require('./Menu');
 const MenuItem = require('./MenuItem');
 const MenuSeparator = require('./MenuSeparator');
 
 const {
   menuBar,
-  menuBarRight,
   menuBarLarge,
   menuBarFullScreen,
 } = require('../../scss/components/menuBar.scss');
@@ -26,6 +26,7 @@ const MenuBar = ({
   closeWindow,
   toggleFullscreen,
   modal = false,
+  title = null,
 }) => (
   <Navbar className={classNames({
     [menuBar]: true,
@@ -56,7 +57,12 @@ const MenuBar = ({
       </Menu>
     )) : null}
 
-    <div className={menuBarRight}>
+    {modal && title ?
+      <span>{title}</span>
+      : null
+    }
+
+    <NavbarRight>
       {isFullScreen ?
         <NavbarButton onClick={toggleFullscreen}>
           Exit Fullscreen (F11)
@@ -81,7 +87,7 @@ const MenuBar = ({
         </NavbarButton>
         : null
       }
-    </div>
+    </NavbarRight>
   </Navbar>
 );
 
@@ -95,6 +101,7 @@ MenuBar.propTypes = {
   closeWindow: React.PropTypes.func.isRequired,
   toggleFullscreen: React.PropTypes.func.isRequired,
   modal: React.PropTypes.bool,
+  title: React.PropTypes.string,
 };
 
 module.exports = MenuBar;

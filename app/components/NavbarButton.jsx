@@ -5,7 +5,7 @@ const Button = require('./Button');
 const {navbarButton} = require('../../scss/components/navbar.scss');
 
 const NavbarButton = ({children, ...props}) => (
-  <Button {...props} style='navbar' size='xs' className={navbarButton}>
+  <Button style='navbar' size='xs' className={navbarButton} {...props}>
     {children}
   </Button>
 );

@@ -100,7 +100,7 @@ const actionHandlers = {
     }
 
     this.showModal(win, {dispatch, getState},
-      `/resize?width=${image.width}&height=${image.height}`, 480, 400);
+      `/resize?width=${image.width}&height=${image.height}`, 300, 250);
   },
 
   [ACTION_SHOW_RESIZE_CANVAS_DIALOG](win, {dispatch, getState}) {

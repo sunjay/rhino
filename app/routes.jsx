@@ -1,5 +1,6 @@
 const Editor = require('./components/pages/Editor');
 const About = require('./components/pages/About');
+const ResizeImage = require('./components/pages/ResizeImage');
 
 const routes = Object.freeze({
   editor: Object.freeze({
@@ -19,6 +20,15 @@ const routes = Object.freeze({
     component: About,
     onEnter: About.onPageEnter,
     onLeave: About.onPageLeave,
+  }),
+  resize: Object.freeze({
+    title: 'Resize',
+    path: 'resize',
+    href: '#/resize',
+    pattern: /^\/resize\/?.*/,
+    component: ResizeImage,
+    onEnter: ResizeImage.onPageEnter,
+    onLeave: ResizeImage.onPageLeave,
   }),
 });
 
