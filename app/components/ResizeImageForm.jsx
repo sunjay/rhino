@@ -43,6 +43,16 @@ const ResizeImageForm = React.createClass({
     });
   },
 
+  validSize(value) {
+    value = parseFloat(value);
+    return value && Number.isInteger(value) && value > 0;
+  },
+
+  validate() {
+    const {width, height} = this.state;
+    return this.validSize(width) && this.validSize(height);
+  },
+
   render() {
     const {onCancel} = this.props;
     const {width, height, ratio} = this.state;
@@ -51,13 +61,13 @@ const ResizeImageForm = React.createClass({
       <Form>
         <Fieldset>
           <legend>Pixel Dimensions:</legend>
-          <FormGroup layout='horizontal'>
+          <FormGroup layout='horizontal' isValid={this.validSize(width)}>
             <Label>Width:&nbsp;</Label>
             <Input type='number' min={1} value={width}
               onChange={(e) => this.onChangeDimension('width', e)} />
             <FormStatic>pixels</FormStatic>
           </FormGroup>
-          <FormGroup layout='horizontal'>
+          <FormGroup layout='horizontal' isValid={this.validSize(height)}>
             <Label>Height:</Label>
             <Input type='number' min={1} value={height}
               onChange={(e) => this.onChangeDimension('height', e)} />

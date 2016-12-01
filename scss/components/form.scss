@@ -20,6 +20,12 @@
     flex-direction: column;
   }
 
+  &Invalid {
+    background-color: $state-danger-bg;
+    border-color: $state-danger-text;
+    color: $state-danger-text;
+  }
+
   &:last-child {
     margin-bottom: 0;
   }
