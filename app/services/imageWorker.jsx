@@ -2,8 +2,25 @@ const spawn = require('child_process').spawn;
 
 const {
   updateImage,
+  destroyImage,
   ACTION_LOAD_IMAGE,
 } = require('../actions/ImageActions');
+
+const {
+  ACTION_CLOSE_FILE,
+} = require('../actions/FileActions');
+
+const actionHandlers = {
+  [ACTION_LOAD_IMAGE]({path}) {
+    this.send({
+      Load: {path},
+    });
+  },
+
+  [ACTION_CLOSE_FILE]() {
+    this.send('Close');
+  },
+};
 
 class ImageWorker {
   constructor() {
@@ -59,7 +76,10 @@ class ImageWorker {
   processResponse(dispatch, data) {
     const response = JSON.parse(data);
 
-    if (response.Success) {
+    if (response === 'ProjectClosed') {
+      dispatch(destroyImage());
+    }
+    else if (response.Success) {
       const {path, width, height, data} = response.Success;
       dispatch(updateImage(path, width, height, data));
     }
@@ -72,18 +92,13 @@ class ImageWorker {
 
   middleware() {
     return (/*store*/) => (next) => (action) => {
-      if (action.type === ACTION_LOAD_IMAGE) {
-        this.open(action.path);
+      const handler = actionHandlers[action.type];
+      if (handler) {
+        handler.call(this, action);
       }
 
       next(action);
     };
-  }
-
-  open(path) {
-    this.send({
-      Load: {path},
-    });
   }
 
   send(message) {
