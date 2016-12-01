@@ -18,6 +18,8 @@ const {
 
 const MenuBar = ({
   isFullScreen,
+  image,
+  view,
   dispatch,
   minimizeWindow,
   maximizeWindow,
@@ -32,15 +34,19 @@ const MenuBar = ({
     {!modal ? menu(dispatch).map(({label, submenu}) => (
       <Menu key={label} label={label}>
         {submenu ?
-          submenu.map(({type, label, accelerator, click}, i) => {
+          submenu.map(({type, label, accelerator, click, disabled}, i) => {
             if (type === 'separator') {
               return (
                 <MenuSeparator key={'sep' + i} />
               );
             }
             else {
+              const disable = disabled ? disabled({image, view}) : false;
+              if (disable) {
+                click = (e) => e.stopPropagation();
+              }
               return (
-                <MenuItem key={label} label={label}
+                <MenuItem key={label} label={label} disabled={disable}
                   accelerator={accelerator} onClick={click} />
               );
             }
@@ -81,6 +87,8 @@ const MenuBar = ({
 
 MenuBar.propTypes = {
   isFullScreen: React.PropTypes.bool.isRequired,
+  image: React.PropTypes.object,
+  view: React.PropTypes.object.isRequired,
   dispatch: React.PropTypes.func.isRequired,
   minimizeWindow: React.PropTypes.func.isRequired,
   maximizeWindow: React.PropTypes.func.isRequired,

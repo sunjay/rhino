@@ -20,6 +20,8 @@ const {
 
 const alert = global.alert || console.error;
 
+const noImage = ({image}) => !image;
+
 module.exports = (dispatch) => [
   {
     label: 'File',
@@ -34,6 +36,7 @@ module.exports = (dispatch) => [
       {
         label: 'Save...',
         accelerator: 'CommandOrControl+S',
+        disabled: noImage,
         click() {
           dispatch(saveFile());
         },
@@ -41,6 +44,7 @@ module.exports = (dispatch) => [
       {
         label: 'Save As...',
         accelerator: 'CommandOrControl+Shift+S',
+        disabled: noImage,
         click() {
           dispatch(saveFileAs());
         },
@@ -49,6 +53,7 @@ module.exports = (dispatch) => [
       {
         label: 'Close',
         accelerator: 'CommandOrControl+W',
+        disabled: noImage,
         click() {
           dispatch(closeFile());
         },
@@ -62,6 +67,7 @@ module.exports = (dispatch) => [
       {
         label: 'Undo',
         accelerator: 'CommandOrControl+Z',
+        disabled: noImage,
         click() {
           dispatch(undo());
         },
@@ -69,6 +75,7 @@ module.exports = (dispatch) => [
       {
         label: 'Redo',
         accelerator: 'CommandOrControl+Shift+Z',
+        disabled: noImage,
         click() {
           dispatch(redo());
         },
@@ -82,6 +89,7 @@ module.exports = (dispatch) => [
       {
         label: 'Crop...',
         accelerator: 'CommandOrControl+Shift+X',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },
@@ -89,6 +97,7 @@ module.exports = (dispatch) => [
       {
         label: 'Resize...',
         accelerator: 'CommandOrControl+R',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },
@@ -96,6 +105,7 @@ module.exports = (dispatch) => [
       {
         label: 'Canvas Size...',
         accelerator: 'CommandOrControl+Shift+R',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },
@@ -103,12 +113,14 @@ module.exports = (dispatch) => [
       {type: 'separator'},
       {
         label: 'Flip Horizontal',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },
       },
       {
         label: 'Flip Vertical',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },
@@ -117,6 +129,7 @@ module.exports = (dispatch) => [
       {
         label: 'Rotate 90\u00B0 Clockwise',
         accelerator: 'CommandOrControl+H',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },
@@ -124,6 +137,7 @@ module.exports = (dispatch) => [
       {
         label: 'Rotate 90\u00B0 Counterclockwise',
         accelerator: 'CommandOrControl+G',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },
@@ -131,6 +145,7 @@ module.exports = (dispatch) => [
       {
         label: 'Rotate 180\u00B0',
         accelerator: 'CommandOrControl+J',
+        disabled: noImage,
         click() {
           alert('Not implemented');
         },

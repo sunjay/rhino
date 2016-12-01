@@ -71,6 +71,11 @@
       border-top: $panel-border;
     }
 
+    &Disabled {
+      color: rgba($panel-color, 0.5);
+      cursor: not-allowed;
+    }
+
     .menuItemRight {
       display: inline-block;
       padding-left: 30px;

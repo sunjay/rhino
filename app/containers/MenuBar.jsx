@@ -9,9 +9,11 @@ const {
   toggleFullscreen,
 } = require('../actions/WindowActions');
 
-const mapStateToProps = ({page: {view: {fullscreen: isFullScreen}}}, {modal}) => ({
-  isFullScreen,
+const mapStateToProps = ({page: {image, view}}, {modal}) => ({
   modal,
+  image,
+  view,
+  isFullScreen: view.fullscreen,
 });
 
 const mapDispatchToProps = (dispatch) => ({
