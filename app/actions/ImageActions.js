@@ -16,6 +16,8 @@ exports.updateImage = Actions.registerActionCreator(
     'path',
     'width',
     'height',
+    'canUndo',
+    'canRedo',
     'data',
   ]
 );

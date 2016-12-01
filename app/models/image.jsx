@@ -5,6 +5,8 @@ const ImageRecord = createRecord({
   path: null,
   width: undefined,
   height: undefined,
+  canUndo: false,
+  canRedo: false,
   data: undefined,
 }));
 

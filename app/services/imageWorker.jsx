@@ -12,6 +12,11 @@ const {
 } = require('../actions/ImageActions');
 
 const {
+  ACTION_UNDO,
+  ACTION_REDO,
+} = require('../actions/EditActions');
+
+const {
   saveFileAs,
   ACTION_SAVE_FILE,
   ACTION_CLOSE_FILE,
@@ -67,6 +72,18 @@ const actionHandlers = {
 
   [ACTION_ROTATE_IMAGE_180]: requireImage(function() {
     this.send('Rotate180');
+  }),
+
+  [ACTION_UNDO]: requireImage(function(image) {
+    if (image.canUndo) {
+      this.send('Undo');
+    }
+  }),
+
+  [ACTION_REDO]: requireImage(function(image) {
+    if (image.canRedo) {
+      this.send('Redo');
+    }
   }),
 };
 
@@ -128,8 +145,15 @@ class ImageWorker {
       dispatch(destroyImage());
     }
     else if (response.Success) {
-      const {path, width, height, data} = response.Success;
-      dispatch(updateImage(path, width, height, data));
+      const {
+        path,
+        width,
+        height,
+        data,
+        can_undo,
+        can_redo,
+      } = response.Success;
+      dispatch(updateImage(path, width, height, can_undo, can_redo, data));
     }
     else {
       console.error('image worker response', response);

@@ -75,7 +75,7 @@ module.exports = (dispatch) => [
       {
         label: 'Undo',
         accelerator: 'CommandOrControl+Z',
-        disabled: noImage,
+        disabled: ({image}) => noImage({image}) || !image.canUndo,
         click() {
           dispatch(undo());
         },
@@ -83,7 +83,7 @@ module.exports = (dispatch) => [
       {
         label: 'Redo',
         accelerator: 'CommandOrControl+Shift+Z',
-        disabled: noImage,
+        disabled: ({image}) => noImage({image}) || !image.canRedo,
         click() {
           dispatch(redo());
         },

@@ -9,8 +9,8 @@ const {
 } = require('../actions/ImageActions');
 
 module.exports = createReducer(null, {
-  [ACTION_UPDATE_IMAGE](state, {path, width, height, data}) {
-    return new Image({path, width, height, data});
+  [ACTION_UPDATE_IMAGE](state, {path, width, height, canUndo, canRedo, data}) {
+    return new Image({path, width, height, canUndo, canRedo, data});
   },
 
   [ACTION_CHANGE_IMAGE_PATH](state, {path}) {
