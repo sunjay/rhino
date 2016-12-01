@@ -6,6 +6,8 @@ const {
 
 const {
   ACTION_TOGGLE_FULLSCREEN,
+  ACTION_MODAL_OPEN,
+  ACTION_MODAL_CLOSED,
 } = require('../actions/WindowActions');
 
 const IMAGE_PATH = Symbol('image path');
@@ -20,6 +22,7 @@ const initialViewState = Object.freeze({
 module.exports = createReducer({
   ...initialViewState,
   fullscreen: false,
+  isModalOpen: false,
 }, {
   [ACTION_UPDATE_IMAGE](state, {path}) {
     const prevPath = state[IMAGE_PATH];
@@ -38,6 +41,20 @@ module.exports = createReducer({
     return Object.freeze({
       ...state,
       fullscreen: !state.fullscreen,
+    });
+  },
+
+  [ACTION_MODAL_OPEN](state) {
+    return Object.freeze({
+      ...state,
+      isModalOpen: true,
+    });
+  },
+
+  [ACTION_MODAL_CLOSED](state) {
+    return Object.freeze({
+      ...state,
+      isModalOpen: false,
     });
   },
 });

@@ -25,6 +25,8 @@ const {
 } = require('../actions/FileActions');
 
 const {
+  modalOpen,
+  modalClosed,
   ACTION_MINIMIZE_WINDOW,
   ACTION_MAXIMIZE_WINDOW,
   ACTION_CLOSE_WINDOW,
@@ -87,16 +89,28 @@ const actionHandlers = {
     shell.openExternal(url);
   },
 
-  [ACTION_SHOW_ABOUT_SCREEN](win) {
-    this.showModal(win, '/about', 480, 400);
+  [ACTION_SHOW_ABOUT_SCREEN](win, store) {
+    this.showModal(win, store, '/about', 480, 400);
   },
 
-  [ACTION_SHOW_RESIZE_DIALOG](win) {
-    this.showModal(win, '/resize', 480, 400);
+  [ACTION_SHOW_RESIZE_DIALOG](win, {dispatch, getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    this.showModal(win, {dispatch, getState},
+      `/resize?width=${image.width}&height=${image.height}`, 480, 400);
   },
 
-  [ACTION_SHOW_RESIZE_CANVAS_DIALOG](win) {
-    this.showModal(win, '/canvas-size', 480, 400);
+  [ACTION_SHOW_RESIZE_CANVAS_DIALOG](win, {dispatch, getState}) {
+    const image = getState().page.image;
+    if (!image) {
+      return;
+    }
+
+    this.showModal(win, {dispatch, getState},
+      `/canvas-size?width=${image.width}&height=${image.height}`, 480, 400);
   },
 };
 
@@ -131,7 +145,12 @@ class Remote {
     };
   }
 
-  showModal(win, routePath, width, height) {
+  showModal(win, {getState, dispatch}, routePath, width, height) {
+    // Cannot open a modal while another is open
+    if (getState().page.view.isModalOpen) {
+      return;
+    }
+
     const child = new BrowserWindow({
       parent: win,
       modal: true,
@@ -152,6 +171,11 @@ class Remote {
 
     child.once('ready-to-show', () => {
       child.show();
+    });
+
+    dispatch(modalOpen());
+    child.once('closed', () => {
+      dispatch(modalClosed());
     });
   }
 
