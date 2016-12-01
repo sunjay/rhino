@@ -3487,6 +3487,10 @@ react-click-outside@tj/react-click-outside:
   version "1.1.0"
   resolved "https://codeload.github.com/tj/react-click-outside/tar.gz/82d51114d841a151e6285ac542d6fd98690910e6"
 
+react-close-on-escape@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-close-on-escape/-/react-close-on-escape-1.0.3.tgz#765b25637e84999f797de1b58f73929ec8438014"
+
 react-dom@^15.4.0:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.1.tgz#d54c913261aaedb17adc20410d029dcc18a1344a"

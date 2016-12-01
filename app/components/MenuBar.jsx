@@ -1,4 +1,5 @@
 const React = require('react');
+const CloseOnEscape = require('react-close-on-escape').default;
 const classNames = require('classnames');
 
 const menu = require('../menu');
@@ -32,6 +33,10 @@ const MenuBar = ({
     [menuBar]: true,
     [menuBarFullScreen]: isFullScreen,
   })}>
+    {modal ?
+      <CloseOnEscape onEscape={closeWindow}><span /></CloseOnEscape>
+      : null
+    }
     {!modal ? menu(dispatch).map(({label, submenu}) => (
       <Menu key={label} label={label}>
         {submenu ?
