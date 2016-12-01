@@ -53,7 +53,7 @@ function createWindow () {
     mainWindow = null;
   });
 
-  registerAccelerators(menu(dispatch));
+  registerAccelerators(mainWindow, menu(dispatch));
 }
 
 // This method will be called when Electron has finished
@@ -82,14 +82,14 @@ function dispatch(action) {
   mainWindow.webContents.send('action', action);
 }
 
-function registerAccelerators(menuItems) {
+function registerAccelerators(win, menuItems) {
   menuItems.forEach((item) => {
     if (item.accelerator && item.click) {
-      localShortcut.register(item.accelerator, item.click);
+      localShortcut.register(win, item.accelerator, item.click);
     }
 
     if (item.submenu) {
-      registerAccelerators(item.submenu);
+      registerAccelerators(win, item.submenu);
     }
   });
 }
