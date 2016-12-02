@@ -13,3 +13,6 @@ linters:
 
   QualifyingElement:
     enabled: false
+
+  PlaceholderInExtend:
+    enabled: false

@@ -1,0 +1,46 @@
+// Additions to the icons provided by font-awesome
+@mixin icon($icon) {
+  @include fa-icon;
+  @extend .fa;
+
+  &::before {
+    @extend .fa-#{$icon}:before;
+  }
+}
+
+// Convenience classes for anchor grid in canvas resize dialog
+.fa-arrow-nw {
+  @include icon(arrow-up);
+  transform: rotate(-45deg);
+}
+
+.fa-arrow-n {
+  @include icon(arrow-up);
+}
+
+.fa-arrow-ne {
+  @include icon(arrow-up);
+  transform: rotate(45deg);
+}
+
+.fa-arrow-w {
+  @include icon(arrow-left);
+}
+
+.fa-arrow-e {
+  @include icon(arrow-right);
+}
+
+.fa-arrow-sw {
+  @include icon(arrow-down);
+  transform: rotate(45deg);
+}
+
+.fa-arrow-s {
+  @include icon(arrow-down);
+}
+
+.fa-arrow-se {
+  @include icon(arrow-down);
+  transform: rotate(-45deg);
+}

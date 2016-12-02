@@ -83,8 +83,13 @@ const ResizeCanvasForm = React.createClass({
   },
 
   render() {
-    const {onCancel, onSubmit} = this.props;
+    const {onCancel, onSubmit, initialWidth, initialHeight} = this.props;
     const {width, height, ratio, anchor} = this.state;
+
+    // sign is used to flip the arrows in the anchor grid
+    // We default to 1
+    const xSign = Math.sign(width - initialWidth) || 1;
+    const ySign = Math.sign(height - initialHeight) || 1;
 
     const submit = (e) => {
       e.preventDefault();
@@ -124,7 +129,7 @@ const ResizeCanvasForm = React.createClass({
             <div>
               <AnchorSelect value={anchor} onChange={this.onChangeAnchor} />
             </div>
-            <AnchorGrid value={anchor} onChange={this.onChangeAnchor} />
+            <AnchorGrid value={anchor} onChange={this.onChangeAnchor} xSign={xSign} ySign={ySign} />
           </HorizontalLayout>
         </Fieldset>
 
