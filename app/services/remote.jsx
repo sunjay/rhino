@@ -184,7 +184,7 @@ class Remote {
     });
 
     if (process.env.NODE_ENV !== 'production') {
-      child.openDevTools();
+      child.openDevTools({mode: 'undocked'});
     }
   }
 
