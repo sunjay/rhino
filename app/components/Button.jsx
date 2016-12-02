@@ -14,14 +14,16 @@ const Button = ({
 }) => {
   const Element = type ? 'input' : 'div';
   return (
-    <Element {...props} className={classNames({
-      btn: true,
-      [`btn-${style}`]: !!style,
-      [`btn-${size}`]: !!size,
-      ['btn-block']: !!block,
-      ['active']: !!active,
-      ['disabled']: !!disabled,
-    }, className)} value={type && children}>
+    <Element {...props} disabled={disabled}
+      type={type} value={type && children}
+      className={classNames({
+        btn: true,
+        [`btn-${style}`]: !!style,
+        [`btn-${size}`]: !!size,
+        ['btn-block']: !!block,
+        ['active']: !!active,
+        ['disabled']: !!disabled,
+      }, className)}>
       {type ? null : children}
     </Element>
   );

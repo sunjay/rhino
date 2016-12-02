@@ -3,8 +3,8 @@ const classNames = require('classnames');
 
 const {form: formClass} = require('../../scss/components/form.scss');
 
-const Form = ({children, className}) => (
-  <form className={classNames(formClass, className)}>
+const Form = ({children, className, ...props}) => (
+  <form className={classNames(formClass, className)} {...props}>
     {children}
   </form>
 );

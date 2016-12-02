@@ -60,20 +60,29 @@ const ResizeImageForm = React.createClass({
 
   validSize(value) {
     value = parseFloat(value);
-    return value && Number.isInteger(value) && value > 0;
+    return !!value && Number.isInteger(value) && value > 0;
   },
 
   validate() {
+    const {initialWidth, initialHeight} = this.props;
     const {width, height} = this.state;
-    return this.validSize(width) && this.validSize(height);
+    return (
+      initialWidth !== width && initialHeight !== height &&
+      this.validSize(width) && this.validSize(height)
+    );
   },
 
   render() {
     const {onCancel, onSubmit} = this.props;
     const {width, height, ratio} = this.state;
 
+    const submit = (e) => {
+      e.preventDefault();
+      onSubmit(width, height);
+    };
+
     return (
-      <Form>
+      <Form onSubmit={submit}>
         <Fieldset>
           <legend>Pixel Dimensions:</legend>
           <FormGroup layout='horizontal' isValid={this.validSize(width)}>
@@ -102,8 +111,7 @@ const ResizeImageForm = React.createClass({
         <Navbar>
           <NavbarButton onClick={onCancel}>Cancel</NavbarButton>
           <NavbarRight>
-            <NavbarButton style='primary'
-              onClick={() => onSubmit(width, height)}
+            <NavbarButton style='primary' type='submit'
               disabled={!this.validate()}>
               Apply
             </NavbarButton>
