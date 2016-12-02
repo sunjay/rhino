@@ -93,7 +93,7 @@ const ResizeCanvasForm = React.createClass({
 
     const submit = (e) => {
       e.preventDefault();
-      onSubmit(width, height);
+      onSubmit(width, height, anchor);
     };
 
     return (

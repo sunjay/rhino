@@ -1,7 +1,7 @@
 const {connect} = require('react-redux');
 
 const {
-  resizeImage,
+  resizeCanvas,
 } = require('../actions/ImageActions');
 
 const {
@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(closeWindow());
   },
 
-  onSubmit(width, height) {
-    dispatch(sendModalResponse(resizeImage(width, height)));
+  onSubmit(width, height, anchor) {
+    dispatch(sendModalResponse(resizeCanvas(width, height, anchor)));
     dispatch(closeWindow());
   },
 });
