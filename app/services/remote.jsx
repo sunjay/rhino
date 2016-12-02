@@ -177,6 +177,10 @@ class Remote {
     child.once('closed', () => {
       dispatch(modalClosed());
     });
+
+    if (process.env.NODE_ENV !== 'production') {
+      child.openDevTools();
+    }
   }
 
   open(dispatch) {
