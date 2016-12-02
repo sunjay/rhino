@@ -10,13 +10,14 @@ const {
   ACTION_MODAL_CLOSED,
 } = require('../actions/WindowActions');
 
-const IMAGE_PATH = Symbol('image path');
+// Lighter representation of image with only properties relevant to this reducer
+const LIGHT_IMAGE = Symbol('light-image');
 
 const initialViewState = Object.freeze({
   centerX: 0.5,
   centerY: 0.5,
   zoom: 1,
-  [IMAGE_PATH]: null,
+  [LIGHT_IMAGE]: {},
 });
 
 module.exports = createReducer({
@@ -24,16 +25,28 @@ module.exports = createReducer({
   fullscreen: false,
   isModalOpen: false,
 }, {
-  [ACTION_UPDATE_IMAGE](state, {path}) {
-    const prevPath = state[IMAGE_PATH];
+  [ACTION_UPDATE_IMAGE](state, {path, width, height}) {
+    const prev = state[LIGHT_IMAGE];
 
-    if (prevPath !== path) {
+    if (width !== prev.width || height !== prev.height) {
+      // We take the minimum because that is most
+      // likely to allow the image to fit
+      state = {
+        ...state,
+        zoom: Math.min(
+          width / (prev.width || width),
+          height / (prev.height || height)
+        ),
+      };
+    }
+
+    if (path !== prev.path) {
       state = {...state, initialViewState};
     }
 
     return Object.freeze({
       ...state,
-      [IMAGE_PATH]: path,
+      [LIGHT_IMAGE]: {path, width, height},
     });
   },
 
