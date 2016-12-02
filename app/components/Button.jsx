@@ -9,6 +9,7 @@ const Button = ({
   type = null,
   block = false,
   active = false,
+  disabled = false,
   ...props
 }) => {
   const Element = type ? 'input' : 'div';
@@ -19,6 +20,7 @@ const Button = ({
       [`btn-${size}`]: !!size,
       ['btn-block']: !!block,
       ['active']: !!active,
+      ['disabled']: !!disabled,
     }, className)} value={type && children}>
       {type ? null : children}
     </Element>
@@ -36,6 +38,7 @@ Button.propTypes = {
   size: React.PropTypes.oneOf(['xs', 'sm', 'lg']),
   block: React.PropTypes.bool,
   active: React.PropTypes.bool,
+  disabled: React.PropTypes.bool,
 };
 
 module.exports = Button;

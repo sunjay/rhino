@@ -37,6 +37,7 @@ const {
   ACTION_SHOW_ABOUT_SCREEN,
   ACTION_SHOW_RESIZE_DIALOG,
   ACTION_SHOW_RESIZE_CANVAS_DIALOG,
+  ACTION_MODAL_RESPONSE,
 } = require('../actions/WindowActions');
 
 const actionHandlers = {
@@ -111,6 +112,10 @@ const actionHandlers = {
 
     this.showModal(win, {dispatch, getState},
       `/canvas-size?width=${image.width}&height=${image.height}`, 480, 400);
+  },
+
+  [ACTION_MODAL_RESPONSE](win, store, action) {
+    ipc.send('modal', action);
   },
 };
 

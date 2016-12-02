@@ -15,11 +15,13 @@ const ResizeImageForm = React.createClass({
     initialWidth: React.PropTypes.number.isRequired,
     initialHeight: React.PropTypes.number.isRequired,
     onCancel: React.PropTypes.func,
+    onSubmit: React.PropTypes.func,
   },
 
   getDefaultProps() {
     return {
       onCancel() {},
+      onSubmit() {},
     };
   },
 
@@ -67,7 +69,7 @@ const ResizeImageForm = React.createClass({
   },
 
   render() {
-    const {onCancel} = this.props;
+    const {onCancel, onSubmit} = this.props;
     const {width, height, ratio} = this.state;
 
     return (
@@ -100,7 +102,11 @@ const ResizeImageForm = React.createClass({
         <Navbar>
           <NavbarButton onClick={onCancel}>Cancel</NavbarButton>
           <NavbarRight>
-            <NavbarButton style='primary'>Apply</NavbarButton>
+            <NavbarButton style='primary'
+              onClick={() => onSubmit(width, height)}
+              disabled={!this.validate()}>
+              Apply
+            </NavbarButton>
           </NavbarRight>
         </Navbar>
       </Form>

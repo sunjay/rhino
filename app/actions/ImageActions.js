@@ -9,6 +9,7 @@ exports.ACTION_FLIP_IMAGE_VERTICAL = Actions.register('image-flipv');
 exports.ACTION_ROTATE_IMAGE_90_CLOCKWISE = Actions.register('image-rotate-90-clockwise');
 exports.ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE = Actions.register('image-rotate-90-counterclockwise');
 exports.ACTION_ROTATE_IMAGE_180 = Actions.register('image-rotate-180');
+exports.ACTION_RESIZE_IMAGE = Actions.register('image-resize');
 
 exports.updateImage = Actions.registerActionCreator(
   exports.ACTION_UPDATE_IMAGE,
@@ -58,4 +59,12 @@ exports.rotate90Counterclockwise = Actions.registerActionCreator(
 
 exports.rotate180 = Actions.registerActionCreator(
   exports.ACTION_ROTATE_IMAGE_180
+);
+
+exports.resizeImage = Actions.registerActionCreator(
+  exports.ACTION_RESIZE_IMAGE,
+  [
+    'width',
+    'height',
+  ]
 );

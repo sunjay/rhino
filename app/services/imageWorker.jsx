@@ -9,6 +9,7 @@ const {
   ACTION_ROTATE_IMAGE_90_CLOCKWISE,
   ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE,
   ACTION_ROTATE_IMAGE_180,
+  ACTION_RESIZE_IMAGE,
 } = require('../actions/ImageActions');
 
 const {
@@ -72,6 +73,12 @@ const actionHandlers = {
 
   [ACTION_ROTATE_IMAGE_180]: requireImage(function() {
     this.send('Rotate180');
+  }),
+
+  [ACTION_RESIZE_IMAGE]: requireImage(function(image, {width, height}) {
+    this.send({
+      Resize: {width, height},
+    });
   }),
 
   [ACTION_UNDO]: requireImage(function(image) {

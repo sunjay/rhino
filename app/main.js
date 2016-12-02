@@ -5,6 +5,7 @@ const {
   app,
   nativeImage,
   BrowserWindow,
+  ipcMain: ipc,
 } = require('electron');
 
 const localShortcut = require('electron-localshortcut');
@@ -75,6 +76,10 @@ app.on('activate', function() {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipc.on('modal', (e, {response}) => {
+  dispatch(response);
 });
 
 function dispatch(action) {

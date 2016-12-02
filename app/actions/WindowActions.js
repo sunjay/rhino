@@ -12,6 +12,7 @@ exports.ACTION_SHOW_RESIZE_DIALOG = Actions.register('window-show-resize-dialog'
 exports.ACTION_SHOW_RESIZE_CANVAS_DIALOG = Actions.register('window-show-resize-canvas-dialog');
 exports.ACTION_MODAL_OPEN = Actions.register('window-modal-open');
 exports.ACTION_MODAL_CLOSED = Actions.register('window-modal-closed');
+exports.ACTION_MODAL_RESPONSE = Actions.register('window-modal-response');
 
 exports.minimizeWindow = Actions.registerActionCreator(
   exports.ACTION_MINIMIZE_WINDOW
@@ -62,4 +63,11 @@ exports.modalOpen = Actions.registerActionCreator(
 
 exports.modalClosed = Actions.registerActionCreator(
   exports.ACTION_MODAL_CLOSED
+);
+
+exports.sendModalResponse = Actions.registerActionCreator(
+  exports.ACTION_MODAL_RESPONSE,
+  [
+    'response',
+  ]
 );
