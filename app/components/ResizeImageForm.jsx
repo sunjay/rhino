@@ -34,8 +34,8 @@ const ResizeImageForm = React.createClass({
   },
 
   onChangeDimension(dim, event) {
-    const value = event.target.value;
-    if (this.state.ratio && this.validSize(value)) {
+    const value = Number(event.target.value);
+    if (!isNaN(value) && this.state.ratio && this.validSize(value)) {
       const {initialWidth: width, initialHeight: height} = this.props;
 
       const other = dim === 'width' ? 'height' : 'width';
@@ -67,8 +67,8 @@ const ResizeImageForm = React.createClass({
     const {initialWidth, initialHeight} = this.props;
     const {width, height} = this.state;
     return (
-      initialWidth !== width && initialHeight !== height &&
-      this.validSize(width) && this.validSize(height)
+      this.validSize(width) && this.validSize(height) &&
+      (initialWidth !== width || initialHeight !== height)
     );
   },
 

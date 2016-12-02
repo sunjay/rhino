@@ -12,8 +12,8 @@ const {
 const ResizeCanvasForm = require('../components/ResizeCanvasForm');
 
 const mapStateToProps = (state, {width, height}) => ({
-  initialWidth: width,
-  initialHeight: height,
+  initialWidth: Number(width),
+  initialHeight: Number(height),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -12,8 +12,8 @@ const {
 const ResizeImageForm = require('../components/ResizeImageForm');
 
 const mapStateToProps = (state, {width, height}) => ({
-  initialWidth: width,
-  initialHeight: height,
+  initialWidth: Number(width),
+  initialHeight: Number(height),
 });
 
 const mapDispatchToProps = (dispatch) => ({
