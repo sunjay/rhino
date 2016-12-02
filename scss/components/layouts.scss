@@ -1,0 +1,8 @@
+@import '../partials/variables';
+
+.horizontal {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

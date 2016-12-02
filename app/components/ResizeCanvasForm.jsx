@@ -9,8 +9,11 @@ const Fieldset = require('./Fieldset');
 const Navbar = require('./Navbar');
 const NavbarButton = require('./NavbarButton');
 const NavbarRight = require('./NavbarRight');
+const HorizontalLayout = require('./HorizontalLayout');
+const AnchorSelect = require('./AnchorSelect');
+const AnchorGrid = require('./AnchorGrid');
 
-const ResizeImageForm = React.createClass({
+const ResizeCanvasForm = React.createClass({
   propTypes: {
     initialWidth: React.PropTypes.number.isRequired,
     initialHeight: React.PropTypes.number.isRequired,
@@ -29,6 +32,7 @@ const ResizeImageForm = React.createClass({
     return {
       width: this.props.initialWidth,
       height: this.props.initialHeight,
+      anchor: 'N',
       ratio: true,
     };
   },
@@ -58,6 +62,12 @@ const ResizeImageForm = React.createClass({
     });
   },
 
+  onChangeAnchor(value) {
+    this.setState({
+      anchor: value,
+    });
+  },
+
   validSize(value) {
     value = parseFloat(value);
     return !!value && Number.isInteger(value) && value > 0;
@@ -74,7 +84,7 @@ const ResizeImageForm = React.createClass({
 
   render() {
     const {onCancel, onSubmit} = this.props;
-    const {width, height, ratio} = this.state;
+    const {width, height, ratio, anchor} = this.state;
 
     const submit = (e) => {
       e.preventDefault();
@@ -108,6 +118,16 @@ const ResizeImageForm = React.createClass({
           </FormGroup>
         </Fieldset>
 
+        <Fieldset>
+          <legend>Anchor</legend>
+          <HorizontalLayout>
+            <div>
+              <AnchorSelect value={anchor} onChange={this.onChangeAnchor} />
+            </div>
+            <AnchorGrid value={anchor} onChange={this.onChangeAnchor} />
+          </HorizontalLayout>
+        </Fieldset>
+
         <Navbar>
           <NavbarRight>
             <NavbarButton style='primary' type='submit'
@@ -123,7 +143,7 @@ const ResizeImageForm = React.createClass({
   },
 });
 
-ResizeImageForm.propTypes = {
+ResizeCanvasForm.propTypes = {
 };
 
-module.exports = ResizeImageForm;
+module.exports = ResizeCanvasForm;

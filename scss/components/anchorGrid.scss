@@ -1,0 +1,16 @@
+@import '../partials/variables';
+
+$anchor-point-width: 40px;
+
+.anchorGrid {
+  width: $anchor-point-width * 3;
+}
+
+.anchorPoint {
+  width: $anchor-point-width;
+
+  &:nth-child(3n + 3)::after {
+    content: '\A';
+    white-space: pre;
+  }
+}

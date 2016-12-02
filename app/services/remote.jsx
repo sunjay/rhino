@@ -111,7 +111,7 @@ const actionHandlers = {
     }
 
     this.showModal(win, {dispatch, getState},
-      `/canvas-size?width=${image.width}&height=${image.height}`, 480, 400);
+      `/canvas-size?width=${image.width}&height=${image.height}`, 350, 400);
   },
 
   [ACTION_MODAL_RESPONSE](win, store, action) {

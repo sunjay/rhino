@@ -3,9 +3,9 @@ const classNames = require('classnames');
 
 const Button = ({
   className,
-  style,
   size,
   children,
+  style = 'default',
   type = null,
   block = false,
   active = false,

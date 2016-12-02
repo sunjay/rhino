@@ -32,6 +32,7 @@ const createRouter = (history, store) => (
       {createRoute({store, routeKey: 'editor'})}
       {createRoute({store, routeKey: 'about'})}
       {createRoute({store, routeKey: 'resize'})}
+      {createRoute({store, routeKey: 'canvasSize'})}
       <Route path='*' component={NotFound}/>
     </Route>
   </Router>

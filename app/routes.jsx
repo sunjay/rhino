@@ -1,6 +1,7 @@
 const Editor = require('./components/pages/Editor');
 const About = require('./components/pages/About');
 const ResizeImage = require('./components/pages/ResizeImage');
+const ResizeCanvas = require('./components/pages/ResizeCanvas');
 
 const routes = Object.freeze({
   editor: Object.freeze({
@@ -29,6 +30,15 @@ const routes = Object.freeze({
     component: ResizeImage,
     onEnter: ResizeImage.onPageEnter,
     onLeave: ResizeImage.onPageLeave,
+  }),
+  canvasSize: Object.freeze({
+    title: 'Canvas Size',
+    path: 'canvas-size',
+    href: '#/canvas-size',
+    pattern: /^\/canvas-size\/?.*/,
+    component: ResizeCanvas,
+    onEnter: ResizeCanvas.onPageEnter,
+    onLeave: ResizeCanvas.onPageLeave,
   }),
 });
 
