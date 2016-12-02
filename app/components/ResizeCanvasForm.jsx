@@ -1,5 +1,7 @@
 const React = require('react');
 
+const {ratio} = require('../helpers/ratio');
+
 const Form = require('./Form');
 const FormGroup = require('./FormGroup');
 const Label = require('./Label');
@@ -40,13 +42,20 @@ const ResizeCanvasForm = React.createClass({
   onChangeDimension(dim, event) {
     const value = Number(event.target.value);
     if (!isNaN(value) && this.state.ratio && this.validSize(value)) {
-      const {initialWidth: width, initialHeight: height} = this.props;
+      const {initialWidth, initialHeight} = this.props;
 
-      const other = dim === 'width' ? 'height' : 'width';
-      const factor = dim === 'width' ? (height / width) : (width / height);
+      let other, otherValue;
+      if (dim === 'width') {
+        other = 'height';
+        otherValue = ratio(value, initialWidth, initialHeight);
+      }
+      else {
+        other = 'width';
+        otherValue = ratio(value, initialHeight, initialWidth);
+      }
       this.setState({
         [dim]: value,
-        [other]: Math.round(value * factor),
+        [other]: otherValue,
       });
     }
     else {
