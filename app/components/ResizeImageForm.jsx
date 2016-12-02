@@ -32,9 +32,22 @@ const ResizeImageForm = React.createClass({
   },
 
   onChangeDimension(dim, event) {
-    this.setState({
-      [dim]: event.target.value,
-    });
+    const value = event.target.value;
+    if (this.state.ratio && this.validSize(value)) {
+      const {initialWidth: width, initialHeight: height} = this.props;
+
+      const other = dim === 'width' ? 'height' : 'width';
+      const factor = dim === 'width' ? (height / width) : (width / height);
+      this.setState({
+        [dim]: value,
+        [other]: Math.round(value * factor),
+      });
+    }
+    else {
+      this.setState({
+        [dim]: value,
+      });
+    }
   },
 
   onChangeMaintainRatio(event) {
