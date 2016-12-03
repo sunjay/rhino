@@ -7,6 +7,17 @@
   height: 30px;
   padding: $panel-padding;
 
+  & + & {
+    border-top: 1px solid darken($panel-background, 20%);
+  }
+
+  .navbarText {
+    cursor: default;
+    font-size: $font-size-small;
+    padding: $padding-xs-vertical $padding-xs-horizontal;
+    user-select: none;
+  }
+
   .navbarRight {
     float: right;
   }

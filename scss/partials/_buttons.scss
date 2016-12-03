@@ -151,7 +151,7 @@ a.btn {
 }
 
 .btn-navbar {
-  @include button-variant2(#fff, $panel-background, $panel-border-color);
+  @include button-variant2($panel-color, $panel-background, $panel-border-color);
   border-width: 0;
   font-weight: normal;
 }
