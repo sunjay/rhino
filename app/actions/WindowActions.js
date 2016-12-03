@@ -13,6 +13,7 @@ exports.ACTION_SHOW_RESIZE_CANVAS_DIALOG = Actions.register('window-show-resize-
 exports.ACTION_MODAL_OPEN = Actions.register('window-modal-open');
 exports.ACTION_MODAL_CLOSED = Actions.register('window-modal-closed');
 exports.ACTION_MODAL_RESPONSE = Actions.register('window-modal-response');
+exports.ACTION_PROCESS_REMOTELY = Actions.register('window-process-remotely');
 
 exports.minimizeWindow = Actions.registerActionCreator(
   exports.ACTION_MINIMIZE_WINDOW
@@ -69,5 +70,15 @@ exports.sendModalResponse = Actions.registerActionCreator(
   exports.ACTION_MODAL_RESPONSE,
   [
     'response',
+  ]
+);
+
+// Used to ask the remote service to process this action specially
+// Ususally used to provide additional information in actions
+// that is not available in menus
+exports.processRemotely = Actions.registerActionCreator(
+  exports.ACTION_PROCESS_REMOTELY,
+  [
+    'action',
   ]
 );

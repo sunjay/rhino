@@ -38,7 +38,13 @@ const {
   ACTION_SHOW_RESIZE_DIALOG,
   ACTION_SHOW_RESIZE_CANVAS_DIALOG,
   ACTION_MODAL_RESPONSE,
+  ACTION_PROCESS_REMOTELY,
 } = require('../actions/WindowActions');
+
+const {
+  activateTool,
+  ACTION_ACTIVATE_TOOL,
+} = require('../actions/ToolActions');
 
 const actionHandlers = {
   [ACTION_MINIMIZE_WINDOW](win) {
@@ -116,6 +122,43 @@ const actionHandlers = {
 
   [ACTION_MODAL_RESPONSE](win, store, action) {
     ipc.send('modal', action);
+  },
+
+  [ACTION_PROCESS_REMOTELY](win, store, {action}) {
+    const middleware = actionMiddleware[action.type];
+    if (!middleware) {
+      throw new Error(`No remote function defined to handle action type '${action.type}' when processing remotely`);
+    }
+
+    middleware.call(this, win, store, action);
+  },
+};
+
+// Used to intercept certain actions and dispatch them
+// with additional information or possibly not dispatch
+// them at all.
+// This is useful for menu functions called from the main
+// process because the main process does not have access
+// to the store
+const actionMiddleware = {
+  [ACTION_ACTIVATE_TOOL](win, {dispatch, getState}, {toolId, data}) {
+    if (toolId === 'crop') {
+      const {image} = getState().page;
+      if (!image) {
+        return;
+      }
+
+      dispatch(activateTool(toolId, {
+        ...(data || {}),
+        x: 0,
+        y: 0,
+        width: image.width,
+        height: image.height,
+      }));
+    }
+    else {
+      throw new Error(`No defined way to process toolId '${toolId}'`);
+    }
   },
 };
 

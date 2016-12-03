@@ -18,7 +18,12 @@ const {
   aboutRhino,
   showResizeDialog,
   showResizeCanvasDialog,
+  processRemotely,
 } = require('./actions/WindowActions');
+
+const {
+  activateTool,
+} = require('./actions/ToolActions');
 
 const {
   flipHorizontal,
@@ -27,8 +32,6 @@ const {
   rotate90Counterclockwise,
   rotate180,
 } = require('./actions/ImageActions');
-
-const alert = global.alert || console.error;
 
 const noImage = ({image}) => !image;
 
@@ -101,7 +104,11 @@ module.exports = (dispatch) => [
         accelerator: 'CommandOrControl+Shift+X',
         disabled: noImage,
         click() {
-          alert('Not implemented');
+          // can't pass additional data in menu
+          // because menu functions can be called
+          // from the main process which does not
+          // have access to the redux store
+          dispatch(processRemotely(activateTool('crop')));
         },
       },
       {
