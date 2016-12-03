@@ -14,6 +14,19 @@ const {
 const About = () => (
   <Page>
     <MenuBar modal={true} />
+    {/**
+      * TODO: (Technical Debt) It's possible that this usage
+      * of MainContent is completely unnecessary here.
+      * MainContent is meant to be used to create horizontal
+      * layouts. We have a HorizontalLayout component that was
+      * made after MainContent.
+      * We probably want to address several things with these
+      * layout components:
+      * 1. Remove MainContent from pages where we just want a
+      *    vertical layout anyway (like all the modals)
+      * 2. Replace MainContent with HorizontalLayout if that makes
+      *    sense when this refactoring is done
+      */}
     <MainContent>
       <div className={about}>
         <Logo size='large' align='center' block />
