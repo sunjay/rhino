@@ -41,7 +41,7 @@ module.exports = createReducer({
     }
 
     if (path !== prev.path) {
-      state = {...state, initialViewState};
+      state = {...state, ...initialViewState};
     }
 
     return Object.freeze({
