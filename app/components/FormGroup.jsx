@@ -21,7 +21,7 @@ const FormGroup = ({
 }) => (
   <div className={classNames(className, {
     [formGroup]: true,
-    [layouts[layout]]: layouts[layout],
+    [layouts[layout]]: !!layouts[layout],
     [formGroupInvalid]: !isValid,
   })}>
     {children}

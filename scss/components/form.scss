@@ -5,12 +5,23 @@
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-between;
+
+  &.formHorizontal {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 }
 
 .formGroup {
   display: flex;
   justify-content: space-between;
   margin-bottom: $form-group-margin-bottom;
+
+  .form.formHorizontal & {
+    display: inline-flex;
+    margin-bottom: 0;
+    margin-left: $form-group-margin-bottom;
+  }
 
   &Horizontal {
     flex-direction: row;
@@ -65,6 +76,11 @@
 
   &:focus {
     outline: none;
+  }
+
+  .form.formHorizontal & {
+    display: inline-block;
+    width: auto;
   }
 }
 

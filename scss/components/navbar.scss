@@ -1,4 +1,5 @@
 @import '../partials/variables';
+@import '../components/form';
 
 .navbar {
   background-color: $panel-background;
@@ -25,5 +26,41 @@
   .navbarButton {
     padding-left: 8px;
     padding-right: 8px;
+  }
+
+  form {
+    height: 30px - nth($panel-padding, 1) * 2;
+  }
+
+  form label {
+    font-size: $font-size-small;
+    font-weight: normal;
+    margin-right: $padding-small-horizontal;
+    padding: $padding-xs-vertical $padding-xs-horizontal;
+  }
+
+  form input:not([type='checkbox']) {
+    border-radius: $input-border-radius-small;
+    font-size: $font-size-small;
+    height: $input-height-small;
+    line-height: $input-height-small;
+    max-width: 60px;
+    padding: $padding-small-vertical $padding-small-horizontal;
+  }
+
+  form input[type='number'] {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      margin-left: $padding-small-horizontal;
+      margin-right: -$padding-small-horizontal + 1;
+    }
+  }
+
+  form :global(.btn) {
+    margin-left: 15px;
+  }
+
+  form :global(.btn) + :global(.btn) {
+    margin-left: 2px;
   }
 }
