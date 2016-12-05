@@ -1,4 +1,5 @@
 const React = require('react');
+const CloseOnEscape = require('react-close-on-escape').default;
 const Icon = require('react-fontawesome').default;
 
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
@@ -53,6 +54,7 @@ const CropToolbar = React.createClass({
 
     return (
       <Navbar>
+        <CloseOnEscape onEscape={onCancel}><span /></CloseOnEscape>
         <Form layout='horizontal' onSubmit={submit}>
           <NavbarText>Crop</NavbarText>
 
