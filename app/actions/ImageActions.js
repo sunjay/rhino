@@ -11,6 +11,7 @@ exports.ACTION_ROTATE_IMAGE_90_COUNTERCLOCKWISE = Actions.register('image-rotate
 exports.ACTION_ROTATE_IMAGE_180 = Actions.register('image-rotate-180');
 exports.ACTION_RESIZE_IMAGE = Actions.register('image-resize');
 exports.ACTION_RESIZE_CANVAS = Actions.register('image-resize-canvas');
+exports.ACTION_CROP_IMAGE = Actions.register('image-crop-image');
 
 exports.updateImage = Actions.registerActionCreator(
   exports.ACTION_UPDATE_IMAGE,
@@ -76,5 +77,15 @@ exports.resizeCanvas = Actions.registerActionCreator(
     'width',
     'height',
     'anchor',
+  ]
+);
+
+exports.cropImage = Actions.registerActionCreator(
+  exports.ACTION_CROP_IMAGE,
+  [
+    'x',
+    'y',
+    'width',
+    'height',
   ]
 );
