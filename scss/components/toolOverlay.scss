@@ -2,5 +2,5 @@
 
 .toolOverlay {
   position: absolute;
-  z-index: 5;
+  z-index: $tool-overlay-z-index;
 }

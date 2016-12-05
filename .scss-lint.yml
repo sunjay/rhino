@@ -16,3 +16,6 @@ linters:
 
   PlaceholderInExtend:
     enabled: false
+
+  VendorPrefix:
+    enabled: false

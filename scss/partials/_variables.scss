@@ -4,11 +4,21 @@ $brand-primary: #2196f3;
 $brand-success: #4caf50;
 $brand-info: #03a9f4;
 
+// Panel styles
 $panel-color: #e0e0e0;
 $panel-background: #424242;
 $panel-border-color: #616161;
 $panel-border: 1px solid $panel-border-color;
 $panel-padding: 4px 8px;
+
+// Tool overlay styles
+$tool-overlay-z-index: 5;
+
+// Draggable handle
+$draggable-handle-background: #9e9e9e;
+$draggable-handle-border-color: #616161;
+
+// Bootstrap variable overrides
 
 // Typography
 $font-family-sans-serif: 'Open Sans', sans-serif;

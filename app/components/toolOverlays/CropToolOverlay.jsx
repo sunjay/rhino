@@ -3,6 +3,7 @@ const React = require('react');
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
 
 const ToolOverlay = require('../ToolOverlay');
+const DraggableHandle = require('../DraggableHandle');
 
 const CropToolOverlay = React.createClass({
   propTypes: {
@@ -56,7 +57,7 @@ const CropToolOverlay = React.createClass({
 
     return (
       <ToolOverlay {...this.props}>
-        {x}, {y}, {width}, {height}, {zoom}
+        <DraggableHandle x={x * zoom} y={y * zoom} />
       </ToolOverlay>
     );
   },
