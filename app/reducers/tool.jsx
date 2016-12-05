@@ -3,6 +3,7 @@ const {createReducer} = require('./reducer');
 const {
   ACTION_ACTIVATE_TOOL,
   ACTION_CLEAR_ACTIVE_TOOL,
+  ACTION_UPDATE_TOOL_DATA,
 } = require('../actions/ToolActions');
 
 const {
@@ -30,6 +31,14 @@ module.exports = createReducer(initialState, {
       data: data,
     });
   },
+
+  [ACTION_UPDATE_TOOL_DATA](state, {data}) {
+    return Object.freeze({
+      ...state,
+      data: {...state.data, ...data},
+    });
+  },
+
   [ACTION_CLEAR_ACTIVE_TOOL]: clearActiveTool,
   [ACTION_DESTROY_IMAGE]: clearActiveTool,
   [ACTION_LOAD_IMAGE]: clearActiveTool,
