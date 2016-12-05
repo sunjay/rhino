@@ -7,11 +7,7 @@ const {
 } = require('../../actions/ImageActions');
 
 const {
-  processRemotely,
-} = require('../../actions/WindowActions');
-
-const {
-  activateTool,
+  clearActiveTool,
   updateToolData,
 } = require('../../actions/ToolActions');
 
@@ -23,11 +19,12 @@ const mapStateToProps = ({page: {image, tool: {data}}}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onCancel() {
-    dispatch(processRemotely(activateTool('crop')));
+    dispatch(clearActiveTool());
   },
 
   onSubmit({x, y, width, height}) {
     dispatch(cropImage(x, y, width, height));
+    dispatch(clearActiveTool());
   },
 
   onChange(data) {
