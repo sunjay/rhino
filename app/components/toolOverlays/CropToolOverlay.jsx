@@ -46,18 +46,56 @@ const CropToolOverlay = React.createClass({
     });
   },
 
-  numberHandler(prop, event) {
-    const value = parseFloat(event.target.value);
-    this.props.onChange({[prop]: isNaN(value) ? '' : value});
+  deriveHandleBox(handles) {
+    const {maxWidth, maxHeight} = this.props;
+    const {minX, minY, maxX, maxY} = handles.reduce((acc, {x, y}) => ({
+      minX: Math.max(0, Math.min(acc.minX, x)),
+      minY: Math.max(0, Math.min(acc.minY, y)),
+      maxX: Math.min(Math.max(acc.maxX, x), maxWidth),
+      maxY: Math.min(Math.max(acc.maxY, y), maxHeight),
+    }), {minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity});
+
+    this.props.onChange({
+      x: minX,
+      y: minY,
+      width: maxX - minX,
+      height: maxY - minY,
+    });
+  },
+
+  handleCoordinates() {
+    const {x, y, width, height} = this.state;
+
+    return [
+      {x: x, y: y},
+      {x: x + width, y: y},
+      {x: x + width, y: y + height},
+      {x: x, y: y + height},
+    ];
   },
 
   render() {
-    const {x, y, width, height} = this.state;
     const {zoom} = this.props;
+
+    const handles = this.handleCoordinates();
 
     return (
       <ToolOverlay {...this.props}>
-        <DraggableHandle x={x * zoom} y={y * zoom} />
+        {handles.map(({x, y}, index) => (
+          <DraggableHandle key={`h${x},${y}`}
+            x={x * zoom} y={y * zoom}
+            onChange={(dx, dy) => {
+              // need to divide by the zoom so these values are correct
+              dx = Math.round(dx / zoom);
+              dy = Math.round(dy / zoom);
+              const others = handles.filter((h, i) => i !== index);
+              const updated = others.map((other) => ({
+                x: other.x === x ? dx : other.x,
+                y: other.y === y ? dy : other.y,
+              }));
+              this.deriveHandleBox([{x: dx, y: dy}, ...updated]);
+            }} />
+        ))}
       </ToolOverlay>
     );
   },
