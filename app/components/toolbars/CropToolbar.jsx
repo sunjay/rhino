@@ -1,7 +1,7 @@
 const React = require('react');
 const Icon = require('react-fontawesome').default;
 
-const {isValidSize, isPositiveCoordinate} = require('../../helpers/validators');
+const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
 
 const Navbar = require('../Navbar');
 const NavbarButton = require('../NavbarButton');
@@ -17,6 +17,8 @@ const CropToolbar = React.createClass({
     y: React.PropTypes.any.isRequired,
     width: React.PropTypes.any.isRequired,
     height: React.PropTypes.any.isRequired,
+    maxWidth: React.PropTypes.number.isRequired,
+    maxHeight: React.PropTypes.number.isRequired,
     onCancel: React.PropTypes.func,
     onSubmit: React.PropTypes.func,
   },
@@ -29,10 +31,10 @@ const CropToolbar = React.createClass({
   },
 
   validate() {
-    const {x, y, width, height} = this.props;
+    const {x, y, width, height, maxWidth, maxHeight} = this.props;
     return (
       isPositiveCoordinate(x) && isPositiveCoordinate(y) &&
-      isValidSize(width) && isValidSize(height)
+      isSizeInRange(width, maxWidth) && isSizeInRange(height, maxHeight)
     );
   },
 
@@ -42,7 +44,7 @@ const CropToolbar = React.createClass({
   },
 
   render() {
-    const {x, y, width, height, onCancel, onSubmit} = this.props;
+    const {x, y, width, height, maxWidth, maxHeight, onCancel, onSubmit} = this.props;
 
     const submit = (e) => {
       e.preventDefault();
@@ -66,13 +68,13 @@ const CropToolbar = React.createClass({
               onChange={this.numberHandler.bind(this, 'y')} />
           </FormGroup>
 
-          <FormGroup layout='horizontal' isValid={isValidSize(width)}>
+          <FormGroup layout='horizontal' isValid={isSizeInRange(width, maxWidth)}>
             <Label>width</Label>
             <Input type='number' min={1} value={width}
               onChange={this.numberHandler.bind(this, 'width')} />
           </FormGroup>
 
-          <FormGroup layout='horizontal' isValid={isValidSize(height)}>
+          <FormGroup layout='horizontal' isValid={isSizeInRange(height, maxHeight)}>
             <Label>height</Label>
             <Input type='number' min={1} value={height}
               onChange={this.numberHandler.bind(this, 'height')} />

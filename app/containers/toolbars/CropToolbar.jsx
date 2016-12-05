@@ -15,8 +15,10 @@ const {
   updateToolData,
 } = require('../../actions/ToolActions');
 
-const mapStateToProps = ({page: {tool: {data}}}) => ({
+const mapStateToProps = ({page: {image, tool: {data}}}) => ({
   ...data,
+  maxWidth: image.width,
+  maxHeight: image.height,
 });
 
 const mapDispatchToProps = (dispatch) => ({
