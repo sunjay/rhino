@@ -1,5 +1,6 @@
 const React = require('react');
 
+const {isValidSize, isDifferent} = require('../helpers/validators');
 const {ratio} = require('../helpers/ratio');
 
 const Form = require('./Form');
@@ -41,7 +42,7 @@ const ResizeCanvasForm = React.createClass({
 
   onChangeDimension(dim, event) {
     const value = Number(event.target.value);
-    if (!isNaN(value) && this.state.ratio && this.validSize(value)) {
+    if (!isNaN(value) && this.state.ratio && isValidSize(value)) {
       const {initialWidth, initialHeight} = this.props;
 
       let other, otherValue;
@@ -77,17 +78,12 @@ const ResizeCanvasForm = React.createClass({
     });
   },
 
-  validSize(value) {
-    value = parseFloat(value);
-    return !!value && Number.isInteger(value) && value > 0;
-  },
-
   validate() {
     const {initialWidth, initialHeight} = this.props;
     const {width, height} = this.state;
     return (
-      this.validSize(width) && this.validSize(height) &&
-      (initialWidth !== width || initialHeight !== height)
+      isValidSize(width) && isValidSize(height) &&
+      (isDifferent(width, initialWidth) || isDifferent(height, initialHeight))
     );
   },
 
@@ -109,13 +105,13 @@ const ResizeCanvasForm = React.createClass({
       <Form onSubmit={submit}>
         <Fieldset>
           <legend>Pixel Dimensions</legend>
-          <FormGroup layout='horizontal' isValid={this.validSize(width)}>
+          <FormGroup layout='horizontal' isValid={isValidSize(width)}>
             <Label>Width:&nbsp;</Label>
             <Input type='number' min={1} value={width}
               onChange={(e) => this.onChangeDimension('width', e)} />
             <FormStatic>pixels</FormStatic>
           </FormGroup>
-          <FormGroup layout='horizontal' isValid={this.validSize(height)}>
+          <FormGroup layout='horizontal' isValid={isValidSize(height)}>
             <Label>Height:</Label>
             <Input type='number' min={1} value={height}
               onChange={(e) => this.onChangeDimension('height', e)} />
