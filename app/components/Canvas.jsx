@@ -2,6 +2,8 @@ const React = require('react');
 
 const ImageModel = require('../models/image');
 
+const ToolOverlayRouter = require('../containers/ToolOverlayRouter');
+
 const {
   canvasContainer,
   canvas: canvasClass,
@@ -101,11 +103,16 @@ const Canvas = React.createClass({
     const offsetX = canvasCenterX - imageWidth / 2;
     const offsetY = canvasCenterY - imageHeight / 2;
 
-    return (
-      <canvas ref={(node) => this._canvas = node}
-        width={image.width * zoom} height={image.height * zoom}
-        style={{left: offsetX, top: offsetY}} className={canvasClass} />
-    );
+    return [(
+      <canvas key='canvas' ref={(node) => this._canvas = node}
+        width={imageWidth} height={imageHeight}
+        style={{left: offsetX, top: offsetY}}
+        className={canvasClass} />
+      ), (
+      <ToolOverlayRouter key='overlay' zoom={zoom}
+        width={imageWidth} height={imageHeight}
+        offsetX={offsetX} offsetY={offsetY} />
+    )];
   },
 
   zoom(image) {
