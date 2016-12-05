@@ -31,7 +31,7 @@
     flex-direction: column;
   }
 
-  &Invalid {
+  &Invalid .formControl:not([type='checkbox']) {
     background-color: $state-danger-bg;
     border-color: $state-danger-text;
     color: $state-danger-text;
