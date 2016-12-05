@@ -37,7 +37,7 @@ const ResizeImageForm = React.createClass({
   },
 
   onChangeDimension(dim, event) {
-    const value = Number(event.target.value);
+    const value = parseFloat(event.target.value);
     if (!isNaN(value) && this.state.ratio && isValidSize(value)) {
       const {initialWidth, initialHeight} = this.props;
 
