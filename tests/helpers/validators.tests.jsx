@@ -3,6 +3,7 @@ const {expect} = require('chai');
 const {
   isInteger,
   isValidSize,
+  isSizeInRange,
   isPositiveCoordinate,
   isDifferent,
 } = require('../../app/helpers/validators');
@@ -48,6 +49,35 @@ describe('isValidSize', () => {
 
   it('should reject non-integer sizes', () => {
     expect(isValidSize(1.5)).to.be.false;
+  });
+});
+
+describe('isSizeInRange', () => {
+  it('should allow valid sizes', () => {
+    expect(isSizeInRange(1, 100)).to.be.true;
+    expect(isSizeInRange(2, 100)).to.be.true;
+    expect(isSizeInRange(485, 500)).to.be.true;
+  });
+
+  it('should reject zero sizes', () => {
+    expect(isSizeInRange(0, 500)).to.be.false;
+  });
+
+  it('should reject negative sizes', () => {
+    expect(isSizeInRange(-15, 500)).to.be.false;
+  });
+
+  it('should reject non-integer sizes', () => {
+    expect(isSizeInRange(1.5, 500)).to.be.false;
+  });
+
+  it('should allow values equal to the maximum value', () => {
+    expect(isSizeInRange(500, 500)).to.be.true;
+  });
+
+  it('should reject values above the maximum value', () => {
+    expect(isSizeInRange(501, 500)).to.be.false;
+    expect(isSizeInRange(2, 1)).to.be.false;
   });
 });
 

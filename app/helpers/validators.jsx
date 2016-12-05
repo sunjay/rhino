@@ -14,6 +14,13 @@ export function isValidSize(value) {
 }
 
 /**
+ * Ensures a size cannot be larger than a given value
+ */
+export function isSizeInRange(value, max) {
+  return isValidSize(value) && value <= max;
+}
+
+/**
  * Checks if a value is an integer
  */
 export function isInteger(value) {
