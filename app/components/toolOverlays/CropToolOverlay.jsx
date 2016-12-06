@@ -3,7 +3,8 @@ const React = require('react');
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
 
 const ToolOverlay = require('../ToolOverlay');
-const DraggableHandle = require('../DraggableHandle');
+const DraggableHandle = require('../../containers/DraggableHandle');
+const DraggableHandleDragLayer = require('../../containers/DraggableHandleDragLayer');
 
 const CropToolOverlay = React.createClass({
   propTypes: {
@@ -19,6 +20,8 @@ const CropToolOverlay = React.createClass({
     overlayHeight: React.PropTypes.number.isRequired,
     overlayOffsetX: React.PropTypes.number.isRequired,
     overlayOffsetY: React.PropTypes.number.isRequired,
+
+    connectDropTarget: React.PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -44,6 +47,19 @@ const CropToolOverlay = React.createClass({
       width: isSizeInRange(cropWidth, maxWidth) ? cropWidth : width,
       height: isSizeInRange(cropHeight, maxHeight) ? cropHeight : height,
     });
+  },
+
+  onMouseMove({clientX, clientY}) {
+    if (!this.state.dragging) {
+      return;
+    }
+
+    const {top, left} = this._handle.getBoundingClientRect();
+    const {x, y, onChange} = this.props;
+
+    const dx = clientX - left + x;
+    const dy = clientY - top + y;
+    onChange(dx, dy);
   },
 
   deriveHandleBox(handles) {
@@ -75,15 +91,16 @@ const CropToolOverlay = React.createClass({
   },
 
   render() {
-    const {zoom} = this.props;
+    const {zoom, connectDropTarget} = this.props;
 
     const handles = this.handleCoordinates();
 
-    return (
+    return connectDropTarget(
       <ToolOverlay {...this.props}>
         {handles.map(({x, y}, index) => (
           <DraggableHandle key={`h${x},${y}`}
             x={x * zoom} y={y * zoom}
+            onMouseDown={this.onMouseDown.bind(this, handles, index)}
             onChange={(dx, dy) => {
               // need to divide by the zoom so these values are correct
               dx = Math.round(dx / zoom);
@@ -96,6 +113,7 @@ const CropToolOverlay = React.createClass({
               this.deriveHandleBox([{x: dx, y: dy}, ...updated]);
             }} />
         ))}
+        <DraggableHandleDragLayer />
       </ToolOverlay>
     );
   },

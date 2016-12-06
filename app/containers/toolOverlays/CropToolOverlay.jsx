@@ -1,4 +1,7 @@
 const {connect} = require('react-redux');
+const {DropTarget} = require('react-dnd');
+
+const {TYPES} = require('../../constants/dnd');
 
 const CropToolOverlay = require('../../components/toolOverlays/CropToolOverlay');
 
@@ -25,4 +28,6 @@ const mapDispatchToProps = (dispatch) => ({
 module.exports = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CropToolOverlay);
+)(DropTarget(TYPES.CROP, {}, (connect) => ({
+  connectDropTarget: connect.dropTarget(),
+}))(CropToolOverlay));
