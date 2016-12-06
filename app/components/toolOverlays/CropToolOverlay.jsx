@@ -3,7 +3,7 @@ const React = require('react');
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
 
 const ToolOverlay = require('../ToolOverlay');
-const DraggableHandle = require('../DraggableHandle');
+const DragHandle = require('../DragHandle');
 
 const CropToolOverlay = React.createClass({
   propTypes: {
@@ -82,7 +82,7 @@ const CropToolOverlay = React.createClass({
     return (
       <ToolOverlay {...this.props}>
         {handles.map(({x, y}, index) => (
-          <DraggableHandle key={`h${x},${y}`}
+          <DragHandle key={`h${x},${y}`}
             x={x * zoom} y={y * zoom}
             onChange={(dx, dy) => {
               // need to divide by the zoom so these values are correct

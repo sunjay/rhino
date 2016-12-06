@@ -1,15 +1,15 @@
 @import '../partials/variables';
 
-.draggableHandleContainer {
+.dragHandleContainer {
   position: absolute;
   z-index: $tool-overlay-z-index + 2;
 }
 
-.draggableHandle {
+.dragHandle {
   $size: 20px;
 
-  background-color: $draggable-handle-background;
-  border: 1px solid $draggable-handle-border-color;
+  background-color: $drag-handle-background;
+  border: 1px solid $drag-handle-border-color;
   border-radius: 50%;
   cursor: -webkit-grab;
   height: $size;
