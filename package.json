@@ -54,8 +54,6 @@
     "react": "^15.4.0",
     "react-click-outside": "tj/react-click-outside",
     "react-close-on-escape": "^1.0.3",
-    "react-dnd": "^2.1.4",
-    "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.4.0",
     "react-fontawesome": "^1.4.0",
     "react-redux": "^4.4.6",
