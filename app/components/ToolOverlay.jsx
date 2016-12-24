@@ -10,8 +10,10 @@ const ToolOverlay = ({
   overlayHeight,
   overlayOffsetX,
   overlayOffsetY,
+  ...props
 }) => (
-  <div className={classNames(toolOverlay, className)}
+  <div {...props}
+    className={classNames(toolOverlay, className)}
     style={{
       width: overlayWidth,
       height: overlayHeight,

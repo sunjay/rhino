@@ -5,6 +5,9 @@ const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators'
 const ToolOverlay = require('../ToolOverlay');
 const DragHandle = require('../DragHandle');
 
+// The radius around a handle to accept drags
+const HANDLE_RADIUS = 10; // px
+
 const CropToolOverlay = React.createClass({
   propTypes: {
     cropX: React.PropTypes.any.isRequired,
@@ -31,6 +34,7 @@ const CropToolOverlay = React.createClass({
       y: this.props.cropY,
       width: this.props.cropWidth,
       height: this.props.cropHeight,
+      dragging: false,
     };
   },
 
@@ -44,6 +48,41 @@ const CropToolOverlay = React.createClass({
       width: isSizeInRange(cropWidth, maxWidth) ? cropWidth : width,
       height: isSizeInRange(cropHeight, maxHeight) ? cropHeight : height,
     });
+  },
+
+  componentWillUnmount() {
+    console.log('unmount');
+    window.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener('mousemove', this.onMouseMove);
+  },
+
+  onMouseDown({clientX, clientY}) {
+    console.log('down');
+    console.log(this.refs);
+    this.setState({dragging: true});
+    window.addEventListener('mouseup', this.onMouseUp);
+    window.addEventListener('mousemove', this.onMouseMove);
+  },
+
+  onMouseUp() {
+    console.log('up');
+    this.setState({dragging: false});
+    window.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener('mousemove', this.onMouseMove);
+  },
+
+  onMouseMove({clientX, clientY}) {
+    if (!this.state.dragging) {
+      return;
+    }
+
+    console.log('move', clientX, clientY);
+  },
+
+  convertMouseToLocalPosition({clientX, clientY}) {
+    // Need to get position local to the offset parent (the ToolOverlay)
+    const {top, left} = this._overlay.getBoundingClientRect();
+    console.log(top, left);
   },
 
   deriveHandleBox(handles) {
@@ -75,28 +114,33 @@ const CropToolOverlay = React.createClass({
   },
 
   render() {
-    const {zoom} = this.props;
+    const {zoom, overlayWidth, overlayHeight, overlayOffsetX, overlayOffsetY} = this.props;
 
     const handles = this.handleCoordinates();
 
     return (
-      <ToolOverlay {...this.props}>
-        {handles.map(({x, y}, index) => (
-          <DragHandle key={`h${x},${y}`}
-            x={x * zoom} y={y * zoom}
-            onChange={(dx, dy) => {
-              // need to divide by the zoom so these values are correct
-              dx = Math.round(dx / zoom);
-              dy = Math.round(dy / zoom);
-              const others = handles.filter((h, i) => i !== index);
-              const updated = others.map((other) => ({
-                x: other.x === x ? dx : other.x,
-                y: other.y === y ? dy : other.y,
-              }));
-              this.deriveHandleBox([{x: dx, y: dy}, ...updated]);
-            }} />
-        ))}
-      </ToolOverlay>
+      <div ref={(node) => this._overlay = node}>
+        <ToolOverlay overlayWidth={overlayWidth} overlayHeight={overlayHeight}
+          overlayOffsetX={overlayOffsetX} overlayOffsetY={overlayOffsetY}
+          onMouseDown={this.onMouseDown}>
+          {handles.map(({x, y}, index) => (
+            <DragHandle key={`h${x},${y}`}
+              x={x * zoom} y={y * zoom}
+              isDragging={false}
+              onChange={(dx, dy) => {
+                // need to divide by the zoom so these values are correct
+                dx = Math.round(dx / zoom);
+                dy = Math.round(dy / zoom);
+                const others = handles.filter((h, i) => i !== index);
+                const updated = others.map((other) => ({
+                  x: other.x === x ? dx : other.x,
+                  y: other.y === y ? dy : other.y,
+                }));
+                this.deriveHandleBox([{x: dx, y: dy}, ...updated]);
+              }} />
+          ))}
+        </ToolOverlay>
+      </div>
     );
   },
 });
