@@ -13,6 +13,8 @@ platforms, but it is primarily aimed to work on most popular Linux
 distributions. If a platform dependent decision must be made, Linux
 compatibility will always be favored over anything else.
 
+![Rhino Image Editor](preview.png)
+
 ## Usage
 
 Make sure you have [Node.js](https://nodejs.org/en/) and
