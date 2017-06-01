@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const ImageModel = require('../models/image');
@@ -10,33 +11,33 @@ const {
   canvasNoImage,
 } = require('../../scss/components/canvas.scss');
 
-const Canvas = React.createClass({
-  propTypes: {
-    image: React.PropTypes.instanceOf(ImageModel),
-    view: React.PropTypes.object.isRequired,
-  },
+class Canvas extends React.Component {
+  static propTypes = {
+    image: PropTypes.instanceOf(ImageModel),
+    view: PropTypes.object.isRequired,
+  };
 
   componentDidMount() {
     this.forceUpdate();
 
     window.addEventListener('resize', this.onResize);
-  },
+  }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
-  },
+  }
 
-  onResize() {
+  onResize = () => {
     this.forceUpdate();
-  },
+  };
 
   componentDidUpdate() {
     if (this._canvas && this.props.image) {
       this.draw();
     }
-  },
+  }
 
-  draw() {
+  draw = () => {
     const canvas = this._canvas;
     const ctx = canvas.getContext('2d');
 
@@ -61,9 +62,9 @@ const Canvas = React.createClass({
     ctx.drawImage(imageCanvas, 0, 0, imageWidth, imageHeight);
 
     ctx.restore();
-  },
+  };
 
-  createImageCanvas(image) {
+  createImageCanvas = (image) => {
     const data = Uint8ClampedArray.from(image.data);
     const imageData = new ImageData(data, image.width, image.height);
     const canvas = document.createElement('canvas');
@@ -73,7 +74,7 @@ const Canvas = React.createClass({
     imageContext.putImageData(imageData, 0, 0);
 
     return canvas;
-  },
+  };
 
   render() {
     const {image} = this.props;
@@ -87,9 +88,9 @@ const Canvas = React.createClass({
         )}
       </div>
     );
-  },
+  }
 
-  renderImage(image) {
+  renderImage = (image) => {
     const zoom = this.zoom(image);
     const {centerX, centerY} = this.props.view;
     const {canvasWidth, canvasHeight} = this.canvasDimensions();
@@ -113,9 +114,9 @@ const Canvas = React.createClass({
         width={imageWidth} height={imageHeight}
         offsetX={offsetX} offsetY={offsetY} />
     )];
-  },
+  };
 
-  zoom(image) {
+  zoom = (image) => {
     // When we initially load an image, we want to zoom in so that this
     // much of the canvas width or height is taken up
     const size = 0.8;
@@ -128,9 +129,9 @@ const Canvas = React.createClass({
 
     const {zoom} = this.props.view;
     return zoom * factor;
-  },
+  };
 
-  canvasDimensions() {
+  canvasDimensions = () => {
     const {
       offsetWidth: canvasWidth = 0,
       offsetHeight: canvasHeight = 0,
@@ -140,7 +141,7 @@ const Canvas = React.createClass({
       canvasWidth,
       canvasHeight,
     };
-  },
-});
+  };
+}
 
 module.exports = Canvas;

@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const {horizontal} = require('../../scss/components/layouts.scss');
@@ -9,7 +10,7 @@ const HorizontalLayout = ({children}) => (
 );
 
 HorizontalLayout.propTypes = {
-  children: React.PropTypes.any,
+  children: PropTypes.any,
 };
 
 module.exports = HorizontalLayout;

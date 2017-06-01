@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -10,8 +11,8 @@ const NavbarRight = ({className, children}) => (
 );
 
 NavbarRight.propTypes = {
-  className: React.PropTypes.string,
-  children: React.PropTypes.any,
+  className: PropTypes.string,
+  children: PropTypes.any,
 };
 
 module.exports = NavbarRight;

@@ -6,7 +6,7 @@ const {Provider} = require('react-redux');
 const {compose, createStore, applyMiddleware} = require('redux');
 const {hashHistory} = require('react-router');
 const {routerMiddleware, syncHistoryWithStore} = require('react-router-redux');
-const createLogger = require('redux-logger');
+const logger = require('redux-logger').default;
 const thunk = require('redux-thunk').default;
 
 const createRouter = require('./router');
@@ -18,7 +18,6 @@ const Remote = require('./services/remote');
 const image = new ImageWorker();
 const remote = new Remote();
 
-const logger = createLogger();
 const store = createStore(
   appReducer,
   compose(

@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const CropToolOverlay = require('../containers/toolOverlays/CropToolOverlay');
@@ -23,14 +24,14 @@ const ToolOverlayRouter = ({
 };
 
 ToolOverlayRouter.propTypes = {
-  activeToolId: React.PropTypes.string,
-  zoom: React.PropTypes.number,
+  activeToolId: PropTypes.string,
+  zoom: PropTypes.number,
   // These are the dimensions and offset of the overlay
   // NOT the image currently in the editor
-  width: React.PropTypes.number,
-  height: React.PropTypes.number,
-  offsetX: React.PropTypes.number,
-  offsetY: React.PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  offsetX: PropTypes.number,
+  offsetY: PropTypes.number,
 };
 
 module.exports = ToolOverlayRouter;

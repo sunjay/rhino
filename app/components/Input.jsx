@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -12,8 +13,8 @@ const Input = ({type, className, ...props}) => {
 };
 
 Input.propTypes = {
-  type: React.PropTypes.string,
-  className: React.PropTypes.string,
+  type: PropTypes.string,
+  className: PropTypes.string,
 };
 
 module.exports = Input;

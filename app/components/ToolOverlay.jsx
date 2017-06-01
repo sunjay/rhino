@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -23,12 +24,12 @@ const ToolOverlay = ({
 );
 
 ToolOverlay.propTypes = {
-  overlayWidth: React.PropTypes.number.isRequired,
-  overlayHeight: React.PropTypes.number.isRequired,
-  overlayOffsetX: React.PropTypes.number.isRequired,
-  overlayOffsetY: React.PropTypes.number.isRequired,
-  className: React.PropTypes.string,
-  children: React.PropTypes.any,
+  overlayWidth: PropTypes.number.isRequired,
+  overlayHeight: PropTypes.number.isRequired,
+  overlayOffsetX: PropTypes.number.isRequired,
+  overlayOffsetY: PropTypes.number.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.any,
 };
 
 module.exports = ToolOverlay;

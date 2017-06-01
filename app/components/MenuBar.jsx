@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const CloseOnEscape = require('react-close-on-escape').default;
 const classNames = require('classnames');
@@ -97,16 +98,16 @@ const MenuBar = ({
 );
 
 MenuBar.propTypes = {
-  isFullScreen: React.PropTypes.bool.isRequired,
-  image: React.PropTypes.object,
-  view: React.PropTypes.object,
-  dispatch: React.PropTypes.func.isRequired,
-  minimizeWindow: React.PropTypes.func.isRequired,
-  maximizeWindow: React.PropTypes.func.isRequired,
-  closeWindow: React.PropTypes.func.isRequired,
-  toggleFullscreen: React.PropTypes.func.isRequired,
-  modal: React.PropTypes.bool,
-  title: React.PropTypes.string,
+  isFullScreen: PropTypes.bool.isRequired,
+  image: PropTypes.object,
+  view: PropTypes.object,
+  dispatch: PropTypes.func.isRequired,
+  minimizeWindow: PropTypes.func.isRequired,
+  maximizeWindow: PropTypes.func.isRequired,
+  closeWindow: PropTypes.func.isRequired,
+  toggleFullscreen: PropTypes.func.isRequired,
+  modal: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 module.exports = MenuBar;

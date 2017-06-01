@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
@@ -5,36 +6,34 @@ const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators'
 const ToolOverlay = require('../ToolOverlay');
 const DragHandle = require('../DragHandle');
 
-const CropToolOverlay = React.createClass({
-  propTypes: {
-    cropX: React.PropTypes.any.isRequired,
-    cropY: React.PropTypes.any.isRequired,
-    cropWidth: React.PropTypes.any.isRequired,
-    cropHeight: React.PropTypes.any.isRequired,
-    maxWidth: React.PropTypes.number.isRequired,
-    maxHeight: React.PropTypes.number.isRequired,
+class CropToolOverlay extends React.Component {
+  static propTypes = {
+    cropX: PropTypes.any.isRequired,
+    cropY: PropTypes.any.isRequired,
+    cropWidth: PropTypes.any.isRequired,
+    cropHeight: PropTypes.any.isRequired,
+    maxWidth: PropTypes.number.isRequired,
+    maxHeight: PropTypes.number.isRequired,
 
-    zoom: React.PropTypes.number.isRequired,
-    overlayWidth: React.PropTypes.number.isRequired,
-    overlayHeight: React.PropTypes.number.isRequired,
-    overlayOffsetX: React.PropTypes.number.isRequired,
-    overlayOffsetY: React.PropTypes.number.isRequired,
-  },
+    zoom: PropTypes.number.isRequired,
+    overlayWidth: PropTypes.number.isRequired,
+    overlayHeight: PropTypes.number.isRequired,
+    overlayOffsetX: PropTypes.number.isRequired,
+    overlayOffsetY: PropTypes.number.isRequired,
+  };
 
-  getInitialState() {
-    // We keep an internal copy of the state in case
-    // the user using the toolbar enters incorrect data
-    // we can default to what we have in the state until
-    // they correct their input
-    return {
-      x: this.props.cropX,
-      y: this.props.cropY,
-      width: this.props.cropWidth,
-      height: this.props.cropHeight,
-    };
-  },
+  // We keep an internal copy of the state in case
+  // the user using the toolbar enters incorrect data
+  // we can default to what we have in the state until
+  // they correct their input
+  state = {
+    x: this.props.cropX,
+    y: this.props.cropY,
+    width: this.props.cropWidth,
+    height: this.props.cropHeight,
+  };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     const {cropX, cropY, cropWidth, cropHeight, maxWidth, maxHeight} = nextProps;
     const {x, y, width, height} = this.state;
 
@@ -44,9 +43,9 @@ const CropToolOverlay = React.createClass({
       width: isSizeInRange(cropWidth, maxWidth) ? cropWidth : width,
       height: isSizeInRange(cropHeight, maxHeight) ? cropHeight : height,
     });
-  },
+  }
 
-  deriveHandleBox(handles) {
+  deriveHandleBox = (handles) => {
     const {maxWidth, maxHeight} = this.props;
     const {minX, minY, maxX, maxY} = handles.reduce((acc, {x, y}) => ({
       minX: Math.max(0, Math.min(acc.minX, x)),
@@ -61,9 +60,9 @@ const CropToolOverlay = React.createClass({
       width: maxX - minX,
       height: maxY - minY,
     });
-  },
+  }
 
-  handleCoordinates() {
+  handleCoordinates = () => {
     const {x, y, width, height} = this.state;
 
     return [
@@ -72,9 +71,9 @@ const CropToolOverlay = React.createClass({
       {x: x + width, y: y + height},
       {x: x, y: y + height},
     ];
-  },
+  }
 
-  render() {
+  render = () => {
     const {zoom} = this.props;
 
     const handles = this.handleCoordinates();
@@ -98,7 +97,7 @@ const CropToolOverlay = React.createClass({
         ))}
       </ToolOverlay>
     );
-  },
-});
+  }
+}
 
 module.exports = CropToolOverlay;

@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const CropToolbar = require('../containers/toolbars/CropToolbar');
@@ -15,7 +16,7 @@ const ToolbarRouter = ({tool: {activeToolId}}) => {
 };
 
 ToolbarRouter.propTypes = {
-  activeToolId: React.PropTypes.string,
+  activeToolId: PropTypes.string,
 };
 
 module.exports = ToolbarRouter;

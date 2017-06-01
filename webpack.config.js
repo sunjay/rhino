@@ -1,7 +1,6 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: ['./app/index.jsx'],
@@ -20,7 +19,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css?modules&importLoaders=1&sourceMap!postcss!sass?sourceMap&sourceMapContents'],
+        loaders: ['style-loader', 'css-loader?modules&importLoaders=1&sourceMap!postcss-loader?sourceMap!sass-loader?sourceMap&sourceMapContents'],
       },
       {
         test: /\.json$/,
@@ -29,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/,
-        loader: 'url?limit=100000&name=[name].[ext]',
+        loader: 'url-loader?limit=100000&name=[name].[ext]',
       },
     ],
   },
@@ -43,11 +42,10 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       'image-assets': path.join(__dirname, 'assets/images'),
     },
   },
-  devtool: 'cheap-module-eval-source-map',
-  postcss: [autoprefixer],
+  devtool: 'source-map',
 };

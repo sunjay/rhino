@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const {isValidSize, isDifferent} = require('../helpers/validators');
@@ -16,31 +17,27 @@ const HorizontalLayout = require('./HorizontalLayout');
 const AnchorSelect = require('./AnchorSelect');
 const AnchorGrid = require('./AnchorGrid');
 
-const ResizeCanvasForm = React.createClass({
-  propTypes: {
-    initialWidth: React.PropTypes.number.isRequired,
-    initialHeight: React.PropTypes.number.isRequired,
-    onCancel: React.PropTypes.func,
-    onSubmit: React.PropTypes.func,
-  },
+class ResizeCanvasForm extends React.Component {
+  static propTypes = {
+    initialWidth: PropTypes.number.isRequired,
+    initialHeight: PropTypes.number.isRequired,
+    onCancel: PropTypes.func,
+    onSubmit: PropTypes.func,
+  };
 
-  getDefaultProps() {
-    return {
-      onCancel() {},
-      onSubmit() {},
-    };
-  },
+  static defaultProps = {
+    onCancel() {},
+    onSubmit() {},
+  };
 
-  getInitialState() {
-    return {
-      width: this.props.initialWidth,
-      height: this.props.initialHeight,
-      anchor: 'N',
-      ratio: true,
-    };
-  },
+  state = {
+    width: this.props.initialWidth,
+    height: this.props.initialHeight,
+    anchor: 'N',
+    ratio: true,
+  };
 
-  onChangeDimension(dim, event) {
+  onChangeDimension = (dim, event) => {
     const value = parseFloat(event.target.value);
     if (!isNaN(value) && this.state.ratio && isValidSize(value)) {
       const {initialWidth, initialHeight} = this.props;
@@ -64,28 +61,28 @@ const ResizeCanvasForm = React.createClass({
         [dim]: value,
       });
     }
-  },
+  };
 
-  onChangeMaintainRatio(event) {
+  onChangeMaintainRatio = (event) => {
     this.setState({
       ratio: event.target.checked,
     });
-  },
+  };
 
-  onChangeAnchor(value) {
+  onChangeAnchor = (value) => {
     this.setState({
       anchor: value,
     });
-  },
+  };
 
-  validate() {
+  validate = () => {
     const {initialWidth, initialHeight} = this.props;
     const {width, height} = this.state;
     return (
       isValidSize(width) && isValidSize(height) &&
       (isDifferent(width, initialWidth) || isDifferent(height, initialHeight))
     );
-  },
+  };
 
   render() {
     const {onCancel, onSubmit, initialWidth, initialHeight} = this.props;
@@ -150,10 +147,7 @@ const ResizeCanvasForm = React.createClass({
         </Navbar>
       </Form>
     );
-  },
-});
-
-ResizeCanvasForm.propTypes = {
-};
+  }
+}
 
 module.exports = ResizeCanvasForm;

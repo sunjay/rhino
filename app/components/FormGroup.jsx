@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -29,10 +30,10 @@ const FormGroup = ({
 );
 
 FormGroup.propTypes = {
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
-  layout: React.PropTypes.oneOf(Object.keys(layouts)),
-  isValid: React.PropTypes.bool,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  layout: PropTypes.oneOf(Object.keys(layouts)),
+  isValid: PropTypes.bool,
 };
 
 module.exports = FormGroup;

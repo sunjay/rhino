@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 require('../../scss/index.scss');
@@ -11,7 +12,7 @@ const App = ({children}) => (
 );
 
 App.propTypes = {
-  children: React.PropTypes.node,
+  children: PropTypes.node,
 };
 
 module.exports = App;

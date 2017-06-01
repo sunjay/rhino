@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -16,8 +17,8 @@ const Label = ({children, controlId, className}) => (
 );
 
 Label.propTypes = {
-  children: React.PropTypes.any,
-  className: React.PropTypes.string,
+  children: PropTypes.any,
+  className: PropTypes.string,
 };
 
 module.exports = Label;

@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const Button = require('./Button');
@@ -11,7 +12,7 @@ const NavbarButton = ({children, ...props}) => (
 );
 
 NavbarButton.propTypes = {
-  children: React.PropTypes.any,
+  children: PropTypes.any,
 };
 
 module.exports = NavbarButton;

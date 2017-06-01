@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -19,9 +20,9 @@ const DragHandle = ({x, y, isDragging}) => (
 );
 
 DragHandle.propTypes = {
-  x: React.PropTypes.number.isRequired,
-  y: React.PropTypes.number.isRequired,
-  isDragging: React.PropTypes.bool.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  isDragging: PropTypes.bool.isRequired,
 };
 
 module.exports = DragHandle;

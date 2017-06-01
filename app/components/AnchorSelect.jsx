@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const Select = require('./Select');
@@ -24,8 +25,8 @@ const AnchorSelect = ({value, onChange}) => (
 );
 
 AnchorSelect.propTypes = {
-  value: React.PropTypes.oneOf(anchors).isRequired,
-  onChange: React.PropTypes.func,
+  value: PropTypes.oneOf(anchors).isRequired,
+  onChange: PropTypes.func,
 };
 
 module.exports = AnchorSelect;

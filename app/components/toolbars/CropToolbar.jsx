@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const CloseOnEscape = require('react-close-on-escape').default;
 const Icon = require('react-fontawesome').default;
@@ -12,39 +13,37 @@ const FormGroup = require('../FormGroup');
 const Label = require('../Label');
 const Input = require('../Input');
 
-const CropToolbar = React.createClass({
-  propTypes: {
-    x: React.PropTypes.any.isRequired,
-    y: React.PropTypes.any.isRequired,
-    width: React.PropTypes.any.isRequired,
-    height: React.PropTypes.any.isRequired,
-    maxWidth: React.PropTypes.number.isRequired,
-    maxHeight: React.PropTypes.number.isRequired,
-    onCancel: React.PropTypes.func,
-    onSubmit: React.PropTypes.func,
-  },
+class CropToolbar extends React.Component {
+  static propTypes = {
+    x: PropTypes.any.isRequired,
+    y: PropTypes.any.isRequired,
+    width: PropTypes.any.isRequired,
+    height: PropTypes.any.isRequired,
+    maxWidth: PropTypes.number.isRequired,
+    maxHeight: PropTypes.number.isRequired,
+    onCancel: PropTypes.func,
+    onSubmit: PropTypes.func,
+  };
 
-  getDefaultProps() {
-    return {
-      onCancel() {},
-      onSubmit() {},
-    };
-  },
+  static defaultProps = {
+    onCancel() {},
+    onSubmit() {},
+  };
 
-  validate() {
+  validate = () => {
     const {x, y, width, height, maxWidth, maxHeight} = this.props;
     return (
       isPositiveCoordinate(x) && isPositiveCoordinate(y) &&
       isSizeInRange(width, maxWidth) && isSizeInRange(height, maxHeight)
     );
-  },
+  }
 
-  numberHandler(prop, event) {
+  numberHandler = (prop, event) => {
     const value = parseFloat(event.target.value);
     this.props.onChange({[prop]: isNaN(value) ? '' : value});
-  },
+  }
 
-  render() {
+  render = () => {
     const {x, y, width, height, maxWidth, maxHeight, onCancel, onSubmit} = this.props;
 
     const submit = (e) => {
@@ -96,7 +95,7 @@ const CropToolbar = React.createClass({
         </Form>
       </Navbar>
     );
-  },
-});
+  }
+}
 
 module.exports = CropToolbar;

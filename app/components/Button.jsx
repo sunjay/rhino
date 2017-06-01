@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -30,17 +31,17 @@ const Button = ({
 };
 
 Button.propTypes = {
-  className: React.PropTypes.string,
-  children: React.PropTypes.any,
-  type: React.PropTypes.string,
-  style: React.PropTypes.oneOf([
+  className: PropTypes.string,
+  children: PropTypes.any,
+  type: PropTypes.string,
+  style: PropTypes.oneOf([
     'default', 'primary', 'secondary', 'success',
     'info', 'warning', 'danger', 'link', 'navbar',
   ]),
-  size: React.PropTypes.oneOf(['xs', 'sm', 'lg']),
-  block: React.PropTypes.bool,
-  active: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
+  size: PropTypes.oneOf(['xs', 'sm', 'lg']),
+  block: PropTypes.bool,
+  active: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 module.exports = Button;

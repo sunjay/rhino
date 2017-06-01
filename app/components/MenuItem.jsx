@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -27,10 +28,10 @@ const MenuItem = ({
 );
 
 MenuItem.propTypes = {
-  label: React.PropTypes.node,
-  accelerator: React.PropTypes.string,
-  className: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
+  label: PropTypes.node,
+  accelerator: PropTypes.string,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 module.exports = MenuItem;

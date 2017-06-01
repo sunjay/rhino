@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const classNames = require('classnames');
 
@@ -32,9 +33,9 @@ const Logo = ({
 );
 
 Logo.propTypes = {
-  size: React.PropTypes.oneOf(Object.keys(sizes)),
-  align: React.PropTypes.oneOf(Object.keys(alignments)),
-  block: React.PropTypes.bool,
+  size: PropTypes.oneOf(Object.keys(sizes)),
+  align: PropTypes.oneOf(Object.keys(alignments)),
+  block: PropTypes.bool,
 };
 
 module.exports = Logo;

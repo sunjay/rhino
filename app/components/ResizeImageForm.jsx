@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const {isValidSize, isDifferent} = require('../helpers/validators');
@@ -13,30 +14,26 @@ const Navbar = require('./Navbar');
 const NavbarButton = require('./NavbarButton');
 const NavbarRight = require('./NavbarRight');
 
-const ResizeImageForm = React.createClass({
-  propTypes: {
-    initialWidth: React.PropTypes.number.isRequired,
-    initialHeight: React.PropTypes.number.isRequired,
-    onCancel: React.PropTypes.func,
-    onSubmit: React.PropTypes.func,
-  },
+class ResizeImageForm extends React.Component {
+  static propTypes = {
+    initialWidth: PropTypes.number.isRequired,
+    initialHeight: PropTypes.number.isRequired,
+    onCancel: PropTypes.func,
+    onSubmit: PropTypes.func,
+  };
 
-  getDefaultProps() {
-    return {
-      onCancel() {},
-      onSubmit() {},
-    };
-  },
+  static defaultProps = {
+    onCancel() {},
+    onSubmit() {},
+  };
 
-  getInitialState() {
-    return {
-      width: this.props.initialWidth,
-      height: this.props.initialHeight,
-      ratio: true,
-    };
-  },
+  state = {
+    width: this.props.initialWidth,
+    height: this.props.initialHeight,
+    ratio: true,
+  };
 
-  onChangeDimension(dim, event) {
+  onChangeDimension = (dim, event) => {
     const value = parseFloat(event.target.value);
     if (!isNaN(value) && this.state.ratio && isValidSize(value)) {
       const {initialWidth, initialHeight} = this.props;
@@ -60,22 +57,22 @@ const ResizeImageForm = React.createClass({
         [dim]: value,
       });
     }
-  },
+  };
 
-  onChangeMaintainRatio(event) {
+  onChangeMaintainRatio = (event) => {
     this.setState({
       ratio: event.target.checked,
     });
-  },
+  };
 
-  validate() {
+  validate = () => {
     const {initialWidth, initialHeight} = this.props;
     const {width, height} = this.state;
     return (
       isValidSize(width) && isValidSize(height) &&
       (isDifferent(width, initialWidth) || isDifferent(height, initialHeight))
     );
-  },
+  };
 
   render() {
     const {onCancel, onSubmit} = this.props;
@@ -125,10 +122,7 @@ const ResizeImageForm = React.createClass({
         </Navbar>
       </Form>
     );
-  },
-});
-
-ResizeImageForm.propTypes = {
-};
+  }
+}
 
 module.exports = ResizeImageForm;

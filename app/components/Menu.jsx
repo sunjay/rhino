@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const debounce = require('lodash.debounce');
 const ClickOutside = require('react-click-outside').default;
@@ -9,42 +10,40 @@ const {
   menuItems,
 } = require('../../scss/components/menuBar.scss');
 
-const Menu = React.createClass({
-  propTypes: {
-    label: React.PropTypes.node.isRequired,
-    children: React.PropTypes.any,
-  },
+class Menu extends React.Component {
+  static propTypes = {
+    label: PropTypes.node.isRequired,
+    children: PropTypes.any,
+  };
 
-  getInitialState() {
-    return {
-      open: false,
-    };
-  },
+  state = {
+    open: false,
+  };
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize());
-  },
+  }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize());
-  },
+  }
 
-  onResize() {
+  onResize = () => {
     if (!this._onResize) {
       this._onResize = debounce(function() {
         this.close();
       }.bind(this), 1000, {leading: true, trailing: false});
     }
     return this._onResize;
-  },
+  };
 
-  toggleOpen() {
+  toggleOpen = () => {
     this.setState({open: !this.state.open});
-  },
+  };
 
-  close() {
+  close = () => {
     this.setState({open: false});
-  },
+  };
 
   render() {
     const {open} = this.state;
@@ -61,7 +60,7 @@ const Menu = React.createClass({
         }
       </ClickOutside>
     );
-  },
-});
+  }
+}
 
 module.exports = Menu;

@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 const Icon = require('react-fontawesome').default;
 
@@ -43,10 +44,10 @@ const AnchorGrid = ({value, onChange, xSign = 1, ySign = 1}) => (
 );
 
 AnchorGrid.propTypes = {
-  value: React.PropTypes.oneOf(anchors).isRequired,
-  onChange: React.PropTypes.func,
-  xSign: React.PropTypes.oneOf([-1, 1]),
-  ySign: React.PropTypes.oneOf([-1, 1]),
+  value: PropTypes.oneOf(anchors).isRequired,
+  onChange: PropTypes.func,
+  xSign: PropTypes.oneOf([-1, 1]),
+  ySign: PropTypes.oneOf([-1, 1]),
 };
 
 const AnchorPoint = ({value, current, xSign, ySign, onClick}) => {
@@ -78,11 +79,11 @@ const AnchorPoint = ({value, current, xSign, ySign, onClick}) => {
 };
 
 AnchorPoint.propTypes = {
-  value: React.PropTypes.oneOf(anchors).isRequired,
-  current: React.PropTypes.oneOf(anchors).isRequired,
-  xSign: React.PropTypes.oneOf([-1, 1]).isRequired,
-  ySign: React.PropTypes.oneOf([-1, 1]).isRequired,
-  onClick: React.PropTypes.func,
+  value: PropTypes.oneOf(anchors).isRequired,
+  current: PropTypes.oneOf(anchors).isRequired,
+  xSign: PropTypes.oneOf([-1, 1]).isRequired,
+  ySign: PropTypes.oneOf([-1, 1]).isRequired,
+  onClick: PropTypes.func,
 };
 
 module.exports = AnchorGrid;
