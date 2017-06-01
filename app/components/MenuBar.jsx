@@ -11,6 +11,7 @@ const NavbarRight = require('./NavbarRight');
 const Menu = require('./Menu');
 const MenuItem = require('./MenuItem');
 const MenuSeparator = require('./MenuSeparator');
+const Logo = require('./Logo');
 
 const {
   menuBar,
@@ -36,6 +37,10 @@ const MenuBar = ({
   })}>
     {modal ?
       <CloseOnEscape onEscape={closeWindow}><span /></CloseOnEscape>
+      : null
+    }
+    {!modal ?
+      <span><Logo size='navbar' />&emsp;</span>
       : null
     }
     {!modal ? menu(dispatch).map(({label, submenu}) => (
