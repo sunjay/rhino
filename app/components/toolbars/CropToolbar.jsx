@@ -1,7 +1,7 @@
 const PropTypes = require('prop-types');
 const React = require('react');
 const CloseOnEscape = require('react-close-on-escape').default;
-const Icon = require('react-fontawesome').default;
+const Icon = require('react-fontawesome');
 
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
 

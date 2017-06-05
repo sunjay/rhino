@@ -1,0 +1,41 @@
+@import '../partials/variables';
+
+.resizeable {
+  background: rgba($brand-primary, 0.5);
+  border: 1px solid rgba($brand-primary, 0.8);
+  cursor: -webkit-grab;
+
+  .resizeableDragging & {
+    cursor: -webkit-grabbing;
+  }
+}
+
+.resizeableHandle {
+  $size: 20px;
+
+  background-color: rgba($brand-primary, 0.7) !important;
+  border: 1px dashed rgba($brand-primary, 0.8) !important;
+  height: $size !important;
+  position: absolute !important;
+  width: $size !important;
+
+  &.handleTopLeft {
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  &.handleTopRight {
+    top: 0 !important;
+    right: 0 !important;
+  }
+
+  &.handleBottomLeft {
+    bottom: 0 !important;
+    left: 0 !important;
+  }
+
+  &.handleBottomRight {
+    bottom: 0 !important;
+    right: 0 !important;
+  }
+}

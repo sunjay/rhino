@@ -1,10 +1,15 @@
 const PropTypes = require('prop-types');
 const React = require('react');
+const Draggable = require('react-draggable');
 
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
 
+const Resizeable = require('../Resizeable');
 const ToolOverlay = require('../ToolOverlay');
-const DragHandle = require('../DragHandle');
+
+const {
+  resizeableDragging,
+} = require('../../../scss/components/resizeable.scss');
 
 class CropToolOverlay extends React.Component {
   static propTypes = {
@@ -14,6 +19,7 @@ class CropToolOverlay extends React.Component {
     cropHeight: PropTypes.any.isRequired,
     maxWidth: PropTypes.number.isRequired,
     maxHeight: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
 
     zoom: PropTypes.number.isRequired,
     overlayWidth: PropTypes.number.isRequired,
@@ -35,66 +41,61 @@ class CropToolOverlay extends React.Component {
 
   componentWillReceiveProps = (nextProps) => {
     const {cropX, cropY, cropWidth, cropHeight, maxWidth, maxHeight} = nextProps;
-    const {x, y, width, height} = this.state;
+    let {x, y, width, height} = this.state;
 
-    this.setState({
-      x: isPositiveCoordinate(cropX) ? cropX : x,
-      y: isPositiveCoordinate(cropY) ? cropY : y,
-      width: isSizeInRange(cropWidth, maxWidth) ? cropWidth : width,
-      height: isSizeInRange(cropHeight, maxHeight) ? cropHeight : height,
-    });
-  }
+    x = isPositiveCoordinate(cropX) ? cropX : x;
+    y = isPositiveCoordinate(cropY) ? cropY : y;
+    width = isSizeInRange(cropWidth, maxWidth) ? cropWidth : width;
+    height = isSizeInRange(cropHeight, maxHeight) ? cropHeight : height;
 
-  deriveHandleBox = (handles) => {
-    const {maxWidth, maxHeight} = this.props;
-    const {minX, minY, maxX, maxY} = handles.reduce((acc, {x, y}) => ({
-      minX: Math.max(0, Math.min(acc.minX, x)),
-      minY: Math.max(0, Math.min(acc.minY, y)),
-      maxX: Math.min(Math.max(acc.maxX, x), maxWidth),
-      maxY: Math.min(Math.max(acc.maxY, y), maxHeight),
-    }), {minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity});
+    if (x != this.state.x && y != this.state.y) {
+      //FIXME: THIS IS A TERRIBLE HACK
+      // This is necessary because the Draggable component does not support
+      // the proper API for a controlled component
+      // If you try to use the `position` prop on Draggable, the entire component
+      // stops responding to user input. This is really not useful behaviour...
+      // The solution is to probably replace both Draggable and Resizeable by
+      // new components since both of their APIs absolutely suck...
+      this.draggable.setState({x, y});
+    }
 
-    this.props.onChange({
-      x: minX,
-      y: minY,
-      width: maxX - minX,
-      height: maxY - minY,
-    });
-  }
-
-  handleCoordinates = () => {
-    const {x, y, width, height} = this.state;
-
-    return [
-      {x: x, y: y},
-      {x: x + width, y: y},
-      {x: x + width, y: y + height},
-      {x: x, y: y + height},
-    ];
+    this.setState({x, y, width, height});
   }
 
   render = () => {
-    const {zoom} = this.props;
-
-    const handles = this.handleCoordinates();
+    const {
+      zoom,
+      overlayWidth,
+      overlayHeight,
+      overlayOffsetX,
+      overlayOffsetY,
+    } = this.props;
+    let {x, y, width, height} = this.state;
+    x *= zoom;
+    y *= zoom;
+    width *= zoom;
+    height *= zoom;
 
     return (
       <ToolOverlay {...this.props}>
-        {handles.map(({x, y}, index) => (
-          <DragHandle key={`h${x},${y}`}
-            x={x * zoom} y={y * zoom}
-            onChange={(dx, dy) => {
-              // need to divide by the zoom so these values are correct
-              dx = Math.round(dx / zoom);
-              dy = Math.round(dy / zoom);
-              const others = handles.filter((h, i) => i !== index);
-              const updated = others.map((other) => ({
-                x: other.x === x ? dx : other.x,
-                y: other.y === y ? dy : other.y,
-              }));
-              this.deriveHandleBox([{x: dx, y: dy}, ...updated]);
-            }} />
-        ))}
+        <Draggable ref={(node) => this.draggable = node}
+          defaultPosition={{x, y}}
+          defaultClassNameDragging={resizeableDragging}
+          onDrag={(event, {x, y}) => console.log({x, y}) || this.props.onChange({
+            x: Math.floor(x / zoom),
+            y: Math.floor(y / zoom),
+            width: this.state.width,
+            height: this.state.height,
+          })}
+        >
+          <Resizeable width={width} height={height}
+            onResize={(event, {width, height}) => this.props.onChange({
+              x: this.state.x,
+              y: this.state.y,
+              width: Math.floor(width / zoom),
+              height: Math.floor(height / zoom),
+            })} />
+        </Draggable>
       </ToolOverlay>
     );
   }

@@ -1,6 +1,6 @@
 const PropTypes = require('prop-types');
 const React = require('react');
-const Icon = require('react-fontawesome').default;
+const Icon = require('react-fontawesome');
 
 const Button = require('./Button');
 
