@@ -1,15 +1,15 @@
 const PropTypes = require('prop-types');
 const React = require('react');
-const Draggable = require('react-draggable');
 
 const {isSizeInRange, isPositiveCoordinate} = require('../../helpers/validators');
 
-const Resizeable = require('../Resizeable');
 const ToolOverlay = require('../ToolOverlay');
+const SelectionBox = require('../SelectionBox');
 
 const {
-  resizeableDragging,
-} = require('../../../scss/components/resizeable.scss');
+  cropOverlay,
+  cropOverlayContainer,
+} = require('../../../scss/components/cropOverlay.scss');
 
 class CropToolOverlay extends React.Component {
   static propTypes = {
@@ -63,13 +63,7 @@ class CropToolOverlay extends React.Component {
   }
 
   render = () => {
-    const {
-      zoom,
-      overlayWidth,
-      overlayHeight,
-      overlayOffsetX,
-      overlayOffsetY,
-    } = this.props;
+    const {zoom} = this.props;
     let {x, y, width, height} = this.state;
     x *= zoom;
     y *= zoom;
@@ -77,25 +71,9 @@ class CropToolOverlay extends React.Component {
     height *= zoom;
 
     return (
-      <ToolOverlay {...this.props}>
-        <Draggable ref={(node) => this.draggable = node}
-          defaultPosition={{x, y}}
-          defaultClassNameDragging={resizeableDragging}
-          onDrag={(event, {x, y}) => console.log({x, y}) || this.props.onChange({
-            x: Math.floor(x / zoom),
-            y: Math.floor(y / zoom),
-            width: this.state.width,
-            height: this.state.height,
-          })}
-        >
-          <Resizeable width={width} height={height}
-            onResize={(event, {width, height}) => this.props.onChange({
-              x: this.state.x,
-              y: this.state.y,
-              width: Math.floor(width / zoom),
-              height: Math.floor(height / zoom),
-            })} />
-        </Draggable>
+      <ToolOverlay {...this.props} className={cropOverlayContainer}>
+        <SelectionBox className={cropOverlay}
+          x={x} y={y} width={width} height={height} />
       </ToolOverlay>
     );
   }

@@ -1,0 +1,94 @@
+$selection-box: #9E9E9E;
+$selection-box-background: rgba($selection-box, 0.5);
+$selection-box-border: 1px solid rgba($selection-box, 0.5);
+$corner-handle-size: 20px;
+$side-handle-size: 3px;
+
+.selectionBox {
+  cursor: -webkit-grab;
+  position: absolute;
+
+  &:active {
+    cursor: -webkit-grabbing;
+  }
+}
+
+.handleTopLeft {
+  background: $selection-box-background;
+  border: $selection-box-border;
+  cursor: nw-resize;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: $corner-handle-size;
+  height: $corner-handle-size;
+}
+
+.handleTopRight {
+  background: $selection-box-background;
+  border: $selection-box-border;
+  cursor: ne-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: $corner-handle-size;
+  height: $corner-handle-size;
+}
+
+.handleBottomLeft {
+  background: $selection-box-background;
+  border: $selection-box-border;
+  cursor: sw-resize;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: $corner-handle-size;
+  height: $corner-handle-size;
+}
+
+.handleBottomRight {
+  background: $selection-box-background;
+  border: $selection-box-border;
+  cursor: se-resize;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  width: $corner-handle-size;
+  height: $corner-handle-size;
+}
+
+.handleTop {
+  cursor: n-resize;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: $side-handle-size;
+}
+
+.handleRight {
+  cursor: e-resize;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: $side-handle-size;
+}
+
+.handleBottom {
+  cursor: s-resize;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  height: $side-handle-size;
+}
+
+.handleLeft {
+  cursor: w-resize;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: $side-handle-size;
+}
