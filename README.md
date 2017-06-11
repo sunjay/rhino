@@ -1,5 +1,8 @@
 # rhino
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRhinoEditor%2Frhino.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRhinoEditor%2Frhino?ref=badge_shield)
+[![Dependency Status](https://dependencyci.com/github/RhinoEditor/rhino/badge)](https://dependencyci.com/github/RhinoEditor/rhino)
+
 Rhino Editor is an image editor specifically targetted towards Linux.
 
 Linux has a history of very poor image editors. Gimp (while some may disagree)
