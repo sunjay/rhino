@@ -1,0 +1,17 @@
+files:
+  include: '**/*.s+(a|c)ss'
+options:
+  formatter: stylish
+  merge-default-rules: false
+rules:
+  class-name-format: 0
+  id-name-format: 0
+  leading-zero:
+    - 1
+    - include: true
+  no-color-literals: 0
+  no-important: 0
+  no-qualifying-elements: 0
+  no-vendor-prefixes: 0
+  placeholder-in-extend: 0
+  placeholder-name-format: 0
