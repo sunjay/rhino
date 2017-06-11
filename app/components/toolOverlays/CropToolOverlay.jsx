@@ -40,26 +40,47 @@ class CropToolOverlay extends React.Component {
   };
 
   componentWillReceiveProps = (nextProps) => {
-    const {cropX, cropY, cropWidth, cropHeight, maxWidth, maxHeight} = nextProps;
-    let {x, y, width, height} = this.state;
+    const {
+      cropX: x,
+      cropY: y,
+      cropWidth: width,
+      cropHeight: height,
+      maxWidth,
+      maxHeight,
+    } = nextProps;
 
-    x = isPositiveCoordinate(cropX) ? cropX : x;
-    y = isPositiveCoordinate(cropY) ? cropY : y;
-    width = isSizeInRange(cropWidth, maxWidth) ? cropWidth : width;
-    height = isSizeInRange(cropHeight, maxHeight) ? cropHeight : height;
+    this.setState(this.validate({x, y, width, height, maxWidth, maxHeight}));
+  }
 
-    if (x != this.state.x && y != this.state.y) {
-      //FIXME: THIS IS A TERRIBLE HACK
-      // This is necessary because the Draggable component does not support
-      // the proper API for a controlled component
-      // If you try to use the `position` prop on Draggable, the entire component
-      // stops responding to user input. This is really not useful behaviour...
-      // The solution is to probably replace both Draggable and Resizeable by
-      // new components since both of their APIs absolutely suck...
-      this.draggable.setState({x, y});
+  onChange = ({x, y, width, height}) => {
+    const {onChange, zoom} = this.props;
+
+    onChange(this.validate({
+      x: Math.ceil(x / zoom),
+      y: Math.ceil(y / zoom),
+      width: Math.ceil(width / zoom),
+      height: Math.ceil(height / zoom),
+    }));
+  }
+
+  // Validates the given updated values and returns valid versions of them by
+  // making any adjustments necessary
+  validate = (updated) => {
+    const maxWidth = updated.maxWidth || this.props.maxWidth;
+    const maxHeight = updated.maxHeight || this.props.maxHeight;
+    let {x, y, width, height} = updated;
+
+    // Only update an axis if it results in valid state
+    if (!isPositiveCoordinate(x) || !isSizeInRange(x + width, maxWidth)) {
+      x = Math.max(0, this.state.x);
+      width = Math.min(this.state.width, maxWidth - x);
+    }
+    if (!isPositiveCoordinate(y) || !isSizeInRange(y + height, maxHeight)) {
+      y = Math.max(0, this.state.y);
+      height = Math.max(this.state.height, maxHeight - y);
     }
 
-    this.setState({x, y, width, height});
+    return {x, y, width, height};
   }
 
   render = () => {
@@ -72,7 +93,7 @@ class CropToolOverlay extends React.Component {
 
     return (
       <ToolOverlay {...this.props} className={cropOverlayContainer}>
-        <SelectionBox className={cropOverlay}
+        <SelectionBox className={cropOverlay} onChange={this.onChange}
           x={x} y={y} width={width} height={height} />
       </ToolOverlay>
     );
