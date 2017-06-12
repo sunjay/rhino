@@ -2,6 +2,7 @@
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRhinoEditor%2Frhino.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2FRhinoEditor%2Frhino?ref=badge_shield)
 [![Dependency Status](https://dependencyci.com/github/RhinoEditor/rhino/badge)](https://dependencyci.com/github/RhinoEditor/rhino)
+[![Join the chat at https://gitter.im/RhinoEditor/rhino](https://badges.gitter.im/RhinoEditor/rhino.svg)](https://gitter.im/RhinoEditor/rhino?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Rhino Editor is an image editor specifically targetted towards Linux.
 
