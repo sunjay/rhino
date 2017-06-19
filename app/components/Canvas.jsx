@@ -109,7 +109,7 @@ class Canvas extends React.Component {
         width={imageWidth} height={imageHeight}
         style={{left: offsetX, top: offsetY}}
         className={canvasClass} />
-      ), (
+    ), (
       <ToolOverlayRouter key='overlay' zoom={zoom}
         width={imageWidth} height={imageHeight}
         offsetX={offsetX} offsetY={offsetY} />
