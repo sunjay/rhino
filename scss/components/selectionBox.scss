@@ -4,12 +4,14 @@ $selection-box-border: 1px solid rgba($selection-box, 0.5);
 $corner-handle-size: 20px;
 $side-handle-size: 3px;
 
+//TODO: Uncomment styles when dragging is properly implemented
+
 .selectionBox {
-  cursor: -webkit-grab;
+  //TODO:cursor: -webkit-grab;
   position: absolute;
 
   &:active {
-    cursor: -webkit-grabbing;
+    //TODO:cursor: -webkit-grabbing;
   }
 }
 
@@ -58,7 +60,7 @@ $side-handle-size: 3px;
 }
 
 .handleTop {
-  cursor: n-resize;
+  //TODO:cursor: n-resize;
   left: 0;
   position: absolute;
   right: 0;
@@ -67,7 +69,7 @@ $side-handle-size: 3px;
 }
 
 .handleRight {
-  cursor: e-resize;
+  //TODO:cursor: e-resize;
   bottom: 0;
   position: absolute;
   right: 0;
@@ -76,7 +78,7 @@ $side-handle-size: 3px;
 }
 
 .handleBottom {
-  cursor: s-resize;
+  //TODO:cursor: s-resize;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -85,7 +87,7 @@ $side-handle-size: 3px;
 }
 
 .handleLeft {
-  cursor: w-resize;
+  //TODO:cursor: w-resize;
   bottom: 0;
   left: 0;
   position: absolute;

@@ -43,6 +43,7 @@ class SelectionBox extends React.Component {
     handleClasses: {},
   };
 
+  /*TODO: Figure out a proper implementation of the draggable selection box
   // Used to store the original top left and bottom right anchor points of the
   // rectangle
   // Each of these is an object with shape {x, y}
@@ -143,6 +144,7 @@ class SelectionBox extends React.Component {
 
     return {x, y};
   }
+  */
 
   render = () => {
     const {x, y, width, height, z, className, handleClasses} = this.props;
@@ -159,6 +161,7 @@ class SelectionBox extends React.Component {
           zIndex: z,
         }}
       >
+        {/*
         <div style={{zIndex: z + 2}}
           onMouseDown={(event) => this.mousedown(event, {top: true, left: true})}
           className={classNames(handleTopLeft, handleClasses.topLeft)} />
@@ -171,17 +174,18 @@ class SelectionBox extends React.Component {
         <div style={{zIndex: z + 2}}
           onMouseDown={(event) => this.mousedown(event, {bottom: true, right: true})}
           className={classNames(handleBottomRight, handleClasses.bottomRight)} />
+        */}
         <div style={{zIndex: z + 1}}
-          onMouseDown={(event) => this.mousedown(event, {top: true})}
+          onMouseDown={() => {}/*(event) => this.mousedown(event, {top: true})*/}
           className={classNames(handleTop, handleClasses.top)} />
         <div style={{zIndex: z + 1}}
-          onMouseDown={(event) => this.mousedown(event, {right: true})}
+          onMouseDown={() => {}/*(event) => this.mousedown(event, {right: true})*/}
           className={classNames(handleRight, handleClasses.right)} />
         <div style={{zIndex: z + 1}}
-          onMouseDown={(event) => this.mousedown(event, {bottom: true})}
+          onMouseDown={() => {}/*(event) => this.mousedown(event, {bottom: true})*/}
           className={classNames(handleBottom, handleClasses.bottom)} />
         <div style={{zIndex: z + 1}}
-          onMouseDown={(event) => this.mousedown(event, {left: true})}
+          onMouseDown={() => {}/*(event) => this.mousedown(event, {left: true})*/}
           className={classNames(handleLeft, handleClasses.left)} />
       </div>
     );
